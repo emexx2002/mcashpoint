@@ -1,5 +1,5 @@
 init:
-	nmp init
+	npm init
 
 install:
 	npm install
@@ -15,4 +15,4 @@ analyze:
 
 docker-image:
 	docker build -t esettlement/images:mcash-admin-view .
-	docker push esettlement/images:mcash-admin
+	docker push esettlement/images:mcash-admin-view
