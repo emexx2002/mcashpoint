@@ -1,0 +1,22 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    padding-top: 10px;
+}
+
+.header p{
+    display: inline;
+    /* justify-content: space-between; */ 
+}
+.header span{
+padding-right: 10px;
+}
+
+.header img{
+    padding-right: 15px;
+}
+
+.divider{
+    /* border: 1px solid #DFE0EB; */
+}
