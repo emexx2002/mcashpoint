@@ -7,18 +7,22 @@ import Upload from '../../../Assets/img/upload.png'
 import Filter from '../../../Assets/img/filter.png'
 import Plus from '../../../Assets/img/+.png'
 import DashboardTemplate from "../../template/dashboardtemplate";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from 'react-bootstrap/Tab'
+import CreateAgentModal from "./CreateAgent";
+
+
 import './style.css';
 
 
-class AgentsManager extends Component {
-    state = {
-  
-    };
+const AgentsManager = () => {
+ 
+      const [createModalActive, showCreateModal] = React.useState(false);
+
+      const [key, showActive] = React.useState('home');
+
 
     
-    render() {
-
-  
         const products = [
             { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
             { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
@@ -90,8 +94,15 @@ class AgentsManager extends Component {
               console.log('sizePerPage', sizePerPage);
             }
           });
+
+        //   handleSelect = (key) => {
+        //    console.log(key)
+  
+            
+        // }
         
       return (
+        
           <DashboardTemplate>
               <div className='transact-wrapper'>
               <p>Agents</p>
@@ -101,8 +112,8 @@ class AgentsManager extends Component {
                          
                          <div className='manage-agent'>
                             <span>Manage all agents on mCashPoint</span>
-                            <span><img src={Plus} />Create Agent Manager</span>
-                            <span><img src={Plus} />Settlement</span>
+                            {/* <span><img src={Plus} />Create Agent Manager</span>
+                            <span><img src={Plus} />Settlement</span> */}
                          </div>
 
                       </div>
@@ -113,15 +124,43 @@ class AgentsManager extends Component {
 
                           <span> <img src={Upload} />Export</span>
                       </div>
-                  </div>
-                 <div className='table-wrapper'>
-                   <h4>All Agents</h4>
-                 <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
 
-                 </div>
+                      
+                  </div>
+                
+                
+                   <Tabs defaultActiveKey={key} id="uncontrolled-tab-example" onSelect={(key) => {key=='profile'?showCreateModal(true):showCreateModal(false) }}>
+                    <Tab eventKey={"home"} title="View Agent Manager">
+                    <div className='table-wrapper'>
+                      <h4>All Agents</h4>
+                      
+                        <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
+                    </div>
+                    </Tab>
+                    <Tab eventKey={"profile"} title="Create Agent Manager">
+                    <CreateAgentModal
+                      show={createModalActive}
+                      close={() => showCreateModal(false) && showActive('home')}
+                    />
+                      <div className='table-wrapper'>
+                      <h4>All Agents</h4>
+                      
+                        <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
+                    </div>
+                    </Tab>
+                    <Tab eventKey={"contact"} title="Settlement" >
+                    <div className='table-wrapper'>
+                      <h4>All Agents</h4>
+                      
+                        <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
+                    </div>
+                    </Tab>
+                  </Tabs>
+
+                 
               </div>
           </DashboardTemplate>
       )
-    }
+    
 }
 export default AgentsManager
