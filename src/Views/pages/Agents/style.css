@@ -1,0 +1,40 @@
+.generate-code{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: center;
+    letter-spacing: 0.1px;
+    color: #1AB759;
+    border: 1px solid #1AB759;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+.assign-terminal{
+    background: #7BA4DB;
+    border-radius: 8px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 18px;
+    letter-spacing: 0.1px;
+    
+    color: #25282B;
+}
+
+.view{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    /* identical to box height, or 129% */
+
+    letter-spacing: 0.1px;
+
+    /* mCashPoint/Tertiary */
+
+    color: #00249C;
+}
