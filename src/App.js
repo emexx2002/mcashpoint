@@ -6,6 +6,8 @@ import Dashboard from './Views/pages/dashboard'
 import Transactions from './Views/pages/Transations'
 import Agents from './Views/pages/Agents'
 import AgentsManager from './Views/pages/AgentsManager'
+import Purse from './Views/pages/Purse'
+import Audit from './Views/pages/Audit'
 import { createHashHistory } from 'history'
 export const history = createHashHistory()
 
@@ -20,6 +22,8 @@ class App extends Component {
             <Route path= "/transactions" component={Transactions } />
             <Route path= "/agents" component={Agents } />
             <Route path= "/agentsmanager" component={AgentsManager } />
+            <Route path= "/purse" component={Purse } />
+            <Route path= "/audit" component={Audit } />
             <Route path="*" component={Dashboard} /> 
           </Switch>
         </Router>
