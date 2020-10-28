@@ -37,10 +37,10 @@ export default class SideNav extends Component {
                 <NavLink  to="/agentsmanager" activeClassName='current' >
                 <li className="list-group-item"><img src={Agentmanagaer} alt="" /> Agent Manager</li>
                 </NavLink>
-                <NavLink  to="#" activeClassName='' >
+                <NavLink  to="/purse" activeClassName='current' >
                 <li className="list-group-item"><img src={Purse} alt="" /> Purse</li>
                 </NavLink>
-                <NavLink  to="#" activeClassName='' onClick='' >
+                <NavLink  to="/audit" activeClassName='current'  >
                 <li className="list-group-item"><img src={Audit} alt="" /> Audit</li>
                 </NavLink>
                 
