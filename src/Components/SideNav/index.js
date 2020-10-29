@@ -44,8 +44,8 @@ export default class SideNav extends Component {
                 <li className="list-group-item"><img src={Audit} alt="" /> Audit</li>
                 </NavLink>
                 
-             <span className="list-group footer">
-              <NavLink   to="" activeClassName=''  >
+             <div className="list-group footer">
+              <NavLink   to="/settings" activeClassName='current'  >
                           <li className="list-group-item ">
                           <img src={Settings} alt="" />
                           Settings
@@ -54,7 +54,7 @@ export default class SideNav extends Component {
                   <NavLink  to="#" activeClassName='' >
                       <li className="list-group-item " ><img src={Logout} alt="" /> Logout</li>
                   </NavLink>
-             </span>
+             </div>
           </ul>
                </div>
             </div>
