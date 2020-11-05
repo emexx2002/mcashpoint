@@ -1,0 +1,97 @@
+.settings-header{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 32px;
+    letter-spacing: 0.2px;
+    
+    color: #00249C;
+}
+
+.settings-text{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+    
+    color: #52575C;
+}
+
+.side-tab{
+    padding: 20px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    height: 80vh;
+}
+
+.tab-navs{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+.tab-navs p{
+    margin: 0px;
+    padding: 0px;
+}
+.tab-navs img{
+    padding-right: 20px;
+}
+
+.nav-item a.nav-link.active{
+    background: #00249C;
+opacity: 0.7;
+/* Stroke */
+
+border: 1px solid #E2E2E2;
+box-sizing: border-box;
+/* DS 5 */
+
+box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+border-radius: 7px;
+}
+.main-tabs{
+    background: #FFFFFF;
+    /* Stroke */
+    
+    border: 1px solid #E2E2E2;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    padding: 50px 100px;
+    height: 550px;
+}
+
+.form-note{
+    background: #7BA4DB;
+    padding: 15px;
+    /* opacity: 0.15 1.0;       */
+    border-radius: 8px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    /* or 133% */
+margin-bottom: 20px;
+    letter-spacing: 0.2px;
+
+    /* Secondary Text */
+
+    color: #52575C;
+}
+
+div.custom-switch {
+    display: inline-block;
+    /*ie7 -- start*/
+    *display: inline;
+    zoom: 1;
+  }
+  
+  div.custom-switch  > label {
+    display: flex;
+    flex-direction: row-reverse;
+  }

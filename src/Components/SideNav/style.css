@@ -61,8 +61,8 @@ a{
     margin-right: 25px;
 }
 .footer{
-position: fixed;
-  left: 10;
+    padding-top: 300px;
+/* position: fixed; */
   bottom: 0;
   background: #FFFFFF;
 }
