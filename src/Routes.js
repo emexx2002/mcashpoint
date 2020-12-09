@@ -13,26 +13,26 @@ import Login from './Views/pages/Login'
 import { createHashHistory } from 'history'
 import { Provider } from "react-redux";
 import store from "./Redux/store";
+import PrivateRoute from './utils/privateRoute'
 
-export const history = createHashHistory()
-
+import {history} from './utils/history'
 
 class Routes extends Component {
   render() {
     return (
       <div className="App">
         <Provider store={store}>
-          <Router>
+          <Router history={history}>
             <Switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard}/>
               <Route  path="/" component={Login} exact />
-              <Route  path="/dashboard" component={ Dashboard} exact />
-              <Route path= "/transactions" component={Transactions } />
-              <Route path= "/agents" component={Agents } />
-              <Route path= "/agentsmanager" component={AgentsManager } />
-              <Route path= "/purse" component={Purse } />
-              <Route path= "/audit" component={Audit } />
-              <Route path= "/settings" component={Settings } />
-              <Route path="*" component={Dashboard} /> 
+              <PrivateRoute path= "/transactions" component={Transactions } />
+              <PrivateRoute path= "/agents" component={Agents } />
+              <PrivateRoute path= "/agentsmanager" component={AgentsManager } />
+              <PrivateRoute path= "/purse" component={Purse } />
+              <PrivateRoute path= "/audit" component={Audit } />
+              <PrivateRoute path= "/settings" component={Settings } />
+              
             </Switch>
           </Router>
         </Provider>

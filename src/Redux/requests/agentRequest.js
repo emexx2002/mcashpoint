@@ -2,6 +2,8 @@ import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
 import { LOGIN_USER } from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
+import {history} from '../../utils/history'
+
 
 export const loginUser = ({ username, password }) => dispatch => {
   console.log(username,password)
@@ -14,12 +16,11 @@ export const loginUser = ({ username, password }) => dispatch => {
       .then(res => {
         const response = res.data
         if (response.responseCode === '00') {
-          console.log('hello')
           dispatch(asyncActions(LOGIN_USER).success(response.data));
-          dispatch(asyncActions(LOGIN_USER).loading(false));
+          // history.push('/dashboard');
         }
       })
       .catch(error => {
-        console.log(error)
+        // console.log(error)
         dispatch(asyncActions(LOGIN_USER).failure(true, error))});
   };

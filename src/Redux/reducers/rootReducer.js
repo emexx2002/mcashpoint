@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import agents from "./agentsReducer";
+import users from "./userReducer";
+import transactions from "./transactionsReducer"
 
 export default combineReducers({
-    agents
+    users,
+    transactions
 });

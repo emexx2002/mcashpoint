@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -6,66 +6,99 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import Upload from '../../../Assets/img/upload.png'
 import Filter from '../../../Assets/img/filter.png'
 import DashboardTemplate from "../../template/dashboardtemplate";
+import { FetchTransaction} from "../../../Redux/requests//tranactionRequest";
+import Loader from "../../../Components/secondLoader"
+
+import { connect } from 'react-redux';
+
+
 import './style.css';
 
 
-class Transactions extends Component {
-    state = {
-  
-    };
+const Transactions = (props) => {
+  const { FetchTransaction: FetchTransactions, transaction, loading} = props;
+  console.log(transaction)
+  const [alltransactions, setTransactions] = useState([FetchTransactions]);
+  const [status, setStatus] = useState([FetchTransactions]);
+  console.log('jj',alltransactions)
 
-    
-    render() {
 
-  
-        const products = [
-            { id: 1, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 2, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 3, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 4, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 5, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 6, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 7, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 8, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 9, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 10, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 11, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 12, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 13, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 14, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 15, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 16, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 17, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-            { id: 18, Date: '3423', Agent: 'With God Enterprenium', TransactionID:'TT123456765654', Type:'Cashout', TerminalID:'202345', Amount:'N12344',Status:'pendng',AgentFee:'N1232', StampDuty:'N890', RRN:'097888rrr', CardDetails:'65456',PreBalance:'N98789'},
-           
-          ];
+  useEffect(() => {
+    FetchTransactions();
+  }, []);
+
+      console.log(props.FetchTransaction)
+
+        const products = transaction.map(transact => {
+          
+          return {
+            id:transact.agent.id === 'undefined' ? '':transact.id,
+            Date:transact.agent.createdAt=== 'undefined' ? '': transact.agent.createdAt,
+            Agent:transact.agent.businessName === 'undefined' ? '':transact.agent.businessName,
+            TransactionID:transact.transactionId === 'undefined' ? '':transact.transactionId,
+            Type:transact.transactionType.type === 'undefined' ? '': transact.transactionType.type ,
+            TerminalID: transact.agent.bankTerminal.terminalId === 'undefined' ? '':transact.agent.bankTerminal.terminalId,
+            Amount:transact.amount === 'undefined' ? '': transact.amount,
+            Status: transact.statusCode,
+            AgentFee:transact.agentFee=== 'undefined' ? '': transact.agentFee,
+            StampDuty:transact.stampDuty=== 'undefined' ? '': transact.stampDuty,
+            RRN:transact.rrn === 'undefined' ? '':transact.rrn ,
+            // CardDetails:transact.rrn === 'undefined' ? '':transact.rrn ,
+            PreBalance:transact.postPurseBalance.toFixed(2) === 'undefined' ? '':transact.postPurseBalance .toFixed(2),
+            PostBalance:transact.postPurseBalance.toFixed(2) === 'undefined' ? '':transact.prePurseBalance .toFixed(2),
+
+            // console
+          }
+      })
         
+       
           const columns = [
             // { dataField: 'id', text: 'Id'},
             { dataField: 'Date', text: 'Date'},
             { dataField: 'Agent', text: 'Agent',headerStyle: (colum, colIndex) => {
                 return { width: '150px', textAlign: 'center',padding:'10px'};
               },bodyStyle: (colum, colIndex) => {
-                return { width: '150px', textAlign: 'center',color:'#00249C',};
+                return { width: '150px', textAlign: 'center',color:'#00249C'};
               }},
-            { dataField: 'TransactionID', text: 'Transaction ID',style:{'width' : '20em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
-                return { width: '200px', textAlign: 'center'};
+            { dataField: 'TransactionID', text: 'Transaction ID',style:{'width' : '15em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
+                return { width: '150px', textAlign: 'center'};
               }},
             { dataField: 'Type', text: 'Type'},
             { dataField: 'TerminalID', text: 'Terminal ID'},
             { dataField: 'Amount', text: 'Amount (N)'},
             { dataField: 'Status', text: 'Status',formatter: (cellContent, row) => {
+              console.log(cellContent,row)
+              let statusMessage = ""
+              let statusColor = ""
+              switch (row.Status) {
+                case "00":
+                  statusMessage = "Successfull"
+                  statusColor ="successful"
+                  break;
+                case "PP":
+                case "09":
+                  statusMessage = "Pending"
+                  statusColor = "pending"
+                  break;
+              
+                default:
+                  statusMessage = "failure"
+                  statusColor = "failure"
+                  break;
+              }
                 return (
                   <h5>
-                    <span className="pending"> pending</span>
+                    <span className={`${statusColor}`}> { statusMessage }</span>
                   </h5>
                 );
               }},
             { dataField: 'AgentFee', text: 'Agent Fee'},
             { dataField: 'StampDuty', text: 'Stamp Duty'},
             { dataField: 'RRN', text: 'RRN'},
-            { dataField: 'CardDetails', text: 'Card Details'},
+            // { dataField: 'CardDetails', text: 'Card Details'},
             { dataField: 'PreBalance', text: 'Pre-Balance'},
+            { dataField: 'PostBalance', text: 'Post-Balance'},
+            // { dataField: 'BeneficiaryDetails', text: 'Beneficiary Details'},
           ];
         
           const defaultSorted = [{
@@ -95,6 +128,7 @@ class Transactions extends Component {
       return (
           <DashboardTemplate>
               <div className='transact-wrapper'>
+              {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
                   <div className='agent-transact-header'>
                       <div>
                           <p>Transactions</p>
@@ -115,7 +149,18 @@ class Transactions extends Component {
                  </div>
               </div>
           </DashboardTemplate>
-      )
-    }
-}
-export default Transactions
+  );
+};
+const mapStateToProps = state => (console.log(state),{
+  transaction: state.transactions.transactions,
+  loading:state.transactions.loading,
+  error:state.transactions.error
+
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    FetchTransaction
+  }
+)(Transactions);

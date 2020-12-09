@@ -57,3 +57,30 @@
     color: #FFFFFF;
 
 }
+
+.successful{
+    background: #2AC769;
+    border-radius: 4px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    padding: 5px 10px;
+}
+.failure{
+    background: #FB4E4E;
+    border-radius: 4px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    padding: 5px 10px;
+}
