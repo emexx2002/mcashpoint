@@ -22,7 +22,7 @@ export default class SideNav extends Component {
                 </div>
                <div className="sidenavlist">
               <ul className="list-group">
-                <NavLink to='/' activeClassName="current" exact={true} >
+                <NavLink to='/dashboard' activeClassName="current" exact={true} >
                         <li className="list-group-item ">
                         <img src={Dashboard} alt="" />
                         Dashboard
