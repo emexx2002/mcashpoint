@@ -1,26 +1,30 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { LOGIN_USER } from "../actions/actionTypes";
+import { FETCH_AGENTS } from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import {history} from '../../utils/history'
 
 
-export const loginUser = ({ username, password }) => dispatch => {
-  console.log(username,password)
-    dispatch(asyncActions(LOGIN_USER).loading(true));
+export const FetchAgent = () => dispatch => {
+    dispatch(asyncActions(FETCH_AGENTS).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    console.log(token)
+    console.log( `bearer ${token.access_token}`,)
     axios
-      .post(`${AgentConstant.LOGIN_AGENT_URL}`, {
-        username,
-        password
+      .get(`${AgentConstant.FETCH_TAGENT_URL}`, 
+      {
+        headers: {
+            'Authorization': `bearer ${token.access_token}`,
+            'Content-Type': 'application/json'
+          },
       })
       .then(res => {
-        const response = res.data
-        if (response.responseCode === '00') {
-          dispatch(asyncActions(LOGIN_USER).success(response.data));
-          // history.push('/dashboard');
+          console.log(res.status == 200)
+        if (res.status == 200) {
+          dispatch(asyncActions(FETCH_AGENTS).success(res.data.data));
         }
       })
       .catch(error => {
         // console.log(error)
-        dispatch(asyncActions(LOGIN_USER).failure(true, error))});
+        dispatch(asyncActions(FETCH_AGENTS).failure(true, error))});
   };

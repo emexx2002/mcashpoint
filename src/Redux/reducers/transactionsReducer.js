@@ -7,13 +7,13 @@ const initialState = {
 };
 
 const TransactionsReducer = (state = initialState, action) => {
-    console.log(action.type )
+    // console.log(action.type )
   switch (action.type) {
     case asyncActionName(FETCH_TRANSACTIONS).loading:
-        console.log('1')
+        // console.log('1')
       return { ...state, loading:true };
     case asyncActionName(FETCH_TRANSACTIONS).success:
-        console.log('2')
+        // console.log('2')
 
       return {
         ...state,

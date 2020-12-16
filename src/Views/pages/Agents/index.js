@@ -1,47 +1,44 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import Upload from '../../../Assets/img/upload.png'
 import Filter from '../../../Assets/img/filter.png'
+import { FetchAgent} from "../../../Redux/requests/agentRequest";
+import Loader from "../../../Components/secondLoader"
 import DashboardTemplate from "../../template/dashboardtemplate";
+import { connect } from 'react-redux';
+
 import './style.css';
 
 
-class Agents extends Component {
-    state = {
-  
-    };
+const Agents = (props) => {
+  const { FetchAgent: FetchAgents, agents, loading} = props;
+  console.log(agents)
+  // const [alltransactions, setTransactions] = useState([FetchTransactions]);
+  // const [status, setStatus] = useState([FetchTransactions]);
+  // console.log('jj',alltransactions)
 
-    
-    render() {
+  useEffect(() => {
+    FetchAgents();
+  }, []);
 
+  // const products = {}
   
-        const products = [
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-        ];
+  const products = agents.map((agent,index) => {
+          console.log(agent)
+    return {
+      id:index,
+      AgentID:agent.user.memberId === 'undefined' ? '':agent.user.memberId,
+      BusinessName:agent.businessName  === 'undefined' ? '':agent.businessName,
+      UserName:agent.user.username  === 'undefined' ? '':agent.user.username ,
+      PhoneNumber: agent.businessPhone === 'undefined' ? '':agent.businessPhone ,
+      TerminalID:agent.bankTerminal.terminalId === 'undefined' ? '': agent.bankTerminal.terminalId,
+      DateCreated:agent.createdAt === 'undefined' ? '': agent.createdAt
+    }
+})
+  
         
           const columns = [
             // { dataField: 'id', text: 'Id'},
@@ -56,7 +53,7 @@ class Agents extends Component {
             { dataField: 'Action', text: 'Action',formatter: (cellContent, row) => {
                 return (
                   <h5>
-                  <button type="button" class="btn assign-terminal">Assign Terminal</button>
+                  <button type="button" className="btn assign-terminal">Assign Terminal</button>
 
                  </h5>
                 );
@@ -65,7 +62,7 @@ class Agents extends Component {
             { dataField: 'TransactionHistory', text: 'Transaction History',formatter: (cellContent, row) => {
                 return (
                   <h5>
-                   <button type="button" class="btn view">view</button>
+                   <button type="button" className="btn view">view</button>
 
                   </h5>
                 );}
@@ -73,7 +70,7 @@ class Agents extends Component {
             { dataField: 'ActivationCode', text: 'Activation Code',formatter: (cellContent, row) => {
                 return (
                   <h5>
-                   <button type="button" class="btn generate-code">Generate</button>
+                   <button type="button" className="btn generate-code">Generate</button>
 
                   </h5>
                 );
@@ -110,6 +107,8 @@ class Agents extends Component {
       return (
           <DashboardTemplate>
               <div className='transact-wrapper'>
+              {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+
                   <div className='agent-transact-header'>
                       <div>
                           <p>Agents</p>
@@ -130,7 +129,18 @@ class Agents extends Component {
                  </div>
               </div>
           </DashboardTemplate>
-      )
-    }
-}
-export default Agents
+ );
+};
+const mapStateToProps = state => (console.log(state),{
+  agents: state.agents.agents,
+  loading:state.agents.loading,
+  error:state.agents.error
+
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    FetchAgent
+  }
+)(Agents);

@@ -6,7 +6,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import Upload from '../../../Assets/img/upload.png'
 import Filter from '../../../Assets/img/filter.png'
 import DashboardTemplate from "../../template/dashboardtemplate";
-import { FetchTransaction} from "../../../Redux/requests//tranactionRequest";
+import { FetchTransaction} from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader"
 
 import { connect } from 'react-redux';
