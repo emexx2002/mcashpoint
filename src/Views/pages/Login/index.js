@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col,Nav,Form,Button} from "react-bootstrap";
-import { loginUser } from "../../../Redux/requests/agentRequest";
+import { loginUser } from "../../../Redux/requests/userRequest";
 import Loader from "../../../Components/secondLoader"
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
