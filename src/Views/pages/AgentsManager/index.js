@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
@@ -10,6 +10,8 @@ import DashboardTemplate from "../../template/dashboardtemplate";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from 'react-bootstrap/Tab'
 import CreateAgentModal from "./CreateAgent";
+import FetchAgentsManager from "./fetchAgentsManager";
+import Settlement from "./settlement";
 
 
 import './style.css';
@@ -19,88 +21,35 @@ const AgentsManager = () => {
  
       const [createModalActive, showCreateModal] = React.useState(false);
 
-      const [key, showActive] = React.useState('home');
+      const [active, showActive] = React.useState('home');
 
-
+      useEffect(() => {
+        console.log(active)
+        renderTab()
+      }, [active]);
     
-        const products = [
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-          
-        ];
+        const onclose = () => {
+          showActive('home')
+          showCreateModal(false) 
+        }
         
-          const columns = [
-            // { dataField: 'id', text: 'Id'},
-            { dataField: 'AgentID', text: 'Agent ID'},
-            { dataField: 'BusinessName', text: 'Business Name',headerStyle: (colum, colIndex) => {
-                return { width: '150px', textAlign: 'center',padding:'10px'};
-              }},
-            { dataField: 'UserName', text: 'User Name',style:{'width' : '20em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
-                return { width: '200px', textAlign: 'center'};
-              }},
-            { dataField: 'PhoneNumber', text: 'Phone Number'},
-           
-            { dataField: 'State', text: 'State'},
-           
-            { dataField: 'LGA', text: 'LGA'},
-            { dataField: 'DateCreated', text: 'Date Created'},
-            
-          ];
-        
-          const defaultSorted = [{
-            dataField: 'name',
-            order: 'desc'
-          }];
-        
-          const pagination = paginationFactory({
-            page: 1,
-            sizePerPage: 10,
-            lastPageText: '>>',
-            firstPageText: '<<',
-            nextPageText: '>',
-            prePageText: '<',
-            showTotal: true,
-            alwaysShowAllBtns: true,
-            onPageChange: function (page, sizePerPage) {
-              console.log('page', page);
-              console.log('sizePerPage', sizePerPage);
-            },
-            onSizePerPageChange: function (page, sizePerPage) {
-              console.log('page', page);
-              console.log('sizePerPage', sizePerPage);
-            }
-          });
+        const renderTab = () =>(
+            <Tabs defaultActiveKey={active} id="uncontrolled-tab-example" onSelect={(key) => {key=='profile'?showCreateModal(true):showActive('home')}}>
+                      <Tab eventKey={"home"} title="View Agent Manager">
+                        <FetchAgentsManager />
+                      </Tab>
+                      <Tab eventKey={"profile"} title="Create Agent Manager">
+                      <CreateAgentModal
+                        show={createModalActive}
+                        close={ onclose}
+                      />
+                      </Tab>
+                      <Tab eventKey={"contact"} title="Settlement" >
+                      <Settlement />
+                      </Tab>
+            </Tabs>
+        )
 
-        //   handleSelect = (key) => {
-        //    console.log(key)
-  
-            
-        // }
-        
       return (
         
           <DashboardTemplate>
@@ -125,37 +74,11 @@ const AgentsManager = () => {
                           <span> <img src={Upload} />Export</span>
                       </div>
 
-                      
                   </div>
                 
-                
-                   <Tabs defaultActiveKey={key} id="uncontrolled-tab-example" onSelect={(key) => {key=='profile'?showCreateModal(true):showCreateModal(false) }}>
-                    <Tab eventKey={"home"} title="View Agent Manager">
-                    <div className='table-wrapper'>
-                      <h4>All Agents</h4>
-                      
-                        <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
-                    </div>
-                    </Tab>
-                    <Tab eventKey={"profile"} title="Create Agent Manager">
-                    <CreateAgentModal
-                      show={createModalActive}
-                      close={() => showCreateModal(false) && showActive('home')}
-                    />
-                      <div className='table-wrapper'>
-                      <h4>All Agents</h4>
-                      
-                        <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
-                    </div>
-                    </Tab>
-                    <Tab eventKey={"contact"} title="Settlement" >
-                    <div className='table-wrapper'>
-                      <h4>All Agents</h4>
-                      
-                        <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
-                    </div>
-                    </Tab>
-                  </Tabs>
+                  {renderTab()}
+
+                   
 
                  
               </div>
