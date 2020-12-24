@@ -96,4 +96,30 @@ div.custom-switch {
     flex-direction: row-reverse;
   }
 
+     .Dashboard-overview-wrapper{
+    display: grid;
+    grid-template-columns:33% 33% 33%;
+    grid-gap: 20px;
   
+}
+
+.role-box{
+    background: #FFFFFF;
+    /* Stroke/1 */
+    
+    border: .5px solid #e93838;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    
+    padding-top: 100px; 
+
+}
+

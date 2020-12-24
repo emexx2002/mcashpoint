@@ -42,10 +42,10 @@ export default function RoleGroups() {
     );
 
     return (
-      <div className="main-tabs">
+      <div >
         {renderTab()}
         <div className="Dashboard-overview-wrapper">
-          <div className="flex-box p-1">
+          <div className="role-box p-1">
             <div>
               <div>
                 <h5>1</h5>
@@ -53,7 +53,7 @@ export default function RoleGroups() {
               <div>Administrator </div>
             </div>
           </div>
-          <div className="flex-box p-1">
+          <div className="role-box p-1">
             <div>
               <div>
                 <h5>12</h5>
@@ -61,7 +61,7 @@ export default function RoleGroups() {
               <div>Support </div>
             </div>
           </div>
-          <div className="flex-box p-1">
+          <div className="role-box p-1">
             <div>
               <div>
                 <h5>13</h5>
@@ -70,7 +70,7 @@ export default function RoleGroups() {
             </div>
           </div>
 
-          <div className="flex-box p-1">
+          <div className="role-box p-1">
             <div>
               <div>
                 <h5>15</h5>
@@ -79,7 +79,7 @@ export default function RoleGroups() {
             </div>
           </div>
 
-          <div className="flex-box p-1">
+          <div className="role-box p-1">
             <div>
               <div>
                 <h5>16</h5>
@@ -88,7 +88,7 @@ export default function RoleGroups() {
             </div>
           </div>
 
-          <div className="flex-box p-1 fw-bold">
+          <div className="role-box p-1 fw-bold">
             <div>
               <div>
                 <h5>14</h5>
