@@ -44,8 +44,8 @@ export default function RoleGroups() {
     return (
       <div >
         {renderTab()}
-        <div className="Dashboard-overview-wrapper">
-          <div className="role-box p-1">
+        <div className="Role-overview-wrapper">
+          <div className="role-box ">
             <div>
               <div>
                 <h5>1</h5>
@@ -53,7 +53,7 @@ export default function RoleGroups() {
               <div>Administrator </div>
             </div>
           </div>
-          <div className="role-box p-1">
+          <div className="role-box">
             <div>
               <div>
                 <h5>12</h5>
@@ -61,7 +61,7 @@ export default function RoleGroups() {
               <div>Support </div>
             </div>
           </div>
-          <div className="role-box p-1">
+          <div className="role-box ">
             <div>
               <div>
                 <h5>13</h5>
@@ -70,7 +70,7 @@ export default function RoleGroups() {
             </div>
           </div>
 
-          <div className="role-box p-1">
+          <div className="role-box ">
             <div>
               <div>
                 <h5>15</h5>
@@ -79,7 +79,7 @@ export default function RoleGroups() {
             </div>
           </div>
 
-          <div className="role-box p-1">
+          <div className="role-box">
             <div>
               <div>
                 <h5>16</h5>
@@ -88,7 +88,7 @@ export default function RoleGroups() {
             </div>
           </div>
 
-          <div className="role-box p-1 fw-bold">
+          <div className="role-box ">
             <div>
               <div>
                 <h5>14</h5>

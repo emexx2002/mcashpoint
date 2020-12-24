@@ -96,7 +96,7 @@ div.custom-switch {
     flex-direction: row-reverse;
   }
 
-     .Dashboard-overview-wrapper{
+     .Role-overview-wrapper{
     display: grid;
     grid-template-columns:33% 33% 33%;
     grid-gap: 20px;
@@ -107,7 +107,7 @@ div.custom-switch {
     background: #FFFFFF;
     /* Stroke/1 */
     
-    border: .5px solid #e93838;
+    border: .5px solid #FFFFFF;
     box-sizing: border-box;
     border-radius: 5px;
     font-family: Montserrat;
@@ -117,9 +117,17 @@ div.custom-switch {
     line-height: 24px;
     display: flex;
     align-items: center;
+    margin: 10px 0 10px 5px;
+    /* margin-top: 10px; */
     /* justify-content: space-between; */
     
-    padding-top: 100px; 
+    padding: 20px ; 
 
 }
-
+.role-box h5{
+    font-weight: 900;
+    
+}
+.role-number{
+    font-weight: bolder;
+}
