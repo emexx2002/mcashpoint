@@ -18,4 +18,4 @@ fi
 
 echo "************************************* Staring the new Container *******************************"
 docker pull esettlement/images:mcash-admin-view
-docker run -d -p 4000:3000 --name mcash-admin-view esettlement/images:mcash-admin-view
+docker run -d -p 4001:3000 --name mcash-admin-view esettlement/images:mcash-admin-view
