@@ -31,7 +31,7 @@ class Routes extends Component {
               <PrivateRoute path= "/agentsmanager" component={AgentsManager } />
               <PrivateRoute path= "/purse" component={Purse } />
               <PrivateRoute path= "/audit" component={Audit } />
-              <PrivateRoute path= "/settings" component={Settings } />
+              <Route path= "/settings" component={Settings } />
               
             </Switch>
           </Router>

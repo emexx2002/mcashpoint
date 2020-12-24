@@ -1,85 +1,53 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-import Upload from '../../../Assets/img/upload.png'
-import Filter from '../../../Assets/img/filter.png'
+import { FetchAudit} from "../../../Redux/requests/auditRequest";
+import Loader from "../../../Components/secondLoader"
 import DashboardTemplate from "../../template/dashboardtemplate";
+import { connect } from 'react-redux';
 import './style.css';
 
 
-class Audit extends Component {
-    state = {
-  
-    };
+const Audit = (props) => {
+  const { FetchAudit: FetchAudits, audits, loading} = props;
+console.log(audits)
+  useEffect(() => {
+    FetchAudits();
+  }, []);
 
-    
-    render() {
 
-  
-        const products = [
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846',Action:'Assign terminal', TerminalID:'202345', TransactionHistory:'View',ActivationCode:'Generate',AgentManager:'Ujunwa Cyntia', DateCreated:'Wed | May 6, 2020'},
-        ];
         
+         const products = audits.map((aud,index) => {
+            return {
+            id:index,
+            AgentID:aud.user.memberId === 'undefined' ? '':aud.user.memberId,
+            UserName:aud.user.username === 'undefined' ? '':aud.user.username,
+            Actions:aud.action === 'undefined' ? '':aud.action,
+            IpAdress:aud.ip === 'undefined' ? '':aud.ip,
+            RequestMethod:aud.requestMethod === 'undefined' ? '':aud.requestMethod,
+            // pageAccessed:aud.user.requestMethod === 'undefined' ? '':aud.user.requestMethod,
+            // DataAccessed:aud.user.username === 'undefined' ? '':aud.user.username,
+
+            }
+            })
+
           const columns = [
             // { dataField: 'id', text: 'Id'},
             { dataField: 'AgentID', text: 'Agent ID'},
-            { dataField: 'BusinessName', text: 'Business Name',headerStyle: (colum, colIndex) => {
-                return { width: '150px', textAlign: 'center',padding:'10px'};
-              }},
             { dataField: 'UserName', text: 'User Name',style:{'width' : '20em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
-                return { width: '200px', textAlign: 'center'};
-              }},
-            { dataField: 'PhoneNumber', text: 'Phone Number'},
-            { dataField: 'Action', text: 'Action',formatter: (cellContent, row) => {
-                return (
-                  <h5>
-                  <button type="button" class="btn assign-terminal">Assign Terminal</button>
+              return { width: '200px', textAlign: 'center'};
+            }},
+            { dataField: 'Actions', text: 'Actions'},
 
-                 </h5>
-                );
-              }},
-            { dataField: 'TerminalID', text: 'Terminal ID'},
-            { dataField: 'TransactionHistory', text: 'Transaction History',formatter: (cellContent, row) => {
-                return (
-                  <h5>
-                   <button type="button" class="btn view">view</button>
+            { dataField: 'IpAdress', text: 'IP Address'},
 
-                  </h5>
-                );}
-              },
-            { dataField: 'ActivationCode', text: 'Activation Code',formatter: (cellContent, row) => {
-                return (
-                  <h5>
-                   <button type="button" class="btn generate-code">Generate</button>
+            { dataField: 'pageAccessed', text: 'Page Accessed'},
 
-                  </h5>
-                );
-              }},
-            { dataField: 'AgentManager', text: 'Agent Manager'},
-            { dataField: 'DateCreated', text: 'Date Created'},
+            { dataField: 'RequestMethod', text: 'Request Method'},
+
+            { dataField: 'DataAccessed', text: 'Date Accessed'},
             
           ];
         
@@ -110,6 +78,8 @@ class Audit extends Component {
       return (
           <DashboardTemplate>
               <div className='transact-wrapper'>
+              {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+
                   <div className='agent-transact-header'>
                       <div>
                           <p>Audit</p>
@@ -126,5 +96,17 @@ class Audit extends Component {
           </DashboardTemplate>
       )
     }
-}
-export default Audit
+
+const mapStateToProps = state => (console.log(state),{
+  audits: state.audit.audit,
+  loading:state.audit.loading,
+  error:state.audit.error
+
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    FetchAudit
+  }
+)(Audit);

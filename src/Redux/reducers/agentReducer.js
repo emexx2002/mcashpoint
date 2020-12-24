@@ -1,8 +1,9 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { FETCH_AGENTS } from "../actions/actionTypes";
+import { FETCH_AGENTS, ACTIVATION_CODE } from "../actions/actionTypes";
 
 const initialState = {
   agents: [],
+  activationCode:null
 };
 
 const AgentsReducer = (state = initialState, action) => {
@@ -28,6 +29,22 @@ const AgentsReducer = (state = initialState, action) => {
         loading:false,
         // failure
       };
+      case asyncActionName(ACTIVATION_CODE).loading:
+        return { ...state, loading: true };
+      case asyncActionName(ACTIVATION_CODE).success:
+        return {
+          ...state,
+          loading:false,
+          activationCode: action.payload,
+          successmodal: true
+        };
+      case asyncActionName(ACTIVATION_CODE).failure:
+        return {
+          ...state,
+          loading:false,
+          error: true,
+          successmodal: false
+        };
     default:
       return state;
   }

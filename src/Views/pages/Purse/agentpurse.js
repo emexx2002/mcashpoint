@@ -1,45 +1,36 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-
-
-
+import { FetchAgentPurse} from "../../../Redux/requests/agentPurseRequest";
+import Loader from "../../../Components/secondLoader"
+import { connect } from 'react-redux';
 import './style.css';
 
+const AgentPurse= (props) => {
+  const { FetchAgentPurse: FetchAgentPurses, agentPurse, loading} = props;
+  console.log(loading)
+    useEffect(() => {
+      FetchAgentPurses();
+    }, []);
+   
+       
 
-const AgentsManager = () => {
-    
-        const products = [
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-            { id: 1, AgentID: 'MCP/AGT/LA/64', BusinessName: 'With God Enterprenium', UserName:'Chinweoke', PhoneNumber:'08068351846', State:'Lagos',LGA:'Lagos Mainland',DateCreated:'Wed | May 6, 2020'},
-          
-        ];
+        const products = agentPurse.map((agent,index) => {
+          console.log(agent)
+          return {
+          id:index,
+          AgentID:agent.agent.user.memberId === undefined ? '':agent.agent.user.memberId,
+          BusinessName:agent.agent.businessName  === 'undefined' ? '':agent.agent.businessName ,
+          AgentName:agent.agent.user.username === 'undefined' ? '':agent.agent.user.username,
+          Balance:agent.balance === 'undefined' ? '':agent.balance,
+          DateCreated:agent.createdAt === 'undefined' ? '': agent.createdAt
+          // pageAccessed:aud.agent.requestMethod === 'undefined' ? '':aud.user.requestMethod,
+          // DataAccessed:aud.user.username === 'undefined' ? '':aud.user.username,
+
+          }
+          })
         
           const columns = [
             // { dataField: 'id', text: 'Id'},
@@ -47,14 +38,18 @@ const AgentsManager = () => {
             { dataField: 'BusinessName', text: 'Business Name',headerStyle: (colum, colIndex) => {
                 return { width: '150px', textAlign: 'center',padding:'10px'};
               }},
-            { dataField: 'UserName', text: 'User Name',style:{'width' : '20em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
+            { dataField: 'AgentName', text: 'Agent Name',style:{'width' : '20em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
                 return { width: '200px', textAlign: 'center'};
               }},
-            { dataField: 'PhoneNumber', text: 'Phone Number'},
-           
-            { dataField: 'State', text: 'State'},
-           
-            { dataField: 'LGA', text: 'LGA'},
+            { dataField: 'Balance', text: 'Balance '},
+            { dataField: 'Action', text: 'Action',formatter: (cellContent, row) => {
+              console.log(cellContent,row)
+                return (
+                  <h5>
+                  <button type="button"  className="btn assign-terminal">CREDIT/DEBIT</button>
+                 </h5>
+                );
+              }},
             { dataField: 'DateCreated', text: 'Date Created'},
             
           ];
@@ -66,7 +61,7 @@ const AgentsManager = () => {
         
           const pagination = paginationFactory({
             page: 1,
-            sizePerPage: 10,
+            sizePerPage: 20,
             lastPageText: '>>',
             firstPageText: '<<',
             nextPageText: '>',
@@ -82,18 +77,14 @@ const AgentsManager = () => {
               console.log('sizePerPage', sizePerPage);
             }
           });
-
-        //   handleSelect = (key) => {
-        //    console.log(key)
-  
-            
-        // }
         
       return (
         
           <div>
-             
+                           {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+
               <div className='table-wrapper'>
+
                    <h4>All Agents</h4>
                  <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
 
@@ -103,4 +94,17 @@ const AgentsManager = () => {
       )
     
 }
-export default AgentsManager
+
+const mapStateToProps = state => (console.log(state),{
+  agentPurse:state.purse.agentPurse,
+  loading:state.purse.loading,
+  error:state.purse.error
+
+});
+
+export default connect(
+  mapStateToProps,
+  {
+     FetchAgentPurse
+  }
+)(AgentPurse);

@@ -1,27 +1,30 @@
-import React, { useState,useEffect } from 'react';
+import React, {useCallback, useState,useEffect } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import Upload from '../../../Assets/img/upload.png'
 import Filter from '../../../Assets/img/filter.png'
-import { FetchAgent} from "../../../Redux/requests/agentRequest";
+import { FetchAgent,ActivatateCode } from "../../../Redux/requests/agentRequest";
 import Loader from "../../../Components/secondLoader"
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { connect } from 'react-redux';
+import { Modal } from "react-bootstrap";
+
 
 import './style.css';
 
 
 const Agents = (props) => {
-  const { FetchAgent: FetchAgents, agents, loading} = props;
-  console.log(agents)
-  // const [alltransactions, setTransactions] = useState([FetchTransactions]);
+  const { FetchAgent: FetchAgents, ActivatateCode:ActivatateCodes,  agents, loading,activationCode, success} = props;
+  const [smShow, setSmShow] = useState(false);
+  const [activation, setActivation] = useState(null);
   // const [status, setStatus] = useState([FetchTransactions]);
-  // console.log('jj',alltransactions)
+  console.log(activationCode)
 
   useEffect(() => {
     FetchAgents();
+  
   }, []);
 
   // const products = {}
@@ -30,15 +33,30 @@ const Agents = (props) => {
           console.log(agent)
     return {
       id:index,
-      AgentID:agent.user.memberId === 'undefined' ? '':agent.user.memberId,
+      AgentID:agent.id === 'undefined' ? '':agent.id,
       BusinessName:agent.businessName  === 'undefined' ? '':agent.businessName,
       UserName:agent.user.username  === 'undefined' ? '':agent.user.username ,
       PhoneNumber: agent.businessPhone === 'undefined' ? '':agent.businessPhone ,
+      Action:agent.user.memberId === 'undefined' ? '':agent.user.memberId ,
       TerminalID:agent.bankTerminal.terminalId === 'undefined' ? '': agent.bankTerminal.terminalId,
       DateCreated:agent.createdAt === 'undefined' ? '': agent.createdAt
     }
 })
-  
+
+      function ActivatateCode(agentId) {
+        setActivation(null)
+        ActivatateCodes(agentId)
+        if(activation !== null ){
+          setSmShow(true)
+          setActivation(activationCode)
+        }
+        
+      }
+    //  const   ActivatateCode = (agentId) => {
+    //     console.log('hello')
+    //   ActivatateCodes(agentId)
+
+    // }
         
           const columns = [
             // { dataField: 'id', text: 'Id'},
@@ -51,26 +69,18 @@ const Agents = (props) => {
               }},
             { dataField: 'PhoneNumber', text: 'Phone Number'},
             { dataField: 'Action', text: 'Action',formatter: (cellContent, row) => {
+              console.log()
                 return (
                   <h5>
-                  <button type="button" className="btn assign-terminal">Assign Terminal</button>
-
+                  <button type="button"  className="btn assign-terminal">Assign Terminal</button>
                  </h5>
                 );
               }},
             { dataField: 'TerminalID', text: 'Terminal ID'},
-            { dataField: 'TransactionHistory', text: 'Transaction History',formatter: (cellContent, row) => {
-                return (
-                  <h5>
-                   <button type="button" className="btn view">view</button>
-
-                  </h5>
-                );}
-              },
             { dataField: 'ActivationCode', text: 'Activation Code',formatter: (cellContent, row) => {
                 return (
                   <h5>
-                   <button type="button" className="btn generate-code">Generate</button>
+                   <button type="button" onClick={ () => ActivatateCode(row.AgentID)   } className="btn generate-code">Generate</button>
 
                   </h5>
                 );
@@ -106,6 +116,19 @@ const Agents = (props) => {
         
       return (
           <DashboardTemplate>
+             <Modal
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            {activation}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>...</Modal.Body>
+      </Modal>
               <div className='transact-wrapper'>
               {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
 
@@ -133,14 +156,17 @@ const Agents = (props) => {
 };
 const mapStateToProps = state => (console.log(state),{
   agents: state.agents.agents,
+  activationCode:state.agents.activationCode,
   loading:state.agents.loading,
-  error:state.agents.error
+  error:state.agents.error,
+  success: state.agents.successmodal,
+
 
 });
 
 export default connect(
   mapStateToProps,
   {
-    FetchAgent
+    FetchAgent,ActivatateCode
   }
 )(Agents);

@@ -1,27 +1,32 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from 'react';
 import DashboardTemplate from "../../template/dashboardtemplate";
-import UnderPerform from '../../../Assets/img/underperform.png'
-import Mark from '../../../Assets/img/mark.png'
-import Person from '../../../Assets/img/person.png'
-import Book from '../../../Assets/img/book.png'
 import './style.css';
-import { Container, Row, Col } from "react-bootstrap";
 import LineChart from '../../../Components/lineChart'
 import Barchart from '../../../Components/barchart'
 import Doughnut from '../../../Components/dougnut'
+import { DashboardBreakdown,DashboardDetails} from "../../../Redux/requests/dashboardRequest";
+import { connect } from 'react-redux';
+import Loader from "../../../Components/secondLoader"
 
 
-class Home extends Component {
-  state = {
 
-  };
+const DashBoard = (props) => {
+    const { DashboardBreakdown: DashboardBreakdowns, DashboardDetails: DashboardDetail,dashboardDetails, dashboardBreakdown, loading} = props;
+  const { successful_value, failed_volume, successful_volume, failed_value} = dashboardBreakdown
+    const {  totalTransactionValue, totalTransactionVolume} = dashboardDetails
 
+    useEffect(() => {
+        DashboardBreakdowns();
+        DashboardDetail()
+    }, []);
   
-  render() {
+    console.log(dashboardBreakdown,DashboardDetail)
  
     return (
       <DashboardTemplate >
         <div className='dashboard-wrapper'>
+        {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+
            <div className='header-title'>
                 <h3>Dashboard</h3>
                 <p>An overview of all activities on mCashPoint</p>
@@ -44,19 +49,19 @@ class Home extends Component {
                 <div className='flex-box'>
                     <div className="underperform-background"> </div>
                     <div>
-                        <div>23,332</div>
+                        <div>{totalTransactionVolume ? totalTransactionVolume : '#00'}</div>
                         <div>Total transaction Volume</div>
                     </div>
                 </div>
                 <div className='flex-box'>
                     <div className="book-background"> </div>
                     <div>
-                        <div>₦177,066,894.04</div>
+                        <div>{totalTransactionValue ? totalTransactionValue : '#00'}</div>
                         <div>Total transaction Value</div>
                     </div>
                 </div>
             </div>
-            
+
            <div className='graphs-wrapper'>
                 <div>
                     <div className='transaction-graph-wrapper'>
@@ -64,11 +69,11 @@ class Home extends Component {
                         <div className='transaction-graph-inner'>
                             <div className='transaction-details'>
                                 <div >successful</div>
-                                <div className='success-text'>#1,942,073.01(134)</div>
+                                <div className='success-text'>{successful_value ? successful_value : '#0000'}({successful_volume? successful_volume :'0'})</div>
                             </div>
                             <div className='transaction-details'>
                                 <div >failed</div>
-                                <div className='failure-text'>#420,073.01(24)</div>
+                                <div className='failure-text'>{failed_value ? failed_value :'#000'}({failed_volume ? failed_volume :'0'})</div>
                             </div>
                             <div className='transaction-details'> 
                                 <div>Agent Registered</div>
@@ -99,39 +104,39 @@ class Home extends Component {
                     <div className='transaction-types'>
                         <div className='transaction-types-wrapper'>
                             <div >
-                                <p>  <div className='cashout-dot'></div>Cash Out</p>
+                                 <div className='cashout-dot'></div>Cash Out
                             </div>
                             <div>20(78.5%)</div>
                         </div>
                         <div className='transaction-types-wrapper'>
                             <div >
-                                <p>  <div className='fundtransfer-dot'></div>Funds Transfer</p>
+                                <div className='fundtransfer-dot'></div>Funds Transfer
                             </div>
                             <div>20(78.5%)</div>
                         </div>
                         <div className='transaction-types-wrapper'>
                             <div >
-                                <p>  <div className='creditpurse-dot'></div>Credit Purse</p>
+                                  <div className='creditpurse-dot'></div>Credit Purse
                             </div>
                             <div>20(78.5%)</div>
                         </div><div className='transaction-types-wrapper'>
                             <div >
-                                <p>  <div className='gotv-dot'></div>GOtv</p>
+                                  <div className='gotv-dot'></div>GOtv
                             </div>
                             <div>20(78.5%</div>
                         </div><div className='transaction-types-wrapper'>
                             <div >
-                                <p>  <div className='recharge-dot'></div>Recharge Top Up</p>
+                                  <div className='recharge-dot'></div>Recharge Top Up
                             </div>
                             <div>20(78.5%</div>
                         </div><div className='transaction-types-wrapper'>
                             <div >
-                                <p>  <div className='startime-dot'></div> Star Times</p>
+                                  <div className='startime-dot'></div> Star Times
                             </div>
                             <div>20(78.5%</div>
                         </div><div className='transaction-types-wrapper'>
                             <div >
-                                <p>  <div className='Agentransfer-dot'></div>Agent Transfer</p>
+                                  <div className='Agentransfer-dot'></div>Agent Transfer
                             </div>
                             <div>20(78.5%)</div>
                         </div>
@@ -140,14 +145,25 @@ class Home extends Component {
                </div>
 
            </div>
-           
+                                
         </div>
       </DashboardTemplate>
     );
-  }
 
   };
 
-
-
-export default Home
+  const mapStateToProps = state => (console.log(state),{
+    dashboardBreakdown: state.dashboard.dashboardBreakdown,
+    dashboardDetails: state.dashboard.dashboardDetails,
+    loading:state.dashboard.loading,
+    error:state.dashboard.error
+  
+  });
+  
+  export default connect(
+    mapStateToProps,
+    {
+        DashboardBreakdown,DashboardDetails
+    }
+  )(DashBoard);
+  
