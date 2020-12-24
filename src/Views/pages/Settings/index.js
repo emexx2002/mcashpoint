@@ -8,14 +8,27 @@ import Profile from '../../../Assets/img/settingsuser.png'
 import Password from '../../../Assets/img/settingslocked.png'
 import Role from '../../../Assets/img/settingusers.png'
 import Notifications from '../../../Assets/img/settingnotifications.png'
+import ProfileSettings from './Profile'
+import NotificationSettings from './Notification'
+
 
 import './style.css';
+import RoleGroups from "./RoleGroups";
+
+
+
 
 
 const Settings = () => {
 
     const [key, setKey] = React.useState('first');
+    // const [createModalActive, showCreateModal] = React.useState(false);
+    // const onclose = () => {
+      
+    //   showCreateModal(false);
+    // };
     
+   
     // console.log(key)
     // const ActiveStyle = {
     //     fontFamily: 'Montserrat',
@@ -96,47 +109,7 @@ const Settings = () => {
                             <Col sm={6}>
                             <Tab.Content>
                                 <Tab.Pane eventKey="first">
-                                <div className='main-tabs'>
-                                    
-                                    <div>
-                                     <Form>
-                                        <div className='d-flex justify-content-between'>
-                                            <div>Personal Information</div>
-                                            <div>Edit Details</div>
-                                        </div>
-                                        <br />
-                                        <Row>
-                                            <Col md={12} sm={12}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Full NAME</Form.Label>
-                                                <Form.Control type="text" />
-                                            </Form.Group>
-                                            </Col>
-                                            <Col md={12} sm={12}>
-                                                <Form.Group controlId="exampleForm.ControlInput1">
-                                                    <Form.Label>Email</Form.Label>
-                                                    <Form.Control type="text" />
-                                                </Form.Group>                       
-                                            </Col>
-                                            <Col md={12} sm={12}>
-                                                <Form.Group controlId="exampleForm.ControlInput1">
-                                                    <Form.Label>Phone Number</Form.Label>
-                                                    <Form.Control type="text" />
-                                                </Form.Group>                       
-                                            </Col>
-                                        </Row>
-                                        <div className='form-note'>
-                                         <big>NOTE: </big>If you decide to change the phone number attached to your PayPad account, an OTP will be sent to the registered number.
-
-                                        </div>
-                                         <div className=" text-right">
-                                            <Button variant="primary" className="text-white "  type="submit">
-                                            Submit
-                                            </Button>
-                                        </div>
-                                        </Form>
-                                    </div>
-                                </div>
+                                <ProfileSettings></ProfileSettings>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                 <div className='main-tabs'>
@@ -176,28 +149,10 @@ const Settings = () => {
                                 </div>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
-                                <div className='main-tabs'></div>
+                                <RoleGroups></RoleGroups>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="fourth">
-                                <div className='main-tabs'>
-                                    <Form>
-                                    <div className='d-flex justify-content-between'>
-                                        <div>Notifications</div>
-                                        <div></div>
-                                    </div>
-                                        <br />
-                                        <Form.Check
-                                            label="Desktop Notifications" 
-                                            type="switch"
-                                            id="custom-switch"
-                                           
-                                        />
-                                        <br />
-                                        <div>When mCashPoing is closed (but yout browser is opened) notifications will appear at the corner of your screen.</div>
-                                       
-                                    </Form>
-                                    
-                                </div>
+                                <NotificationSettings></NotificationSettings>
                                 </Tab.Pane>
                             </Tab.Content>
                             </Col>
