@@ -15,7 +15,7 @@ COPY /run.sh /app/run.sh
 
 RUN ls -lah
 # Expose the port outside of the container
-# EXPOSE 3000
+EXPOSE 3000
 
 CMD ["sh","run.sh"]
 
