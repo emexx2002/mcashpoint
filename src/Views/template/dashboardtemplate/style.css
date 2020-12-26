@@ -2,22 +2,20 @@
     position: fixed;
     height: 100%;
     width: 17%;
-    
 }
 .dashboardTemplate-wrap {
     display: flex;
     margin: 0;
-    /* background: #be0a0a; */
+    background: #e41d1d;
     padding: 0px;
     height: 100%;
 }
 
 .mainwrapper {
-    background: #b6d310;
+    background: #E5E5E5;
     position: relative;
     left: 17%;
     padding-top: 12px;
     width: 83%;
-    height: 100%;
-    overflow-y: scroll;
+    
 }

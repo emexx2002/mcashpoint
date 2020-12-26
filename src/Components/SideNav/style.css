@@ -16,6 +16,10 @@
     padding-top: 20px;
 }
 
+.navbarinnerwrapper img{
+    max-width: 100%;
+}
+
 .sidenavlist{
     padding-top: 23px;
     text-decoration: none;
@@ -30,6 +34,9 @@
 
 .logo {
     padding: 0px 20px 0px 20px;
+ }
+ .logo img{
+    max-width: 80%;
  }
 
 .sidenavlist .list-group-item{
@@ -54,8 +61,8 @@ a{
     
     background: #00249C !important;
     width: 100%;
-    border-left: 9px  solid #BE4D00;
-    transition: border-left .5s ease-in-out;
+    /* border-left: 9px  solid #BE4D00; */
+    /* transition: border-left .5s ease-in-out; */
 }
 .sidenavlist img {
     margin-right: 25px;
