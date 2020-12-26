@@ -95,3 +95,39 @@ div.custom-switch {
     display: flex;
     flex-direction: row-reverse;
   }
+
+     .Role-overview-wrapper{
+    display: grid;
+    grid-template-columns:33% 33% 33%;
+    grid-gap: 20px;
+  
+}
+
+.role-box{
+    background: #FFFFFF;
+    /* Stroke/1 */
+    
+    border: .5px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    margin: 10px 0 10px 5px;
+    /* margin-top: 10px; */
+    /* justify-content: space-between; */
+    
+    padding: 20px ; 
+
+}
+.role-box h5{
+    font-weight: 900;
+    
+}
+.role-number{
+    font-weight: bolder;
+}
