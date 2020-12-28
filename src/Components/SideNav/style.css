@@ -16,9 +16,7 @@
     padding-top: 20px;
 }
 
-.navbarinnerwrapper img{
-    max-width: 100%;
-}
+
 
 .sidenavlist{
     padding-top: 23px;
@@ -35,11 +33,10 @@
 .logo {
     padding: 0px 20px 0px 20px;
  }
- .logo img{
-    max-width: 80%;
- }
+ 
 
 .sidenavlist .list-group-item{
+  
     background: transparent !important;
         border: none;
     font-family: 'Montserrat', sans-serif;
@@ -49,6 +46,8 @@
     line-height: 18px;
     letter-spacing: 0.2px;
     padding:20px 0px 20px 50px;
+    border-left:9px solid transparent ;
+    
     
     
 }
@@ -61,7 +60,8 @@ a{
     
     background: #00249C !important;
     width: 100%;
-    /* border-left: 9px  solid #BE4D00; */
+    /* border: solid yellow; */
+    border-left: 9px solid #BE4D00;
     /* transition: border-left .5s ease-in-out; */
 }
 .sidenavlist img {

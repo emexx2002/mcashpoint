@@ -74,8 +74,8 @@ class LineChart extends Component {
     render() {
     return (
       <div className='line-wrap'>
-        <div className='label-wrap'>Showing transaction Voulume for : Today <div className='success-green'></div><span>Successful </span> <div className='failure-red'></div><span>Failure </span></div>
-        <Line data={data}  options={options} />
+        <div className='label-wrap' style={{marginBottom:"20px"}}>Showing transaction Volume for : Today <div className='success-green'></div><span>Successful </span> <div className='failure-red'></div><span>Failed </span></div>
+        <Line data={data} options={options} height={100} />
       </div>
     );
   }

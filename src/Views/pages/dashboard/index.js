@@ -39,67 +39,69 @@ const DashBoard = (props) => {
             <h3>Dashboard</h3>
             <p>An overview of all activities on mCashPoint</p>
           </div>
-          
-          <div className="Dashboard-overview-wrapper">
-            <div className="flex-box">
-              <div className="person-background"></div>
-              <div>
-                <div>120</div>
-                <div>Agents </div>
-              </div>
-            </div>
-            <div className="flex-box">
-              <div className="mark-background"></div>
-              <div>
-                <div>0</div>
-                <div>Unique Customers</div>
-              </div>
-            </div>
-            <div className="flex-box">
-              <div className="underperform-background"> </div>
-              <div>
-                <div>
-                  {totalTransactionVolume ? totalTransactionVolume : "#00"}
-                </div>
-                <div>Total transaction Volume</div>
-              </div>
-            </div>
-            <div className="flex-box">
-              <div className="book-background"> </div>
-              <div>
-                <div>
-                  {totalTransactionValue ? totalTransactionValue : "#00"}
-                </div>
-                <div>Total transaction Value</div>
-              </div>
-            </div>
-          </div>
 
           <div className="graphs-wrapper">
-            <div className="transaction-graph-wrapper">
+            <div className="Dashboard-overview-wrapper">
+              <div className="flex-box ">
+                <div className="person-background"></div>
+                <div>
+                  <div>120</div>
+                  <div>Agents </div>
+                </div>
+              </div>
+              <div className="flex-box">
+                <div className="mark-background"></div>
+                <div>
+                  <div>0</div>
+                  <div>Unique Customers</div>
+                </div>
+              </div>
+              <div className="flex-box">
+                <div className="underperform-background"> </div>
+                <div>
+                  <div>
+                    {totalTransactionVolume ? totalTransactionVolume : "#00"}
+                  </div>
+                  <div>Total transaction Volume</div>
+                </div>
+              </div>
+              <div className="flex-box ">
+                <div className="book-background"> </div>
+                <div>
+                  <div>
+                    {totalTransactionValue ? totalTransactionValue : "#00"}
+                  </div>
+                  <div>Total transaction Value</div>
+                </div>
+              </div>
+            </div>
+
+            {/* <div className="transaction-graph-wrapper"> */}
+            <div className="line-and-details">
               <div className="chart-bg">
                 <LineChart />
               </div>
               <div className="transaction-graph-inner">
-                <div className="transaction-details">
-                  <div>successful</div>
-                  <div className="success-text">
+                <div className="transaction-details a">
+                  <p>Successful</p>
+                  <h6 className="success-text">
                     {successful_value ? successful_value : "#0000"}(
                     {successful_volume ? successful_volume : "0"})
-                  </div>
+                  </h6>
                 </div>
                 <div className="transaction-details">
-                  <div>failed</div>
-                  <div className="failure-text">
+                  <p>Failed</p>
+                  <h6 className="failure-text ">
                     {failed_value ? failed_value : "#000"}(
                     {failed_volume ? failed_volume : "0"})
-                  </div>
+                  </h6>
                 </div>
-                <div className="transaction-details">
-                  <div>Agent Registered</div>
+                <div className="transaction-details b">
+                  <p>Agent Registered</p>
                   <h6>15</h6>
                 </div>
               </div>
+
               <div className="dougnut-wrapper">
                 <div className="dougnut-chart">
                   <Doughnut />
@@ -150,6 +152,7 @@ const DashBoard = (props) => {
                 </div>
               </div>
             </div>
+
             <div className="bar-graph-wrapper">
               <div className="barchart-bg">
                 <Barchart />
@@ -168,6 +171,8 @@ const DashBoard = (props) => {
               </div>
             </div>
           </div>
+
+          {/* </div> */}
         </div>
       </DashboardTemplate>
     );
