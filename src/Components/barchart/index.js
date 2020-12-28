@@ -71,7 +71,7 @@ class BarChart extends Component {
           <div className="failure-red"></div>
           <span>Failed </span>
         </div>
-        <Bar data={data} width={70} height={100} options={options} />
+        <Bar data={data} width={80} height={100} options={options} />
       </div>
     );
 }
