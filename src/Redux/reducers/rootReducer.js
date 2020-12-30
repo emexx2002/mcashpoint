@@ -6,6 +6,7 @@ import agentmanager from "./agentManagerReducer";
 import dashboard from "./dashboardReducer";
 import audit from "./auditReducer";
 import purse from "./purseReducer"
+import settings from './settingsReducer'
 
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
     agentmanager,
     dashboard,
     audit,
-    purse
+    purse,
+    settings
 });

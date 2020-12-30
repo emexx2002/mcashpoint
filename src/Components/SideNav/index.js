@@ -10,8 +10,15 @@ import Purse from '../../Assets/img/purse.png'
 import Agent from '../../Assets/img/agents.png'
 import Settings from '../../Assets/img/settings.png'
 import Logout from '../../Assets/img/logout.png'
+import { removeToken } from '../../utils/localStorage';
+
 
 export default class SideNav extends Component {
+
+  _handleSignOut(){
+    removeToken()
+}  
+
   render() {
     return (
       <div className= 'sidenav-wrap'>
@@ -51,7 +58,7 @@ export default class SideNav extends Component {
                           Settings
                           </li>
                   </NavLink>
-                  <NavLink  to="#" activeClassName='' >
+                  <NavLink  to="#" activeClassName='' onClick={this._handleSignOut.bind(this)} >
                       <li className="list-group-item " ><img src={Logout} alt="" /> Logout</li>
                   </NavLink>
              </div>
