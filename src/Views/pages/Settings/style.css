@@ -40,7 +40,12 @@
 .tab-navs img{
     padding-right: 20px;
 }
-
+.role{
+    background: #00249C; 
+}
+.role :focus{
+    border: none;
+}
 .nav-item a.nav-link.active{
     background: #00249C;
 opacity: 0.7;

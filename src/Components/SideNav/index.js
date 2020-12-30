@@ -52,7 +52,7 @@ export default class SideNav extends Component {
                 </NavLink>
                 
              <div className="list-group footer">
-              <NavLink   to="/settings" activeClassName='current'  >
+                <NavLink   to="/settings" activeClassName='current'  >
                           <li className="list-group-item ">
                           <img src={Settings} alt="" />
                           Settings

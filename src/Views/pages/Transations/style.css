@@ -3,12 +3,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .agent-transact-header span{
     margin: 18px;
     padding-left: 20px;
+    cursor: pointer;
 }
 
 .agent-transact-header img{

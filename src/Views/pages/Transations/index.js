@@ -8,11 +8,14 @@ import Filter from '../../../Assets/img/filter.png'
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { FetchTransaction} from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader"
+import ExportModal from "../Exports/index"
+import {Nav, NavItem, NavLink} from "react-bootstrap"
 
 import { connect } from 'react-redux';
 
 
 import './style.css';
+// import ExportLink from '../Exports/index';
 
 
 const Transactions = (props) => {
@@ -20,7 +23,9 @@ const Transactions = (props) => {
   console.log(transaction)
   const [alltransactions, setTransactions] = useState([FetchTransactions]);
   const [status, setStatus] = useState([FetchTransactions]);
-  console.log('jj',alltransactions)
+  console.log('jj', alltransactions)
+  const [createModalActive, showCreateModal] = useState(false);
+ 
 
 
   useEffect(() => {
@@ -124,32 +129,61 @@ const Transactions = (props) => {
               console.log('sizePerPage', sizePerPage);
             }
           });
+  
+  const onclose = () => {
+    
+    showCreateModal(false);
+  };
         
       return (
-          <DashboardTemplate>
-              <div className='transact-wrapper'>
-              {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
-                  <div className='agent-transact-header'>
-                      <div>
-                          <p>Transactions</p>
-                          <p>An overview of all transactions on mCashPoint</p>
-                      </div>
-                      <div>
-                          <span>Print</span>
-
-                          <span><img src={Filter} />Filter</span>
-
-                          <span> <img src={Upload} />Export</span>
-                      </div>
-                  </div>
-                 <div className='table-wrapper'>
-                   <h4>All Merchant</h4>
-                 <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
-
-                 </div>
+        <DashboardTemplate>
+          <div className="transact-wrapper">
+            {loading && (
+              <Loader
+                type="TailSpin"
+                type="Oval"
+                height={60}
+                width={60}
+                color="#1E4A86"
+              />
+            )}
+            <div className="agent-transact-header">
+              <div>
+                <p>Transactions</p>
+                <p>An overview of all transactions on mCashPoint</p>
               </div>
-          </DashboardTemplate>
-  );
+              <div>
+                <span>Print</span>
+
+                <span>
+                  <img src={Filter} />
+                  Filter
+                </span>
+
+                <span onClick={() => showCreateModal(true)}>
+                    <img src={Upload} />
+                    Export
+                  <ExportModal show={createModalActive} close={onclose} />
+                </span>
+              </div>
+            </div>
+            <div className="table-wrapper">
+              <h4>All Merchant</h4>
+              <BootstrapTable
+                bootstrap4
+                keyField="id"
+                data={products}
+                columns={columns}
+                defaultSorted={defaultSorted}
+                pagination={pagination}
+                bordered={false}
+                hover
+                condensed
+              />
+            </div>
+          </div>
+        </DashboardTemplate>
+      );
 };
 const mapStateToProps = state => (console.log(state),{
   transaction: state.transactions.transactions,
