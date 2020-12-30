@@ -175,7 +175,7 @@
     grid-gap: 22px
 }
 
-.dashboard-wrapper{
+.dashboard-wrapper{ 
     padding: 20px 200px 20px 20px;
     height: 100%;
 }
@@ -207,15 +207,14 @@
 }
 .transaction-details{
     border: 1px solid #DFE0EB;
-    padding: 34px 70px 34px 70px;
+    padding: 34px 0px 34px 0px;
     background: #FFFFFF;
     font-family: Montserrat;
     font-style: normal;
     font-weight: 500;
     font-size: 13px;
     line-height: 24px;
-    /* identical to box height, or 150% */
-
+    width: 290px;
     text-align: center;
     letter-spacing: 0.1px;
 

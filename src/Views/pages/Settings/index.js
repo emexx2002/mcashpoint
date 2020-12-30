@@ -10,6 +10,7 @@ import Role from '../../../Assets/img/settingusers.png'
 import Notifications from '../../../Assets/img/settingnotifications.png'
 import ProfileSettings from './Profile'
 import NotificationSettings from './Notification'
+import ChangePassword from './changePassword'
 
 
 import './style.css';
@@ -112,41 +113,7 @@ const Settings = () => {
                                 <ProfileSettings></ProfileSettings>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
-                                <div className='main-tabs'>
-                                    <Form>
-                                        <div className='d-flex justify-content-between'>
-                                            <div>Password</div>
-                                            <div>Change Password</div>
-                                        </div>
-                                        <br />
-                                        <Row>
-                                            <Col md={12} sm={12}>
-                                            <Form.Group controlId="exampleForm.ControlInput1">
-                                                <Form.Label>Current Password</Form.Label>
-                                                <Form.Control type="password" />
-                                            </Form.Group>
-                                            </Col>
-                                            <Col md={12} sm={12}>
-                                                <Form.Group controlId="exampleForm.ControlInput1">
-                                                    <Form.Label>New password</Form.Label>
-                                                    <Form.Control type="password" />
-                                                </Form.Group>                       
-                                            </Col>
-                                            <Col md={12} sm={12}>
-                                                <Form.Group controlId="exampleForm.ControlInput1">
-                                                    <Form.Label>Confirm Password</Form.Label>
-                                                    <Form.Control type="password" />
-                                                </Form.Group>                       
-                                            </Col>
-                                        </Row>
-                                       
-                                         <div className=" text-right">
-                                            <Button variant="primary" className="text-white "  type="submit">
-                                            Submit
-                                            </Button>
-                                        </div>
-                                    </Form>
-                                </div>
+                               <ChangePassword></ChangePassword>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="third">
                                 <RoleGroups></RoleGroups>

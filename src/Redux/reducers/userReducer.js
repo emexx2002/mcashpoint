@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const UsersReducer = (state = initialState, action) => {
-  console.log(action.payload)
+  console.log(action.payload?.error?.response?.data?.responseMessage)
   switch (action.type) {
     case asyncActionName(LOGIN_USER).loading:
       return { ...state, loading:true };
@@ -31,7 +31,7 @@ const UsersReducer = (state = initialState, action) => {
     case asyncActionName(LOGIN_USER).failure:
       return {
         ...state,
-        error: true,
+        error: action.payload?.error?.response?.data?.responseMessage,
         success: false,
         loading:false,
         // failure

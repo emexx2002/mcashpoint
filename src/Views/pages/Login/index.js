@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Container, Row, Col,Nav,Form,Button} from "react-bootstrap";
 import { loginUser } from "../../../Redux/requests/userRequest";
 import Loader from "../../../Components/secondLoader"
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {history} from '../../../utils/history'
-
+import ErrorAlert from '../../../Components/alerts';
+import { removeToken } from '../../../utils/localStorage';
 import './style.css';
 
 
 const Login = ({ history, loginUser: handleLogin, loading ,user,error}) => {
-console.log('loading.....',error)
-console.log(user)
+console.log(error)
     const [userCredentials, setUserCredentials] = useState({
         username: null,
         password: null
@@ -24,31 +24,33 @@ console.log(user)
         setUserCredentials({ ...userCredentials, [event.target.name]: event.target.value });
         console.log(userCredentials)
     };
+    useEffect(() => { 
+        removeToken() 
+    }, []);
 
-
-     function onSubmit(event) {
+     function onSubmit (event) {
         event.preventDefault();
+        
         const {username,password}= userCredentials;
         console.log(username,password)
         if(username === null || username === '' || password=== null|| password=== '') {
-            setErrors("*username/password can't be empty")
-        }else{
-            const loginRes = handleLogin(userCredentials);
-            if (!Array.isArray(loginRes)) {
-                
-                return;
-                }
+            setErrors(["*username/password can't be empty"])
         }
+        // if(error){
+        //     return setErrors([error]);
+        // }
+        setErrors([error]);
+         handleLogin(userCredentials);
+         
+        
       }
-    
-
       return ( 
           <div className='d-flex justify-content-center align-items-center login-wrapper'>
               <Form className='form-wrapper'>
               {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
 
                   <div className='logo'></div>
-                  {error ? <span className='error'>hello</span>:''}
+                  <ErrorAlert errors={errors} />
                 <Row>
                     <Col md={12} sm={12}>
                     <Form.Group controlId="exampleForm.ControlInput1">
@@ -77,8 +79,6 @@ console.log(user)
                     </Col>
                   
                 </Row>
-                    
-               
             </Form>
           </div>
       )
