@@ -26,11 +26,11 @@ class DoughnutChart extends Component {
     
     render() {
     return (
-      <div className="donut-chart">
-        <h2>Doughnut Example</h2>
+      <div className="donut-chart" style={{margin:"0", alignItems:"center"}}>
+			<p style={{ borderBottom: "1px solid #EEF0F7", padding: " 10px" }}>Transaction Types</p>
         <Doughnut data={data} />
       </div>
-   );
+    );
 }
 };
 

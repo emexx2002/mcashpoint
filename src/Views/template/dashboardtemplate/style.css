@@ -4,17 +4,21 @@
     width: 17%;
 }
 .dashboardTemplate-wrap {
-    display: flex;
+    /* display: flex; */
     margin: 0;
-    /* background: #E5E5E5; */
+    /* background: #e41d1d; */
     padding: 0px;
     height: 100%;
+    width: 100%;
 }
 
 .mainwrapper {
     background: #E5E5E5;
-    position: relative;
-    left: 17%;
+    
+    margin-left: 20%;
+    /* position: relative;
+    left: 17%; */
     padding-top: 12px;
-    width: 83%;
+    width: 80%;
+    
 }

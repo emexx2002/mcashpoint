@@ -3,7 +3,7 @@
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
-    line-height: 24px;
+    line-height: 30px;
     /* identical to box height, or 133% */
     
     letter-spacing: 0.2px;
@@ -14,21 +14,21 @@
 }
 .line-wrap .success-green{
     background: #1AB759;
-    height: 8px;
-    width: 8px;
+    height: 5px;
+    width: 5px;
     border-radius: 100%;
     display: inline-block;
-    margin-left: 110px;
-    margin-right: 8px;
+    margin-left: 50px;
+    margin-right: 5px;
 
 }
 
 .line-wrap .failure-red{
     background: #E93C3C;
-    height: 8px;
-    width: 8px;
+    height: 5px;
+    width:5px;
     border-radius: 100%;
     display: inline-block;
-    margin-left: 30px;
+    margin-left: 20px;
     margin-right: 8px;
 }
