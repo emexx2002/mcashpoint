@@ -56,14 +56,22 @@ class BarChart extends Component {
     
     render() {
     return (
-      <div className='bar-wrap'>
-        <div className='label-wrap'>Showing transaction Voulume for : Today <div className='success-green'></div><span>Successful </span> <div className='failure-red'></div><span>Failure </span></div>
-        <Bar
-          data={data}
-          width={100}
-          height={175}
-          options={options}
-        />
+      <div className="bar-wrap">
+        <div
+          className="label-wrap"
+          style={{
+            borderBottom: "1px solid #E2E2E2",
+            paddingBottom: "5px",
+            marginBottom: "10px",
+          }}
+        >
+          Transaction Success per Month(volume)
+          <div className="success-green"></div>
+          <span>Successful </span>
+          <div className="failure-red"></div>
+          <span>Failed </span>
+        </div>
+        <Bar data={data} width={80} height={100} options={options} />
       </div>
     );
 }

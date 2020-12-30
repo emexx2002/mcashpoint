@@ -75,7 +75,7 @@
     background-image: url(../../../Assets/img/person.png);
     background-position:50% 50%;
     background-repeat:no-repeat;    
-    margin: 10px 30px 10px 10px;
+    margin: 10px 10px 10px 10px;
 }
 
 .underperform-background{
@@ -87,7 +87,7 @@
     background-image: url(../../../Assets/img/person.png);
     background-position:50% 50%;
     background-repeat:no-repeat;    
-    margin: 10px 30px 10px 10px;
+    margin: 10px 10px 10px 10px;
 
 }
 
@@ -100,7 +100,7 @@
     background-image: url(../../../Assets/img/mark.png);
     background-position:50% 50%;
     background-repeat:no-repeat;    
-    margin: 10px 30px 10px 10px;
+    margin: 10px 10px 10px 10px;
 
 }
 
@@ -113,7 +113,7 @@
     background-image: url(../../../Assets/img/book.png);
     background-position:50% 50%;
     background-repeat:no-repeat;    
-    margin: 10px 30px 10px 10px;
+    margin: 10px 10px 10px 10px;
 
 }
 
@@ -139,6 +139,12 @@
     letter-spacing: 0.2px;
     color: #00249C;
 }
+.dashboard-wrapper{
+    padding: 20px 100px 0px 20px;
+    height: 100%;
+    width: 100%;                                
+    /* background-color: yellowgreen; */
+}
 
 .header-title p{
     font-family: Montserrat;
@@ -148,6 +154,27 @@
     line-height: 24px;
     letter-spacing: 0.2px;
     color: #52575C;
+}
+.Dashboard-overview-wrapper{
+    /* background-color: tomato; */
+    width: 100%;
+    /* margin-bottom: 10px; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    font-size: small; 
+   
+}
+.graphs-wrapper{
+    padding-top: 30px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr ;
+    grid-template-rows: 110px 255px  1fr;
+    /* grid-gap: 22px; */
+    /* background-color: violet; */
+    height: 100%;
+    
 }
 .flex-box{
     background: #FFFFFF;
@@ -163,65 +190,81 @@
     line-height: 24px;
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
     align-items: center;
-    padding: 9px 20px; 
+    width: 100%;
+    height: 80%;
 
 }
-.graphs-wrapper{
-    padding-top: 30px;
-    display: grid;
-    grid-template-columns: 75% 25%;
-    grid-gap: 22px
-}
 
-.dashboard-wrapper{
-    padding: 20px 200px 20px 20px;
-    height: 100%;
-}
+.transaction-graph-wrapper{ 
+    /* background-color: red; */
+    margin-bottom: 20px;
+    width: 100%;
+} 
 
-.Dashboard-overview-wrapper{
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-gap: 8px
-}
-.chart-bg{
-    background: #FFFFFF;
-/* Stroke/1 */
-    padding: 30px;
-    border: 1px solid #E2E2E2;
-    box-sizing: border-box;
-    /* border-radius: 10px; */
-    height: 100%;
-    width: 70%;
-}
-.barchart-bg{
-    background: #FFFFFF;
-/* Stroke/1 */
-    padding: 30px;
-    border: 1px solid #E2E2E2;
-    box-sizing: border-box;
+.line-and-details{
+    
     border-radius: 10px;
-    height: 100%;
-    width: 60%;
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr 250px;
+    grid-gap: 5px;
+    grid-row: 2; 
+    width: 100%;
+    
 }
+
+.chart-bg{
+   border-top-left-radius: 10px;
+   border-bottom-left-radius: 10px;
+    background: #FFFFFF;
+    
+/* Stroke/1 */
+    padding: 30px;
+    border: 1px solid #E2E2E2;
+    box-sizing: border-box;
+    grid-column: 1/span 2;
+    /* border-radius: 10px; */
+    height: 87%;
+    width: 100%; 
+}
+.transaction-graph-inner{
+    height: 90%;
+    width: 100%;
+   
+    margin-left: -10px;
+}
+.a{
+     border-top-right-radius: 10px;
+}
+.b{border-bottom-right-radius: 10px;}
 .transaction-details{
     border: 1px solid #DFE0EB;
-    padding: 34px 70px 34px 70px;
+    padding: 10px 0px 20px 0px;
     background: #FFFFFF;
     font-family: Montserrat;
     font-style: normal;
     font-weight: 500;
     font-size: 13px;
     line-height: 24px;
-    /* identical to box height, or 150% */
-
+    justify-items: center;
+    align-items: center;
     text-align: center;
     letter-spacing: 0.1px;
-
+    height: 32%;
     /* Text/Secondary */
-
     color: #52575C;
+}
+.barchart-bg{
+    background: #FFFFFF;
+/* Stroke/1 */
+    /* padding: 5px 5px  ; */
+    border: 1px solid #E2E2E2;
+    box-sizing: border-box;
+    border-radius: 10px;
+    grid-column: 1;
+    height: 85%;
+    width: 100%;
+    
 }
 
 .success-text{
@@ -233,16 +276,14 @@
     font-size: 16px;
 }
 
-.transaction-graph-wrapper{
-    display: flex;
-    flex-direction: row;
-   
-}
+
 .bar-graph-wrapper{
-    display: flex;
-    flex-direction: row;
-   max-height: 100px;
-   padding-top:  25px ;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 450px 50px 270px 1fr;
+   /* max-height: 200px; */
+   height: 100%;
+
 }
 
 .graph-upper-wrapper{
@@ -252,74 +293,77 @@
 }
 
 .daily-per-agent{
-    margin-left: 20px;
+    /* margin-right: 20px; */
+    margin-left: -30px;
     background: #FFFFFF;
-    height: 100%;
+    height: 85%;
     border: 1px solid #E2E2E2;
     box-sizing: border-box;
     border-radius: 10px;
+    grid-column: 3;
     
 }
 
 .daily-per-agent li{
-    padding: 15px 120px 10px 10px;
+    padding: 15px 20px 10px 10px;
+    font-size: small;
 }
 
 .daily-per-agent #daily-header{
-    padding: 10px 0px 10px;
+    padding: 10px 0px 7px;
     border-bottom: 1px solid #EEF0F7;
     text-align: center;
+    font-size: small;
 }
 
 .dougnut-wrapper{
     background: #FFFFFF;
+    /* margin-left: 10px; */
 /* Stroke/1 */
-
+grid-row: 1/span 3;
+grid-column: 4;
 border: 1px solid #E2E2E2;
 box-sizing: border-box;
 border-radius: 10px;
-padding: 10px 10px;
+/* padding: 20px; */
 height: 100%;
+font-size: small;
+width: 100%;
+
+
 }
 
 .dougnut-wrapper h2{
-    font-family: Montserrat;
+font-family: Montserrat;
 font-style: normal;
 font-weight: 500;
 font-size: 18px;
 line-height: 24px;
 /* identical to box height, or 133% */
-padding: 30px;
+/* padding: 30px; */
 letter-spacing: 0.2px;
 border-bottom: 1px solid #EEF0F7;
-
-/* Text/General */
-
 color: #25282B;
 }
 
 .transaction-types-wrapper{
-    display: flex;
+
+    margin-top: 10px;
     justify-content: space-between;
     padding: 9px;
     font-family: Montserrat;
     font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
+    font-weight: 300;
+    font-size:smaller;
     line-height: 24px;
+    /* max-width: 100%; */
     /* identical to box height, or 150% */
-
+    height: 100%;
     display: flex;
     align-items: center;
-    letter-spacing: 0.1px;
-
-    /* Text/Secondary */
-
     color: #52575C;
 }
-.transaction-types{
-    margin: 15px 0px 15px 0px;
-}
+
  
 
 @media screen and (max-width: 992px) {
@@ -345,9 +389,6 @@ color: #25282B;
     .Dashboard-overview-wrapper{
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-gap: 22px;
-        
-
-
+        grid-gap: 22px
     }
 }
