@@ -77,7 +77,7 @@ const AgentsManager = () => {
                   <img src={Filter} />
                   Filter
                   <FilterModal
-                    type={"Agent Manager"}
+                    type={"Agent Manager "}
                     typetext={"Enter Agent Manager Type"}
                     idtext={"Enter Agent Manager ID"}
                     show={FilterModalActive}

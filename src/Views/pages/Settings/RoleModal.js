@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Form, Container, Button, Image, Row, Col } from "react-bootstrap";
 import Cancel from "../../../Assets/img/x.png";
 
-const createRole = ({ create, show, close }) => {
+const createRole = ({ show, close }) => {
     return (
       <Modal
         size="lg"

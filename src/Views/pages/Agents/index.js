@@ -162,8 +162,8 @@ const Agents = (props) => {
                   <img src={Filter} />
                   Filter
                   <FilterModal
-                    type={"Agent"}
-                    typetext={"Enter Agent"}
+                    type={"Agent "}
+                    typetext={"Enter Agent Type"}
                     idtext={"Enter Agent ID"}
                     show={FilterModalActive} close={closeFilter} />
                 </span>

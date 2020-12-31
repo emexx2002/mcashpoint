@@ -12,7 +12,7 @@ import {
 import Cancel from "../../../Assets/img/x.png";
 import "./style.css";
 
-const Filter= ({ create, show, close,...props }) => {
+const Filter= ({ show, close,...props }) => {
   return (
     <Modal
       size="xl"

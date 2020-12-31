@@ -10,7 +10,7 @@ import {
 import Cancel from "../../../Assets/img/x.png";
 import "./style.css";
 
-const ExportLink = ({ create, show, close }) => {
+const ExportLink = ({ show, close }) => {
   return (
     <Modal
       size="lg"

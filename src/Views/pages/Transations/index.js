@@ -25,7 +25,7 @@ const Transactions = (props) => {
   const [alltransactions, setTransactions] = useState([FetchTransactions]);
   const [status, setStatus] = useState([FetchTransactions]);
   console.log('jj', alltransactions)
-  const [ExportModalActive, showExportModal] = useState(false);
+  const [exportModalActive, showExportModal] = useState(false);
   const [FilterModalActive, showFilterModal] = useState(false);
  
 
@@ -163,8 +163,8 @@ const Transactions = (props) => {
                   <img src={Filter} />
                   Filter
                   <FilterModal
-                    type={"Transaction"}
-                    typetext={"Enter Transaction ID"}
+                    type={"Transaction "}
+                    typetext={"Enter Transaction Type"}
                     idtext={"Enter Transaction ID"}
                     show={FilterModalActive}
                     close={closeFilter}
@@ -174,7 +174,7 @@ const Transactions = (props) => {
                 <span onClick={() => showExportModal(true)}>
                   <img src={Upload} />
                   Export
-                  <ExportModal show={ExportModalActive} close={closeExport} />
+                  <ExportModal show={exportModalActive} close={closeExport} />
                 </span>
               </div>
             </div>
