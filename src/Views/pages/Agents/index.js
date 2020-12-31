@@ -10,8 +10,8 @@ import Loader from "../../../Components/secondLoader"
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { connect } from 'react-redux';
 import { Modal } from "react-bootstrap";
-import ExportModal from "../Exports/index"
-import FilterModal from "../Filter/index"
+import ExportModal from "../../../Components/Exports/index"
+import FilterModal from "../../../Components/Filter/index"
 
 
 import './style.css';

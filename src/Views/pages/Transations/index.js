@@ -8,8 +8,8 @@ import Filter from '../../../Assets/img/filter.png'
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { FetchTransaction} from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader"
-import ExportModal from "../Exports/index"
-import FilterModal from "../Filter/index"
+import ExportModal from "../../../Components/Exports"
+import FilterModal from "../../../Components/Filter"
 import {Nav, NavItem, NavLink} from "react-bootstrap"
 
 import { connect } from 'react-redux';

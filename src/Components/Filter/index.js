@@ -9,7 +9,7 @@ import {
   Col,
 } from "react-bootstrap";
 
-import Cancel from "../../../Assets/img/x.png";
+import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
 const Filter= ({ show, close,...props }) => {

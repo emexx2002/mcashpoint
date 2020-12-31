@@ -12,8 +12,8 @@ import Tab from 'react-bootstrap/Tab'
 import CreateAgentModal from "./CreateAgent";
 import FetchAgentsManager from "./fetchAgentsManager";
 import Settlement from "./settlement";
-import ExportModal from "../Exports/index";
-import FilterModal from "../Filter/index";
+import ExportModal from "../../../Components/Exports/index";
+import FilterModal from "../../../Components/Filter/index";
 
 import './style.css';
 
