@@ -15,11 +15,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'make build'
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         sh 'make build'
+        //     }
+        // }
        
         // stage('Test') {
         //     steps {
