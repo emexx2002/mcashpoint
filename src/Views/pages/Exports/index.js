@@ -4,9 +4,7 @@ import {
   Form,
   Container,
   Button,
-  Image,
   Row,
-  Col,
 } from "react-bootstrap";
 
 import Cancel from "../../../Assets/img/x.png";
@@ -35,34 +33,32 @@ const ExportLink = ({ create, show, close }) => {
           </div>
         </Container>
         <hr />
-        <p>Select Export Type</p>
-        <Container>
-          <Form>
-            <div className="btn">
-              <Row>
-                <Col xs="auto">
-                  <Button className="pdf" variant="light" type="submit">
-                    Export PDF
-                  </Button>
-                </Col>
 
-                <Col xs="auto">
-                  <Button className="excel" variant="light" type="submit">
-                    Export Excel
-                  </Button>
-                </Col>
-                <Col xs="auto">
-                  <Button className="csv" variant="light" type="submit">
-                    Export CSV
-                  </Button>
-                </Col>
-                <Col xs="auto">
-                  <Button className="clip" variant="light" type="submit">
-                    Copy to ClipBoard
-                  </Button>
-                </Col>
-              </Row>
-            </div>
+        <Container>
+          <h3>Select Export Type</h3>
+          <Form>
+            <Row>
+              <Button className="pdf export-btn" variant="light" type="submit">
+                Export PDF
+              </Button>
+
+              <Button
+                className="excel export-btn"
+                variant="light"
+                type="submit"
+              >
+                Export Excel
+              </Button>
+
+              <Button className="csv export-btn" variant="light" type="submit">
+                Export CSV
+              </Button>
+
+              <Button  className="clip export-btn" type="submit">
+                Copy to Clipboard
+                
+              </Button>
+            </Row>
           </Form>
         </Container>
       </Modal.Body>

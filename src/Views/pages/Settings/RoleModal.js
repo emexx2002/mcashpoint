@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal, Form, Container, Button, Image, Row, Col } from "react-bootstrap";
 import Cancel from "../../../Assets/img/x.png";
 

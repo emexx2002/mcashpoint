@@ -9,6 +9,7 @@ import DashboardTemplate from "../../template/dashboardtemplate";
 import { FetchTransaction} from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader"
 import ExportModal from "../Exports/index"
+import FilterModal from "../Filter/index"
 import {Nav, NavItem, NavLink} from "react-bootstrap"
 
 import { connect } from 'react-redux';
@@ -24,7 +25,8 @@ const Transactions = (props) => {
   const [alltransactions, setTransactions] = useState([FetchTransactions]);
   const [status, setStatus] = useState([FetchTransactions]);
   console.log('jj', alltransactions)
-  const [createModalActive, showCreateModal] = useState(false);
+  const [ExportModalActive, showExportModal] = useState(false);
+  const [FilterModalActive, showFilterModal] = useState(false);
  
 
 
@@ -130,9 +132,11 @@ const Transactions = (props) => {
             }
           });
   
-  const onclose = () => {
-    
-    showCreateModal(false);
+  const closeExport = () => {
+    showExportModal(false);
+  };
+  const closeFilter = () => {
+    showFilterModal(false);
   };
         
       return (
@@ -155,15 +159,22 @@ const Transactions = (props) => {
               <div>
                 <span>Print</span>
 
-                <span>
+                <span onClick={() => showFilterModal(true)}>
                   <img src={Filter} />
                   Filter
+                  <FilterModal
+                    type={"Transaction"}
+                    typetext={"Enter Transaction ID"}
+                    idtext={"Enter Transaction ID"}
+                    show={FilterModalActive}
+                    close={closeFilter}
+                  />
                 </span>
 
-                <span onClick={() => showCreateModal(true)}>
-                    <img src={Upload} />
-                    Export
-                  <ExportModal show={createModalActive} close={onclose} />
+                <span onClick={() => showExportModal(true)}>
+                  <img src={Upload} />
+                  Export
+                  <ExportModal show={ExportModalActive} close={closeExport} />
                 </span>
               </div>
             </div>

@@ -12,7 +12,8 @@ import Tab from 'react-bootstrap/Tab'
 import CreateAgentModal from "./CreateAgent";
 import FetchAgentsManager from "./fetchAgentsManager";
 import Settlement from "./settlement";
-
+import ExportModal from "../Exports/index";
+import FilterModal from "../Filter/index";
 
 import './style.css';
 
@@ -20,8 +21,9 @@ import './style.css';
 const AgentsManager = () => {
  
       const [createModalActive, showCreateModal] = React.useState(false);
-
       const [active, showActive] = React.useState('home');
+      const [ExportModalActive, showExportModal] = React.useState(false);
+      const [FilterModalActive, showFilterModal] = React.useState(false);
 
       useEffect(() => {
         console.log(active)
@@ -32,6 +34,12 @@ const AgentsManager = () => {
           showActive('home')
           showCreateModal(false) 
         }
+        const closeExport = () => {
+          showExportModal(false);
+        };
+        const closeFilter = () => {
+          showFilterModal(false);
+        };
         
         const renderTab = () =>(
             <Tabs defaultActiveKey={active} id="uncontrolled-tab-example" onSelect={(key) => {key=='profile'?showCreateModal(true):showActive('home')}}>
@@ -51,39 +59,43 @@ const AgentsManager = () => {
         )
 
       return (
-        
-          <DashboardTemplate>
-              <div className='transact-wrapper'>
-              <p>Agents</p>
-                  <div className='agent-transact-header'>
-               
-                      <div>
-                         
-                         <div className='manage-agent'>
-                            <span>Manage all agents on mCashPoint</span>
-                            {/* <span><img src={Plus} />Create Agent Manager</span>
+        <DashboardTemplate>
+          <div className="transact-wrapper">
+            <p>Agents</p>
+            <div className="agent-transact-header">
+              <div>
+                <div className="manage-agent">
+                  <span>Manage all agents on mCashPoint</span>
+                  {/* <span><img src={Plus} />Create Agent Manager</span>
                             <span><img src={Plus} />Settlement</span> */}
-                         </div>
-
-                      </div>
-                      <div className='manage-agent'>
-                          <span>Print</span>
-
-                          <span><img src={Filter} />Filter</span>
-
-                          <span> <img src={Upload} />Export</span>
-                      </div>
-
-                  </div>
-                
-                  {renderTab()}
-
-                   
-
-                 
+                </div>
               </div>
-          </DashboardTemplate>
-      )
+              <div className="manage-agent">
+                <span>Print</span>
+
+                <span onClick={() => showFilterModal(true)}>
+                  <img src={Filter} />
+                  Filter
+                  <FilterModal
+                    type={"Agent Manager"}
+                    typetext={"Enter Agent Manager Type"}
+                    idtext={"Enter Agent Manager ID"}
+                    show={FilterModalActive}
+                    close={closeFilter} />
+                </span>
+
+                <span onClick={() => showExportModal(true)}>
+                  <img src={Upload} />
+                  Export
+                  <ExportModal show={ExportModalActive} close={closeExport} />
+                </span>
+              </div>
+            </div>
+
+            {renderTab()}
+          </div>
+        </DashboardTemplate>
+      );
     
 }
 export default AgentsManager

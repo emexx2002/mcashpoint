@@ -1,3 +1,9 @@
+.export-btn{
+    margin-right: 15px;
+    margin-left: 20px;
+    height: 40px;
+    font-size: small;
+}
 .btn{
    color: #ffffff;
 }

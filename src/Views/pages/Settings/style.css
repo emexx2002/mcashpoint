@@ -42,10 +42,10 @@
 }
 .role{
     background: #00249C; 
+    font-size: small;
+    width: 200px;
 }
-.role :focus{
-    border: none;
-}
+
 .nav-item a.nav-link.active{
     background: #00249C;
 opacity: 0.7;
