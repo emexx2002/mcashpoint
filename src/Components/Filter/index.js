@@ -29,7 +29,7 @@ const Filter= ({ show, close,...props }) => {
             justify-content-center
           >
             <div className="modal-header">Filter by</div>
-            <div onClick={() => close()} className="align-item-center  pt-3">
+            <div onClick={close} className="align-item-center  pt-3">
               <img src={Cancel} />
             </div>
           </div>

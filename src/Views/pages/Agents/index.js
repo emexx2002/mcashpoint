@@ -161,17 +161,11 @@ const Agents = (props) => {
                 <span onClick={() => showFilterModal(true)}>
                   <img src={Filter} />
                   Filter
-                  <FilterModal
-                    type={"Agent "}
-                    typetext={"Enter Agent Type"}
-                    idtext={"Enter Agent ID"}
-                    show={FilterModalActive} close={closeFilter} />
                 </span>
 
                 <span onClick={() => showExportModal(true)}>
                   <img src={Upload} />
                   Export
-                  <ExportModal show={ExportModalActive} close={closeExport} />
                 </span>
               </div>
             </div>
@@ -190,6 +184,14 @@ const Agents = (props) => {
               />
             </div>
           </div>
+          <FilterModal
+            type={"Agent "}
+            typetext={"Enter Agent Type"}
+            idtext={"Enter Agent ID"}
+            show={FilterModalActive}
+            close={closeFilter}
+          />
+          <ExportModal show={ExportModalActive} close={closeExport} />
         </DashboardTemplate>
       );
 };

@@ -76,24 +76,25 @@ const AgentsManager = () => {
                 <span onClick={() => showFilterModal(true)}>
                   <img src={Filter} />
                   Filter
-                  <FilterModal
-                    type={"Agent Manager "}
-                    typetext={"Enter Agent Manager Type"}
-                    idtext={"Enter Agent Manager ID"}
-                    show={FilterModalActive}
-                    close={closeFilter} />
                 </span>
 
                 <span onClick={() => showExportModal(true)}>
                   <img src={Upload} />
                   Export
-                  <ExportModal show={ExportModalActive} close={closeExport} />
                 </span>
               </div>
             </div>
 
             {renderTab()}
           </div>
+          <FilterModal
+            type={"Agent Manager "}
+            typetext={"Enter Agent Manager Type"}
+            idtext={"Enter Agent Manager ID"}
+            show={FilterModalActive}
+            close={closeFilter}
+          />
+          <ExportModal show={ExportModalActive} close={closeExport} />
         </DashboardTemplate>
       );
     

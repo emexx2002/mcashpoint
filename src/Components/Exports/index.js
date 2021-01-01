@@ -27,7 +27,7 @@ const ExportLink = ({ show, close }) => {
             justify-content-center
           >
             <div className="modal-header">Export</div>
-            <div onClick={() => close()} className="align-item-center  pt-3">
+            <div onClick={close} >
               <img src={Cancel} />
             </div>
           </div>

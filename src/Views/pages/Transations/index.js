@@ -162,19 +162,11 @@ const Transactions = (props) => {
                 <span onClick={() => showFilterModal(true)}>
                   <img src={Filter} />
                   Filter
-                  <FilterModal
-                    type={"Transaction "}
-                    typetext={"Enter Transaction Type"}
-                    idtext={"Enter Transaction ID"}
-                    show={FilterModalActive}
-                    close={closeFilter}
-                  />
                 </span>
 
                 <span onClick={() => showExportModal(true)}>
                   <img src={Upload} />
                   Export
-                  <ExportModal show={exportModalActive} close={closeExport} />
                 </span>
               </div>
             </div>
@@ -193,6 +185,14 @@ const Transactions = (props) => {
               />
             </div>
           </div>
+          <FilterModal
+            type={"Transaction "}
+            typetext={"Enter Transaction Type"}
+            idtext={"Enter Transaction ID"}
+            show={FilterModalActive}
+            close={closeFilter}
+          />
+          <ExportModal show={exportModalActive} close={closeExport} />
         </DashboardTemplate>
       );
 };
