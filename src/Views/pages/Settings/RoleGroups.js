@@ -1,7 +1,7 @@
 import React,{Component,useEffect} from 'react'
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import { Container, Row, Col, Nav, Form, Button } from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import RoleModal from "./RoleModal";
 import "./style.css";
 
@@ -18,32 +18,25 @@ export default function RoleGroups() {
 
     useEffect(() => {
       console.log(active);
-      renderTab();
+      
     }, [active]);
 
     const onclose = () => {
-      showActive("home");
+      
       showCreateModal(false);
     };
-
-
-    const renderTab = () => (
-      <Tabs
-        defaultActiveKey={active}
-        id="uncontrolled-tab-example"
-        onSelect={(key) => {
-          key == "profile" ? showCreateModal(true) : showActive("home");
-        }}
-      >
-        <Tab eventKey={"profile"} title="Create Group Role">
-          <RoleModal show={createModalActive} close={onclose} />
-        </Tab>
-      </Tabs>
-    );
+   
 
     return (
-      <div >
-        {renderTab()}
+      <div>
+       
+          <Button className="role" onClick={() => showCreateModal(true)}>
+            Create Role Group
+          </Button>
+
+          <RoleModal show={createModalActive} close={onclose} />
+       
+
         <div className="Role-overview-wrapper">
           <div className="role-box ">
             <div>

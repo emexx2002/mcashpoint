@@ -10,6 +10,8 @@ import Loader from "../../../Components/secondLoader"
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { connect } from 'react-redux';
 import { Modal } from "react-bootstrap";
+import ExportModal from "../../../Components/Exports/index"
+import FilterModal from "../../../Components/Filter/index"
 
 
 import './style.css';
@@ -19,6 +21,8 @@ const Agents = (props) => {
   const { FetchAgent: FetchAgents, ActivatateCode:ActivatateCodes,  agents, loading,activationCode, success} = props;
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
+  const [ExportModalActive, showExportModal] = useState(false);
+  const [FilterModalActive, showFilterModal] = useState(false);
   // const [status, setStatus] = useState([FetchTransactions]);
   console.log(activationCode)
 
@@ -113,46 +117,83 @@ const Agents = (props) => {
               console.log('sizePerPage', sizePerPage);
             }
           });
+           const closeExport = () => {
+             showExportModal(false);
+           };
+           const closeFilter = () => {
+             showFilterModal(false);
+           };
         
       return (
-          <DashboardTemplate>
-             <Modal
-        size="sm"
-        show={smShow}
-        onHide={() => setSmShow(false)}
-        aria-labelledby="example-modal-sizes-title-sm"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm">
-            {activation}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>...</Modal.Body>
-      </Modal>
-              <div className='transact-wrapper'>
-              {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+        <DashboardTemplate>
+          <Modal
+            size="sm"
+            show={smShow}
+            onHide={() => setSmShow(false)}
+            aria-labelledby="example-modal-sizes-title-sm"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="example-modal-sizes-title-sm">
+                {activation}
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>...</Modal.Body>
+          </Modal>
+          <div className="transact-wrapper">
+            {loading && (
+              <Loader
+                type="TailSpin"
+                type="Oval"
+                height={60}
+                width={60}
+                color="#1E4A86"
+              />
+            )}
 
-                  <div className='agent-transact-header'>
-                      <div>
-                          <p>Agents</p>
-                          <p>A list of all agents on mCashPoint</p>
-                      </div>
-                      <div>
-                          <span>Print</span>
-
-                          <span><img src={Filter} />Filter</span>
-
-                          <span> <img src={Upload} />Export</span>
-                      </div>
-                  </div>
-                 <div className='table-wrapper'>
-                   <h4>All Agents</h4>
-                 <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
-
-                 </div>
+            <div className="agent-transact-header">
+              <div>
+                <p>Agents</p>
+                <p>A list of all agents on mCashPoint</p>
               </div>
-          </DashboardTemplate>
- );
+              <div>
+                <span>Print</span>
+
+                <span onClick={() => showFilterModal(true)}>
+                  <img src={Filter} />
+                  Filter
+                </span>
+
+                <span onClick={() => showExportModal(true)}>
+                  <img src={Upload} />
+                  Export
+                </span>
+              </div>
+            </div>
+            <div className="table-wrapper">
+              <h4>All Agents</h4>
+              <BootstrapTable
+                bootstrap4
+                keyField="id"
+                data={products}
+                columns={columns}
+                defaultSorted={defaultSorted}
+                pagination={pagination}
+                bordered={false}
+                hover
+                condensed
+              />
+            </div>
+          </div>
+          <FilterModal
+            type={"Agent "}
+            typetext={"Enter Agent Type"}
+            idtext={"Enter Agent ID"}
+            show={FilterModalActive}
+            close={closeFilter}
+          />
+          <ExportModal show={ExportModalActive} close={closeExport} />
+        </DashboardTemplate>
+      );
 };
 const mapStateToProps = state => (console.log(state),{
   agents: state.agents.agents,

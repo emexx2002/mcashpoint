@@ -40,6 +40,11 @@
 .tab-navs img{
     padding-right: 20px;
 }
+.role{
+    background: #00249C; 
+    font-size: small;
+    width: 200px;
+}
 
 .nav-item a.nav-link.active{
     background: #00249C;
