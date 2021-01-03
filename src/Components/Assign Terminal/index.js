@@ -15,7 +15,7 @@ import "./style.css";
 const Filter = ({ show, close }) => {
   return (
     <Modal
-      size="md"
+      size="lg"
       show={show}
       onHide={close}
       centered={true}
@@ -59,9 +59,11 @@ const Filter = ({ show, close }) => {
                   <Form.Control
                     size="sm"
                     as="select"
-                    placeholder="Select Bank"
+                   
                     // onChange={updateInput}
-                  />
+                  >
+                    <option>Select Bank</option>
+                  </Form.Control>
                 </Form.Group>
               </Col>
             </Row>
