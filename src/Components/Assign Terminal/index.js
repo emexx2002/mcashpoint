@@ -58,7 +58,7 @@ const Filter = ({ show, close }) => {
                   <Form.Label>Bank</Form.Label>
                   <Form.Control
                     size="sm"
-                    type="text"
+                    as="select"
                     placeholder="Select Bank"
                     // onChange={updateInput}
                   />
