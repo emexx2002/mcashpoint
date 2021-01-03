@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { Modal } from "react-bootstrap";
 import ExportModal from "../../../Components/Exports/index"
 import FilterModal from "../../../Components/Filter/index"
+import AssignTerminal from "../../../Components/Assign Terminal"
 
 
 import './style.css';
@@ -23,6 +24,7 @@ const Agents = (props) => {
   const [activation, setActivation] = useState(null);
   const [ExportModalActive, showExportModal] = useState(false);
   const [FilterModalActive, showFilterModal] = useState(false);
+   const [terminalID, showTerminalID] = useState(false);
   // const [status, setStatus] = useState([FetchTransactions]);
   console.log(activationCode)
 
@@ -76,7 +78,7 @@ const Agents = (props) => {
               console.log()
                 return (
                   <h5>
-                  <button type="button"  className="btn assign-terminal">Assign Terminal</button>
+                  <button type="button"  className="btn assign-terminal" onClick={''}>Assign Terminal</button>
                  </h5>
                 );
               }},
@@ -122,6 +124,9 @@ const Agents = (props) => {
            };
            const closeFilter = () => {
              showFilterModal(false);
+           };
+           const closeAssignTerminal = () => {
+             showTerminalID(false);
            };
         
       return (
@@ -182,6 +187,7 @@ const Agents = (props) => {
                 hover
                 condensed
               />
+              <button onClick={() => showTerminalID(true)}>Assign</button>
             </div>
           </div>
           <FilterModal
@@ -192,6 +198,7 @@ const Agents = (props) => {
             close={closeFilter}
           />
           <ExportModal show={ExportModalActive} close={closeExport} />
+          <AssignTerminal show={terminalID}close={closeAssignTerminal}/>
         </DashboardTemplate>
       );
 };
