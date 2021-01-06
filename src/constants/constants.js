@@ -11,4 +11,8 @@ export const AgentConstant = {
     FETCH_AGENT_PURSE_URL:`${BASE_URL}/api/v1/purse/agent`,
     ACTIVATION_CODE_URL:`${BASE_URL}/api/v1/terminal/activation/generate?agentId`,
     CHANGE_PASSWORD_URL:`${BASE_URL}/api/v1/password`,
+    FETCH_STATE_URL:`${BASE_URL}/api/v1/state`,
+    FETCH_LGA_URL:`${BASE_URL}/api/v1/lga?stateCode`,
+    FETCH_BANK_URL:`${BASE_URL}/api/v1/bank`,
+    CREATE_AGENT_MANAGER_URL: `${BASE_URL}/api/agent/manager`
 };

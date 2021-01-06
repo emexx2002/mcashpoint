@@ -36,16 +36,16 @@ const Agents = (props) => {
   // const products = {}
   
   const products = agents.map((agent,index) => {
-          console.log(agent)
+          console.log(agent.bankTerminal)
     return {
       id:index,
-      AgentID:agent.id === 'undefined' ? '':agent.id,
-      BusinessName:agent.businessName  === 'undefined' ? '':agent.businessName,
-      UserName:agent.user.username  === 'undefined' ? '':agent.user.username ,
-      PhoneNumber: agent.businessPhone === 'undefined' ? '':agent.businessPhone ,
-      Action:agent.user.memberId === 'undefined' ? '':agent.user.memberId ,
-      TerminalID:agent.bankTerminal.terminalId === 'undefined' ? '': agent.bankTerminal.terminalId,
-      DateCreated:agent.createdAt === 'undefined' ? '': agent.createdAt
+      AgentID:agent.id === null ? '':agent.id,
+      BusinessName:agent.businessName  === null ? '':agent.businessName,
+      UserName:agent.user.username  === null ? '':agent.user.username ,
+      PhoneNumber: agent.businessPhone === null ? '':agent.businessPhone ,
+      Action:agent.user === null ? '':agent.user.memberId ,
+      TerminalID:agent.bankTerminal === null ? '': agent.bankTerminal.terminalId,
+      DateCreated:agent.createdAt === null ? '': agent.createdAt
     }
 })
 
@@ -78,7 +78,7 @@ const Agents = (props) => {
               console.log()
                 return (
                   <h5>
-                  <button type="button"  className="btn assign-terminal" onClick={''}>Assign Terminal</button>
+                  <button type="button"  className=" assign-terminal" onClick={''}>Assign Terminal</button>
                  </h5>
                 );
               }},
@@ -86,12 +86,12 @@ const Agents = (props) => {
             { dataField: 'ActivationCode', text: 'Activation Code',formatter: (cellContent, row) => {
                 return (
                   <h5>
-                   <button type="button" onClick={ () => ActivatateCode(row.AgentID)   } className="btn generate-code">Generate</button>
+                   <button type="button" onClick={ () => ActivatateCode(row.AgentID)   } className=" generate-code">Generate</button>
 
                   </h5>
                 );
               }},
-            { dataField: 'AgentManager', text: 'Agent Manager'},
+            // { dataField: 'AgentManager', text: 'Agent Manager'},
             { dataField: 'DateCreated', text: 'Date Created'},
             
           ];

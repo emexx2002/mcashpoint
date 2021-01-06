@@ -30,13 +30,13 @@ const FetchAgentsManager = (props) => {
           console.log(agent)
     return {
       id:index,
-      AgentID:agent.user.memberId === 'undefined' ? '':agent.user.memberId,
-      BusinessName:agent.businessName  === 'undefined' ? '':agent.businessName,
-      UserName:agent.user.username  === 'undefined' ? '':agent.user.username ,
-      PhoneNumber: agent.phone === 'undefined' ? '':agent.phone ,
-      State:agent.state.stateName === 'undefined' ? '': agent.state.stateName,
-      LGA:agent.lga.lga === 'undefined' ? '': agent.lga.lga,
-      DateCreated:agent.createdAt === 'undefined' ? '': agent.createdAt
+      AgentID:agent.user.memberId === null ? '':agent.user.memberId,
+      BusinessName:agent.businessName  === null ? '':agent.businessName,
+      UserName:agent.user.username  === null ? '':agent.user.username ,
+      PhoneNumber: agent.phone === null ? '':agent.phone ,
+      State:agent.state.stateName === null ? '': agent.state.stateName,
+      LGA:agent.lga.lga === null ? '': agent.lga.lga,
+      DateCreated:agent.createdAt === null ? '': agent.createdAt
     }
 })
   
