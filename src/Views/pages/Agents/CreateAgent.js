@@ -18,7 +18,7 @@ import {
   CreateAgentManager,
 } from "../../../Redux/requests/agentManagerRequest";
 import Loader from "../../../Components/secondLoader";
-
+import "./style.css"
 const CreateAgentModal = ({
   create,
   show,
@@ -92,37 +92,21 @@ const CreateAgentModal = ({
   };
 
   return (
-    <Modal
-      size="lg"
-      show={show}
-      onHide={close}
-      aria-labelledby="edit-profile-modal"
-      className="rounded border"
-    >
-      {loading && (
-        <Loader
-          type="TailSpin"
-          type="Oval"
-          height={60}
-          width={60}
-          color="#1E4A86"
-        />
-      )}
+    
+    <div>
+        {loading && (
+            <Loader
+            type="TailSpin"
+            type="Oval"
+            height={60}
+            width={60}
+            color="#1E4A86"
+            />
+        )}
 
-      <Modal.Body>
-        <Container>
-          <div
-            className="header-wrapper d-flex justify-content-between align-item-center  justify-content-center"
-            justify-content-center
-          >
-            <div className="modal-header">Create Agent</div>
-            <div onClick={() => close()} className="align-item-center  pt-3">
-              <img src={Cancel} />
-            </div>
-          </div>
-        </Container>
-        <hr />
-        <Container>
+          <div className='agent-table-wrapper'>
+              <h5>Create Agent</h5>
+            <hr/>
           <Form onSubmit={onSubmit}>
             <h6>Personal Information</h6>
             <br />
@@ -349,9 +333,9 @@ const CreateAgentModal = ({
               </Button>
             </div>
           </Form>
-        </Container>
-      </Modal.Body>
-    </Modal>
+        </div>
+   </div>
+    
   );
 };
 
