@@ -1,6 +1,6 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { FETCH_AGENTS_MANAGER } from "../actions/actionTypes";
+import { FETCH_AGENTS_MANAGER, FETCH_LGA, FETCH_STATE , FETCH_BANK,CREATE_AGENTS_MANAGER} from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
@@ -8,8 +8,6 @@ import { history } from '../../utils/history'
 export const FetchAgentManager = () => dispatch => {
     dispatch(asyncActions(FETCH_AGENTS_MANAGER).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
-    console.log(token)
-    console.log(`bearer ${token.access_token}`, )
     axios
         .get(`${AgentConstant.FETCH_AGENT_MANAGER_URL}`, {
             headers: {
@@ -29,24 +27,117 @@ export const FetchAgentManager = () => dispatch => {
         });
 };
 
-// export const CreateAgentManager = ({ name, email, password }) => dispatch => {
-//     dispatch(asyncActions(REGISTER_USER).loading(true));
-//     axios
-//       .post(`${customerConstant.REGISTER_CUSTOMER_URL}`, {
-//         name,
-//         email,
-//         password
-//       })
-//       .then(response => {
-//         if (response.status === 200) {
-//           dispatch(asyncActions(REGISTER_USER).success(response.data));
-//           dispatch(asyncActions(REGISTER_USER).loading(false));
-//         }
-//         else if (response.status === 400) {
-//           dispatch(asyncActions(REGISTER_USER).failure(true, response.data.error.message));
-//           dispatch(asyncActions(REGISTER_USER).loading(false));
-//         }
-//       })
-//       .catch(error => dispatch(asyncActions(REGISTER_USER).failure(true, error)));
-//   };
+export const FetchState = () => dispatch => {
+    dispatch(asyncActions(FETCH_STATE).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    axios
+       .get(`${AgentConstant.FETCH_STATE_URL}`, {
+            headers: {
+                'Authorization': `bearer ${token.access_token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+      .then(res => {
+        const response = res.data
+        console.log(response)
+        if (response.responseCode === "00") {
+          dispatch(asyncActions(FETCH_STATE).success(response.data));
+        }
+        else if (response.status === 400) {
+          dispatch(asyncActions(FETCH_STATE).failure(true, response.data.error.message));
+        }
+      })
+      .catch(error => dispatch(asyncActions(FETCH_STATE).failure(true, error)));
+  };
   
+
+  export const FetchLga = (stateCode) => dispatch => {
+      console.log(stateCode)
+    dispatch(asyncActions(FETCH_LGA).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    axios
+       .get(`${AgentConstant.FETCH_LGA_URL}=${stateCode}`, {
+            headers: {
+                'Authorization': `bearer ${token.access_token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+      .then(res => {
+        const response = res.data
+        console.log(response)
+        if (response.responseCode === "00") {
+          dispatch(asyncActions(FETCH_LGA).success(response.data));
+        }
+        else if (response.status === 400) {
+          dispatch(asyncActions(FETCH_LGA).failure(true, response.data.error.message));
+        }
+      })
+      .catch(error => dispatch(asyncActions(FETCH_LGA).failure(true, error)));
+  };
+
+  export const FetchBank = () => dispatch => {
+  dispatch(asyncActions(FETCH_BANK).loading(true));
+  const token = JSON.parse(localStorage.getItem("data"))
+  axios
+     .get(`${AgentConstant.FETCH_BANK_URL}`, {
+          headers: {
+              'Authorization': `bearer ${token.access_token}`,
+              'Content-Type': 'application/json'
+          },
+      })
+    .then(res => {
+      const response = res.data
+      console.log(response)
+      if (response.responseCode === "00") {
+        dispatch(asyncActions(FETCH_BANK).success(response.data));
+      }
+      else if (response.status === 400) {
+        dispatch(asyncActions(FETCH_BANK).failure(true, response.data.error.message));
+      }
+    })
+    .catch(error => dispatch(asyncActions(FETCH_BANK).failure(true, error)));
+};
+  
+
+export const CreateAgentManager = ({
+    firstname,lastname,gender,email,phone, accountName ,accountNumber, address,accountBvn, dateOfBirth,username,nationality,identityType, stateId,lgaId,bankId
+}) => dispatch => {
+    dispatch(asyncActions(CREATE_AGENTS_MANAGER).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    axios
+      .post(`${AgentConstant.CREATE_AGENT_MANAGER_URL}`, {
+        firstname,
+        lastname,
+        gender,
+        email,
+        phone,
+        accountName ,
+        accountNumber, 
+        address,
+        accountBvn, 
+        dateOfBirth,
+        username,
+        nationality,
+        identityType, 
+        stateId,
+        lgaId,
+        bankId
+      }, {
+        headers: {
+            'Authorization': `bearer ${token.access_token}`,
+            'Content-Type': 'application/json'
+        },
+    })
+      .then(res => {
+        const response = res.data
+        console.log(response)
+        if (response.responseCode === "00") {
+          dispatch(asyncActions(CREATE_AGENTS_MANAGER).success(response.data));
+        }
+        else if (response.status === 400) {
+          dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, response.data.error.message));
+        }
+      })
+      .catch(error => dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, error)));
+  };
+    

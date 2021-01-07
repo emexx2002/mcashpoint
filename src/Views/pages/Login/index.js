@@ -25,28 +25,30 @@ console.log(error)
         console.log(userCredentials)
     };
     useEffect(() => { 
-        removeToken() 
-    }, []);
+        if(error){
+            return setErrors(['There was an error sending your request, please try again later.']);
 
-     function onSubmit (event) {
+        }
+        removeToken() 
+    }, [error]);
+console.log(error)
+    const onSubmit = (event) => {
         event.preventDefault();
         
-        const {username,password}= userCredentials;
+        const {username, password }= userCredentials;
         console.log(username,password)
         if(username === null || username === '' || password=== null|| password=== '') {
             setErrors(["*username/password can't be empty"])
         }
-        // if(error){
-        //     return setErrors([error]);
-        // }
-        setErrors([error]);
+        
+        console.log(error)
          handleLogin(userCredentials);
          
         
       }
       return ( 
           <div className='d-flex justify-content-center align-items-center login-wrapper'>
-              <Form className='form-wrapper'>
+              <Form className='form-wrapper' onSubmit={onSubmit}>
               {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
 
                   <div className='logo'></div>
@@ -72,7 +74,7 @@ console.log(error)
                             </div>
                         </div>   
                         <div className=" text-center pt-3">
-                            <Button variant="primary" className="text-white button-wrap" onClick={onSubmit} type="submit">
+                            <Button variant="primary" className="text-white button-wrap"  type="submit">
                             login
                             </Button>
                         </div>               

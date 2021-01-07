@@ -31,7 +31,8 @@ const UsersReducer = (state = initialState, action) => {
     case asyncActionName(LOGIN_USER).failure:
       return {
         ...state,
-        error: action.payload?.error?.response?.data?.responseMessage,
+        // error: action.payload?.error?.response?.data?.responseMessage,
+        error: true,
         success: false,
         loading:false,
         // failure
