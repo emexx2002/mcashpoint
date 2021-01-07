@@ -14,5 +14,7 @@ export const AgentConstant = {
     FETCH_STATE_URL:`${BASE_URL}/api/v1/state`,
     FETCH_LGA_URL:`${BASE_URL}/api/v1/lga?stateCode`,
     FETCH_BANK_URL:`${BASE_URL}/api/v1/bank`,
-    CREATE_AGENT_MANAGER_URL: `${BASE_URL}/api/agent/manager`
+    CREATE_AGENT_MANAGER_URL: `${BASE_URL}/api/v1/agent/manager`,
+    FETCH_BANK_TERMINAAL_URL: `${BASE_URL}/api/v1/terminal/banks?agentId`,
+    ACTIVATE_ASSIGN_TERMINAL_URL:`${BASE_URL}/api/v1/erminal/assign?agentId`
 };

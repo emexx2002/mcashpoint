@@ -5,7 +5,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import Upload from '../../../Assets/img/upload.png'
 import Filter from '../../../Assets/img/filter.png'
-import { FetchAgent,ActivatateCode } from "../../../Redux/requests/agentRequest";
+import { FetchAgent,ActivatateCode ,FetchBankTerminal} from "../../../Redux/requests/agentRequest";
 import Loader from "../../../Components/secondLoader"
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { connect } from 'react-redux';
@@ -19,7 +19,7 @@ import './style.css';
 
 
 const Agents = (props) => {
-  const { FetchAgent: FetchAgents, ActivatateCode:ActivatateCodes,  agents, loading,activationCode, success} = props;
+  const { FetchBankTerminal:FetchBankTerminals,FetchAgent: FetchAgents, ActivatateCode:ActivatateCodes, bankTerminal, agents, loading,activationCode, success} = props;
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
   const [ExportModalActive, showExportModal] = useState(false);
@@ -30,7 +30,7 @@ const Agents = (props) => {
 
   useEffect(() => {
     FetchAgents();
-  
+    FetchBankTerminals()
   }, []);
 
   // const products = {}
@@ -38,6 +38,7 @@ const Agents = (props) => {
   const products = agents.map((agent,index) => {
           console.log(agent.bankTerminal)
     return {
+      agent:agent,
       id:index,
       AgentID:agent.id === null ? '':agent.id,
       BusinessName:agent.businessName  === null ? '':agent.businessName,
@@ -58,11 +59,16 @@ const Agents = (props) => {
         }
         
       }
-    //  const   ActivatateCode = (agentId) => {
-    //     console.log('hello')
-    //   ActivatateCodes(agentId)
+     const   AssignTerminals = (agentId) => {
+      // FetchBankTerminals(agentId)
+      ActivateAssignTerminal(agentId) 
+      showTerminalID(true)
 
-    // }
+    }
+
+    const   ActivateAssignTerminal = (agentId) => {
+      
+   }
         
           const columns = [
             // { dataField: 'id', text: 'Id'},
@@ -75,10 +81,15 @@ const Agents = (props) => {
               }},
             { dataField: 'PhoneNumber', text: 'Phone Number'},
             { dataField: 'Action', text: 'Action',formatter: (cellContent, row) => {
-              console.log()
-                return (
+              FetchBankTerminals(row.AgentID)
+              return (
                   <h5>
-                  <button type="button"  className=" assign-terminal" onClick={''}>Assign Terminal</button>
+                    {row.agent.terminalActivated?
+                    <button type="button"  className="unassign-terminal" onClick={() => AssignTerminals(row.AgentID)}>Unassign Terminal</button>
+                    :
+                    <button type="button"  className="assign-terminal" onClick={() => AssignTerminals(row.AgentID)}>Assign Terminal</button>
+
+                    }
                  </h5>
                 );
               }},
@@ -86,21 +97,17 @@ const Agents = (props) => {
             { dataField: 'ActivationCode', text: 'Activation Code',formatter: (cellContent, row) => {
                 return (
                   <h5>
-                   <button type="button" onClick={ () => ActivatateCode(row.AgentID)   } className=" generate-code">Generate</button>
-
+                   <button type="button" onClick={ () => ActivatateCode(row.AgentID)} className=" generate-code">Generate</button>
                   </h5>
                 );
               }},
             // { dataField: 'AgentManager', text: 'Agent Manager'},
             { dataField: 'DateCreated', text: 'Date Created'},
-            
           ];
-        
           const defaultSorted = [{
             dataField: 'name',
             order: 'desc'
           }];
-        
           const pagination = paginationFactory({
             page: 1,
             sizePerPage: 10,
@@ -187,7 +194,7 @@ const Agents = (props) => {
                 hover
                 condensed
               />
-              <button onClick={() => showTerminalID(true)}>Assign</button>
+              {/* <button onClick={() => showTerminalID(true)}>Assign</button> */}
             </div>
           </div>
           <FilterModal
@@ -198,13 +205,14 @@ const Agents = (props) => {
             close={closeFilter}
           />
           <ExportModal show={ExportModalActive} close={closeExport} />
-          <AssignTerminal show={terminalID}close={closeAssignTerminal}/>
+          <AssignTerminal bankTerminals={bankTerminal} load={loading} show={terminalID}close={closeAssignTerminal}/>
         </DashboardTemplate>
       );
 };
 const mapStateToProps = state => (console.log(state),{
   agents: state.agents.agents,
   activationCode:state.agents.activationCode,
+  bankTerminal:state.agents.bankTerminal,
   loading:state.agents.loading,
   error:state.agents.error,
   success: state.agents.successmodal,
@@ -215,6 +223,6 @@ const mapStateToProps = state => (console.log(state),{
 export default connect(
   mapStateToProps,
   {
-    FetchAgent,ActivatateCode
+    FetchAgent,ActivatateCode,FetchBankTerminal
   }
 )(Agents);

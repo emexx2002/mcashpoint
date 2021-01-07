@@ -8,11 +8,12 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import Loader from "../secondLoader"
 
 import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
-const Filter = ({ show, close }) => {
+const Filter = ({ show, close,bankTerminals,load }) => {
   return (
     <Modal
       size="lg"
@@ -23,6 +24,15 @@ const Filter = ({ show, close }) => {
       className="rounded border"
     >
       <Modal.Body>
+      {load && (
+              <Loader
+                type="TailSpin"
+                type="Oval"
+                height={60}
+                width={60}
+                color="#1E4A86"
+              />
+            )}
         <Container>
           <div
             className="header-wrapper d-flex justify-content-between align-item-center  justify-content-center"
@@ -62,8 +72,12 @@ const Filter = ({ show, close }) => {
                    
                     // onChange={updateInput}
                   >
-                    <option>Select Bank</option>
-                  </Form.Control>
+                        <option >Select your bank</option>
+                        {
+                            bankTerminals.map((bank, i) => {
+                                return <option key={i} value = {bank.bankId}>{bank.bankName}</option>
+                            })
+                        }                  </Form.Control>
                 </Form.Group>
               </Col>
             </Row>
@@ -100,6 +114,7 @@ const Filter = ({ show, close }) => {
                 variant="outline-primary"
                 className="filter-btn  "
                 type="submit"
+                onClick={close}
               >
                 CANCEL
               </Button>

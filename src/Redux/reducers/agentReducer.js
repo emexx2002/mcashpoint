@@ -1,9 +1,10 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { FETCH_AGENTS, ACTIVATION_CODE } from "../actions/actionTypes";
+import { FETCH_AGENTS, ACTIVATION_CODE,FETCH_BANK_TERMINAL,ACTIVATE_ASSIGN_TERMINAL } from "../actions/actionTypes";
 
 const initialState = {
   agents: [],
-  activationCode:null
+  activationCode:null,
+  bankTerminal:[]
 };
 
 const AgentsReducer = (state = initialState, action) => {
@@ -39,6 +40,38 @@ const AgentsReducer = (state = initialState, action) => {
           successmodal: true
         };
       case asyncActionName(ACTIVATION_CODE).failure:
+        return {
+          ...state,
+          loading:false,
+          error: true,
+          successmodal: false
+        };
+      case asyncActionName(FETCH_BANK_TERMINAL).loading:
+        return { ...state, loading: true };
+      case asyncActionName(FETCH_BANK_TERMINAL).success:
+        return {
+          ...state,
+          loading:false,
+          bankTerminal: action.payload,
+          successmodal: true
+        };
+      case asyncActionName(FETCH_BANK_TERMINAL).failure:
+        return {
+          ...state,
+          loading:false,
+          error: true,
+          successmodal: false
+        };
+      case asyncActionName(ACTIVATE_ASSIGN_TERMINAL).loading:
+        return { ...state, loading: true };
+      case asyncActionName(ACTIVATE_ASSIGN_TERMINAL).success:
+        return {
+          ...state,
+          loading:false,
+          assignTerminal: action.payload,
+          successmodal: true
+        };
+      case asyncActionName(ACTIVATE_ASSIGN_TERMINAL).failure:
         return {
           ...state,
           loading:false,

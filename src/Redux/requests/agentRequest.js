@@ -1,6 +1,6 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { FETCH_AGENTS, ACTIVATION_CODE } from "../actions/actionTypes";
+import { FETCH_AGENTS, ACTIVATION_CODE, FETCH_BANK_TERMINAL ,ACTIVATE_ASSIGN_TERMINAL} from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
@@ -52,3 +52,51 @@ export const ActivatateCode = (agentid) => dispatch => {
             dispatch(asyncActions(ACTIVATION_CODE).failure(true, error))
         });
 };
+
+export const FetchBankTerminal = (agentid) => dispatch => {
+    console.log(agentid)
+    dispatch(asyncActions(FETCH_BANK_TERMINAL).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    axios
+       .get(`${AgentConstant.FETCH_BANK_TERMINAAL_URL}=${agentid}`, {
+            headers: {
+                'Authorization': `bearer ${token.access_token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+      .then(res => {
+        const response = res.data
+        console.log(response)
+        if (response.responseCode === "00") {
+          dispatch(asyncActions(FETCH_BANK_TERMINAL).success(response.data));
+        }
+        else if (response.status === 400) {
+          dispatch(asyncActions(FETCH_BANK_TERMINAL).failure(true, response.data.error.message));
+        }
+      })
+      .catch(error => dispatch(asyncActions(FETCH_BANK_TERMINAL).failure(true, error)));
+  };
+
+  export const AssignTerminal = (agentid,bankId) => dispatch => {
+    console.log(agentid)
+    dispatch(asyncActions(ACTIVATE_ASSIGN_TERMINAL).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    axios
+       .get(`${AgentConstant.ACTIVATE_ASSIGN_TERMINAL_URL}=${agentid}&=${bankId}`, {
+            headers: {
+                'Authorization': `bearer ${token.access_token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+      .then(res => {
+        const response = res.data
+        console.log(response)
+        if (response.responseCode === "00") {
+          dispatch(asyncActions(ACTIVATE_ASSIGN_TERMINAL).success(response.responseCode));
+        }
+        else if (response.status === 400) {
+          dispatch(asyncActions(ACTIVATE_ASSIGN_TERMINAL).failure(true, response.data.error.message));
+        }
+      })
+      .catch(error => dispatch(asyncActions(ACTIVATE_ASSIGN_TERMINAL).failure(true, error)));
+  };
