@@ -3,55 +3,49 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-import { FetchAgentPurse} from "../../../Redux/requests/agentPurseRequest";
+import { FetchCentralPurse} from "../../../Redux/requests/agentPurseRequest";
 import Loader from "../../../Components/secondLoader"
 import { connect } from 'react-redux';
 import './style.css';
 
-const AgentPurse= (props) => {
-  const { FetchAgentPurse: FetchAgentPurses, agentPurse, loading} = props;
-  console.log(agentPurse)
+const CenttalPurse= (props) => {
+  const { FetchCentralPurse: FetchCentralPurses, centralPurse, loading} = props;
+  console.log(centralPurse)
     useEffect(() => {
-      FetchAgentPurses();
+      FetchCentralPurses();
     }, []);
    
        
 
-        const products = agentPurse.map((agent,index) => {
+        const products = centralPurse.map((agent,index) => {
           console.log(agent)
-
           return {
           id:index,
-          AgentID:agent.agent === undefined ? '':agent.agent.user.memberId,
-          BusinessName:agent.agent.businessName  === 'undefined' ? '':agent.agent.businessName ,
-          AgentName:agent.agent.user.username === 'undefined' ? '':agent.agent.user.username,
-          Balance:agent.balance === 'undefined' ? '':agent.balance,
-          DateCreated:agent.createdAt === 'undefined' ? '': agent.createdAt
-          // pageAccessed:aud.agent.requestMethod === 'undefined' ? '':aud.user.requestMethod,
-          // DataAccessed:aud.user.username === 'undefined' ? '':aud.user.username,
+          TransactionType:agent.transaction.transactionType === undefined ? '':agent.transaction.transactionType ,
+          TransactionID:agent.transaction.transactionID   === 'undefined' ? '':agent.transaction.transactionID ,
+          Amount:agent.transaction.amount  === 'undefined' ? '':agent.transaction.amount,
+          MCPCut:agent.transaction.thirdpartyCut === 'undefined' ? '':agent.transaction.thirdpartyCut,
+          // PreBalance:agent.purseBalance === 'undefined' ? '': agent.purseBalance,
+          // PostBalance:agent.purseBalance === 'undefined' ? '':agent.purseBalance,
+          Description:agent.reason === 'undefined' ? '':agent.reason,
 
           }
           })
         
           const columns = [
             // { dataField: 'id', text: 'Id'},
-            { dataField: 'AgentID', text: 'Agent ID'},
-            { dataField: 'BusinessName', text: 'Business Name',headerStyle: (colum, colIndex) => {
-                return { width: '150px', textAlign: 'center',padding:'10px'};
-              }},
-            { dataField: 'AgentName', text: 'Agent Name',style:{'width' : '20em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
-                return { width: '200px', textAlign: 'center'};
-              }},
-            { dataField: 'Balance', text: 'Balance '},
-            { dataField: 'Action', text: 'Action',formatter: (cellContent, row) => {
-              console.log(cellContent,row)
-                return (
-                  <h5>
-                  <button type="button"  className="btn assign-terminal">CREDIT/DEBIT</button>
-                 </h5>
-                );
-              }},
-            { dataField: 'DateCreated', text: 'Date Created'},
+            { dataField: 'TransactionType', text: ' Transaction Type'},
+            { dataField: 'TransactionID', text: 'Transaction ID'},
+            { dataField: 'Amount', text: 'Amount'},
+            { dataField: 'MCPCut', text: 'MCP Cut'},
+            { dataField: 'ESLCharge', text: 'ESL Charge'},
+            
+            { dataField: 'PreBalance', text: 'Pre-Balance '},
+            { dataField: 'PostBalance', text: 'Post-Balance '},
+            { dataField: 'Description', text: 'Description Name',headerStyle: (colum, colIndex) => {
+              return { width: '250px', textAlign: 'center',padding:'10px'};
+            }},
+            // { dataField: 'Description', text: 'Description'},
             
           ];
         
@@ -79,8 +73,7 @@ const AgentPurse= (props) => {
             }
           });
         
-      return (
-        
+      return (      
           <div>
                            {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
 
@@ -97,7 +90,7 @@ const AgentPurse= (props) => {
 }
 
 const mapStateToProps = state => (console.log(state),{
-  agentPurse:state.purse.agentPurse,
+  centralPurse:state.purse.centralPurse,
   loading:state.purse.loading,
   error:state.purse.error
 
@@ -106,6 +99,7 @@ const mapStateToProps = state => (console.log(state),{
 export default connect(
   mapStateToProps,
   {
-     FetchAgentPurse
+    FetchCentralPurse
   }
-)(AgentPurse);
+)(CenttalPurse);
+ 

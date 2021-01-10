@@ -1,6 +1,6 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { FETCH_AGENTS_MANAGER, FETCH_LGA, FETCH_STATE , FETCH_BANK,CREATE_AGENTS_MANAGER} from "../actions/actionTypes";
+import { FETCH_AGENTS_MANAGER, FETCH_LGA, FETCH_STATE , FETCH_BANK,CREATE_AGENTS_MANAGER,AGENT_MANAGER_SETTLEMENT} from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
@@ -140,4 +140,26 @@ export const CreateAgentManager = ({
       })
       .catch(error => dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, error)));
   };
-    
+
+  export const FetchSettlement = () => dispatch => {
+    dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    axios
+       .get(`${AgentConstant.AGENT_MANAGER_SETTLEMENT_URL}`, {
+            headers: {
+                'Authorization': `bearer ${token.access_token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+      .then(res => {
+        const response = res.data
+        console.log(response.data.data)
+        if (response.responseCode === "00") {
+          dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).success(response.data.data));
+        }
+        else if (response.status === 400) {
+          dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).failure(true, response.data.error.message));
+        }
+      })
+      .catch(error => dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).failure(true, error)));
+  };

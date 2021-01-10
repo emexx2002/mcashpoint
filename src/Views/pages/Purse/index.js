@@ -7,7 +7,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import DashboardTemplate from "../../template/dashboardtemplate";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from 'react-bootstrap/Tab'
-import CreatePurse from "./createpurse";
+import CentralPurse from "./centralPurse";
 import AgentPurse from "./agentpurse";
 
 
@@ -27,14 +27,14 @@ const AgentsManager = () => {
                     <div className="person-background"></div>
                     <div>
                         <div>120</div>
-                        <div>Agents </div>
+                        <div>Total Agent Balance </div>
                     </div>
                 </div>
                 <div className='flex-box'>
                     <div className="mark-background"></div>
                     <div>
                         <div>0</div>
-                        <div>Unique Customers</div>
+                        <div>Wallet Balance</div>
                     </div>
                 </div>  
 
@@ -43,7 +43,7 @@ const AgentsManager = () => {
                 
                    <Tabs defaultActiveKey={key} id="uncontrolled-tab-example" >
                     <Tab eventKey={"centralPurse"} title="Central Purse">
-                    <CreatePurse />
+                    <CentralPurse />
                     </Tab>
                   
                     <Tab eventKey={"AgentPurse"} title="Agent Purse" >

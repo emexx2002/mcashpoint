@@ -3,11 +3,14 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
+import AssignTerminal from "../../../Components/Assign Terminal"
+import Loader from "../../../Components/secondLoader"
 
 import {
   FetchAgent,
   ActivatateCode,
   FetchBankTerminal,
+  UnAssignTerminal
 } from "../../../Redux/requests/agentRequest";
 import { connect } from "react-redux";
 
@@ -18,6 +21,7 @@ const Agents = (props) => {
   const {
     FetchBankTerminal: FetchBankTerminals,
     FetchAgent: FetchAgents,
+    UnAssignTerminal:UnAssignTerminals,
     ActivatateCode: ActivatateCodes,
     bankTerminal,
     agents,
@@ -27,10 +31,12 @@ const Agents = (props) => {
   } = props;
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
-  
   const [terminalID, showTerminalID] = useState(false);
+  const [agentID, setAgentId] = useState('');
+
+  // const [agentsId, showAgentID] = useState(false);
   // const [status, setStatus] = useState([FetchTransactions]);
-  console.log(activationCode);
+  console.log(agentID);
 
   useEffect(() => {
     FetchAgents();
@@ -40,7 +46,6 @@ const Agents = (props) => {
   // const products = {}
 
   const products = agents.map((agent, index) => {
-    console.log(agent.bankTerminal);
     return {
       agent: agent,
       id: index,
@@ -64,12 +69,23 @@ const Agents = (props) => {
     }
   }
   const AssignTerminals = (agentId) => {
-    // FetchBankTerminals(agentId)
-    ActivateAssignTerminal(agentId);
     showTerminalID(true);
+    setAgentId(agentId)
+    FetchBankTerminals(agentId);
+
+
   };
 
-  const ActivateAssignTerminal = (agentId) => {};
+  const UnAssignTerminal = (agentId) => {
+    FetchAgents();
+
+    UnAssignTerminals(agentId)
+
+  };
+    
+  const closeAssignTerminal = () => {
+    showTerminalID(false);
+  };
 
   const columns = [
     // { dataField: 'id', text: 'Id'},
@@ -94,25 +110,27 @@ const Agents = (props) => {
       dataField: "Action",
       text: "Action",
       formatter: (cellContent, row) => {
-        FetchBankTerminals(row.AgentID);
-        return (
+        console.log(row.AgentID,cellContent)
+                return (
           <h5>
-            {row.agent.terminalActivated ? (
+            {row.agent.bankTerminal=== null ? (
+              
               <button
-                type="button"
-                className="unassign-terminal"
-                onClick={() => AssignTerminals(row.AgentID)}
-              >
-                Unassign Terminal
-              </button>
+              type="button"
+              className="assign-terminal"
+              onClick={() => AssignTerminals(row.AgentID)}
+            >
+              Assign Terminal
+            </button>
             ) : (
               <button
-                type="button"
-                className="assign-terminal"
-                onClick={() => AssignTerminals(row.AgentID)}
-              >
-                Assign Terminal
-              </button>
+              type="button"
+              className="unassign-terminal"
+              onClick={() => UnAssignTerminal(row.AgentID)}
+            >
+              Unassign Terminal
+            </button>
+
             )}
           </h5>
         );
@@ -123,6 +141,7 @@ const Agents = (props) => {
       dataField: "ActivationCode",
       text: "Activation Code",
       formatter: (cellContent, row) => {
+        
         return (
           <h5>
             <button
@@ -168,6 +187,15 @@ const Agents = (props) => {
   return (
     
         <div className="table-wrapper">
+            {loading && (
+              <Loader
+                type="TailSpin"
+                type="Oval"
+                height={60}
+                width={60}
+                color="#1E4A86"
+              />
+            )}
           <h4>All Agents</h4>
           <BootstrapTable
             bootstrap4
@@ -181,6 +209,8 @@ const Agents = (props) => {
             condensed
           />
           {/* <button onClick={() => showTerminalID(true)}>Assign</button> */}
+          <AssignTerminal bankTerminals={bankTerminal} load={loading} show={terminalID} close={closeAssignTerminal} agentsId={agentID}/>
+
         </div>
      
       
@@ -202,4 +232,5 @@ export default connect(mapStateToProps, {
   FetchAgent,
   ActivatateCode,
   FetchBankTerminal,
+  UnAssignTerminal
 })(Agents);

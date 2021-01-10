@@ -63,6 +63,8 @@ const AgentsManager = () => {
   return (
     <DashboardTemplate>
       <div className="transact-wrapper">
+    
+
         <p>Agents</p>
         <div className="agent-transact-header">
           <div>

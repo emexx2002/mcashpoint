@@ -1,10 +1,11 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { FETCH_AGENTS, ACTIVATION_CODE,FETCH_BANK_TERMINAL,ACTIVATE_ASSIGN_TERMINAL } from "../actions/actionTypes";
+import { FETCH_AGENTS, ACTIVATION_CODE,FETCH_BANK_TERMINAL,ACTIVATE_ASSIGN_TERMINAL,UNACTIVATE_ASSIGN_TERMINAL,CREATE_AGENTS } from "../actions/actionTypes";
 
 const initialState = {
   agents: [],
   activationCode:null,
-  bankTerminal:[]
+  bankTerminal:[],
+  createAgent:null
 };
 
 const AgentsReducer = (state = initialState, action) => {
@@ -78,6 +79,38 @@ const AgentsReducer = (state = initialState, action) => {
           error: true,
           successmodal: false
         };
+        case asyncActionName(UNACTIVATE_ASSIGN_TERMINAL).loading:
+          return { ...state, loading: true };
+        case asyncActionName(UNACTIVATE_ASSIGN_TERMINAL).success:
+          return {
+            ...state,
+            loading:false,
+            unassignTerminal: action.payload,
+            successmodal: true
+          };
+        case asyncActionName(UNACTIVATE_ASSIGN_TERMINAL).failure:
+          return {
+            ...state,
+            loading:false,
+            error: true,
+            successmodal: false
+          };
+          case asyncActionName(CREATE_AGENTS).loading:
+            return { ...state, loading: true };
+          case asyncActionName(CREATE_AGENTS).success:
+            return {
+              ...state,
+              loading:false,
+              createAgent: action.payload,
+              successmodal: true
+            };
+          case asyncActionName(CREATE_AGENTS).failure:
+            return {
+              ...state,
+              loading:false,
+              error: true,
+              successmodal: false
+            };
     default:
       return state;
   }

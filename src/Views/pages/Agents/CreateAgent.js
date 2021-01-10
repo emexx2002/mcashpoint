@@ -15,8 +15,8 @@ import {
   FetchState,
   FetchLga,
   FetchBank,
-  CreateAgentManager,
 } from "../../../Redux/requests/agentManagerRequest";
+import {CreateAgent} from "../../../Redux/requests/agentRequest";
 import Loader from "../../../Components/secondLoader";
 
 const CreateAgentModal = ({
@@ -31,27 +31,27 @@ const CreateAgentModal = ({
   agentStates,
   agentLgas,
   agentBanks,
+  createAgent
 }) => {
   const [isPublic, setIsPublic] = useState(true);
 
   const [logvt, setIsLogvt] = useState({});
   const [CreateAgentData, setCreateAgentData] = useState({
-    firstname: "",
-    lastname: "",
-    gender: "",
-    email: "",
-    phone: "",
-    accountName: "",
-    accountNumber: "",
-    address: "",
-    accountBvn: "",
-    dateOfBirth: "",
-    username: "",
-    nationality: "",
-    identityType: "",
-    stateId: "",
-    lgaId: "",
-    bankId: "",
+    accountNumber: "" ,
+    accountName: "" ,
+    accountBvn: "" ,
+    businessName: "" ,
+    businessPhone: "" ,
+    businessAddress: "" ,
+    gender: "" ,
+    firstname: "" ,
+    middlename: "" ,
+    lastname: "" ,
+    email: "" ,
+    username: "" ,
+    stateId: "" ,
+    lgaId: "" ,
+    bankId: "" 
   });
 
   useEffect(() => {
@@ -62,18 +62,23 @@ const CreateAgentModal = ({
   const updateInput = (event) => {
     setCreateAgentData({
       ...CreateAgentData,
-      [event.target.name]: event.target.value,
+      [event.target.name]:  event.target.value,
     });
   };
 
   const _handleSelectState = (e) => {
+    agentStates.map((state, i) => {
+      let stateId = state.id;
+
+      setCreateAgentData({
+        ...CreateAgentData,
+        [e.target.name]: stateId,
+      });
+    })
     let stateCode = e.target.value;
     FetchLgas(stateCode);
 
-    setCreateAgentData({
-      ...CreateAgentData,
-      [e.target.name]: stateCode,
-    });
+
   };
 
   const _handleSelectBank = (e) => {
@@ -88,7 +93,8 @@ const CreateAgentModal = ({
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // handleCreateAgentManager(CreateAgentData);
+    console.log()
+    handleCreateAgent(CreateAgentData);
   };
 
   return (
@@ -99,15 +105,7 @@ const CreateAgentModal = ({
       aria-labelledby="edit-profile-modal"
       className="rounded border"
     >
-      {loading && (
-        <Loader
-          type="TailSpin"
-          type="Oval"
-          height={60}
-          width={60}
-          color="#1E4A86"
-        />
-      )}
+     
 
       <Modal.Body>
         <Container>
@@ -123,6 +121,15 @@ const CreateAgentModal = ({
         </Container>
         <hr />
         <Container>
+        {loading  &&(
+        <Loader
+          type="TailSpin"
+          type="Oval"
+          height={60}
+          width={60}
+          color="#1E4A86"
+        />
+      )}
           <Form onSubmit={onSubmit}>
             <h6>Personal Information</h6>
             <br />
@@ -166,7 +173,7 @@ const CreateAgentModal = ({
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Date of birth</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="name@example.com"
                     name="dateOfBirth"
                     onChange={updateInput}
@@ -208,7 +215,7 @@ const CreateAgentModal = ({
                   <Form.Control
                     type="text"
                     placeholder="Enter business name"
-                    name="business-name"
+                    name="businessName"
                     onChange={updateInput}
                   />
                 </Form.Group>
@@ -219,7 +226,7 @@ const CreateAgentModal = ({
                   <Form.Control
                     type="text"
                     placeholder="Enter Business address"
-                    name="business-address"
+                    name="businessAddress"
                     onChange={updateInput}
                   />
                 </Form.Group>
@@ -232,7 +239,7 @@ const CreateAgentModal = ({
                   <Form.Control
                     type="text"
                     placeholder="Enter business phone number"
-                    name="business-phone"
+                    name="businessPhone"
                     onChange={updateInput}
                   />
                 </Form.Group>
@@ -247,6 +254,7 @@ const CreateAgentModal = ({
                   >
                     <option>Select your state</option>
                     {agentStates.map((state, i) => {
+                      console.log(state)
                       return (
                         <option key={i} value={state.stateCode}>
                           {state.stateName}
@@ -263,7 +271,7 @@ const CreateAgentModal = ({
                     <option disabled>Select your LGA</option>
                     {agentLgas.map((lga, i) => {
                       return (
-                        <option value={lga.lga} key={i}>
+                        <option value={lga.id} key={i}>
                           {lga.lga}
                         </option>
                       );
@@ -281,7 +289,7 @@ const CreateAgentModal = ({
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Account Number</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="Enter Account Number"
                     name="accountNumber"
                     onChange={updateInput}
@@ -292,7 +300,7 @@ const CreateAgentModal = ({
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Account Name </Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="Enter account name"
                     name="accountName"
                     onChange={updateInput}
@@ -303,14 +311,15 @@ const CreateAgentModal = ({
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Bank Name</Form.Label>
                   <Form.Control
-                    name="stateId"
+                    name="bankId"
                     as="select"
                     onChange={_handleSelectBank}
                   >
                     <option>Select your bank</option>
                     {agentBanks.map((bank, i) => {
+                      console.log(bank)
                       return (
-                        <option key={i} value={bank.name}>
+                        <option key={i} value={bank.id}>
                           {bank.name}
                         </option>
                       );
@@ -324,7 +333,7 @@ const CreateAgentModal = ({
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Account BVN</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="Enter Account BVN"
                     name="accountBvn"
                     onChange={updateInput}
@@ -364,10 +373,12 @@ CreateAgentModal.propTypes = {
 const mapStateToProps = (state) => (
   console.log(state),
   {
+    createAgent: state.agents.createAgent,
     agentStates: state.agentmanager.agentStates,
     agentLgas: state.agentmanager.agentLga,
     agentBanks: state.agentmanager.agentBanks,
-    loading: state.agentmanager.loading,
+    loading: state.agents.loading,
+    // loadings: state.agentmanager.loading,
     error: state.agentmanager.error,
   }
 );
@@ -376,5 +387,5 @@ export default connect(mapStateToProps, {
   FetchState,
   FetchLga,
   FetchBank,
-  CreateAgentManager,
+  CreateAgent,
 })(CreateAgentModal);

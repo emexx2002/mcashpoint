@@ -5,7 +5,7 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import Upload from '../../../Assets/img/upload.png'
 import Filter from '../../../Assets/img/filter.png'
-import { FetchAgent} from "../../../Redux/requests/agentRequest";
+import { FetchSettlement} from "../../../Redux/requests/agentManagerRequest";
 import Loader from "../../../Components/secondLoader"
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { connect } from 'react-redux';
@@ -13,71 +13,37 @@ import { connect } from 'react-redux';
 import './style.css';
 
 
-const FetchAgentsManager = (props) => {
-  const { FetchAgent: FetchAgents, agents, loading} = props;
-  console.log(agents)
+const FetchAgentsSettlement = (props) => {
+  const { FetchSettlement: FetchSettlements, agents, loading,settlement} = props;
+  console.log(settlement)
   // const [alltransactions, setTransactions] = useState([FetchTransactions]);
   // const [status, setStatus] = useState([FetchTransactions]);
   // console.log('jj',alltransactions)
 
   useEffect(() => {
-    FetchAgents();
+    FetchSettlements();
   }, []);
 
-  // const products = {}
-  
-  const products = agents.map((agent,index) => {
-          console.log(agent)
+  const products = settlement.map((settle,index) => {
+    console.log(settle.ambassador.accountName,settle.ambassador.accountNumber)
     return {
       id:index,
-      AgentID:agent.user.memberId === null ? '':agent.user.memberId,
-      BusinessName:agent.businessName  === null ? '':agent.businessName,
-      UserName:agent.user.username  === null ? '':agent.user.username ,
-      PhoneNumber: agent.businessPhone === null ? '':agent.businessPhone ,
-      TerminalID:agent.bankTerminal === null ? '': agent.bankTerminal.terminalId,
-      DateCreated:agent.createdAt === null ? '': agent.createdAt
+      AgentManagerName:settle.ambassador.user.fullName === null ? '':settle.ambassador.user.fullName,
+      AccountDetails:settle.ambassador  === null ? '':settle.ambassador.accountName + " | " + settle.ambassador.accountNumber + " | " +settle.ambassador.bank.name,
+      AmountAccured:settle.amountAccrued  === null ? '':settle.amountAccrued ,
+      Month: settle.month === null ? '':settle.month ,
+      Year:settle.year === null ? '': settle.year,
     }
 })
   
         
           const columns = [
             // { dataField: 'id', text: 'Id'},
-            { dataField: 'AgentID', text: 'Agent ID'},
-            { dataField: 'BusinessName', text: 'Business Name',headerStyle: (colum, colIndex) => {
-                return { width: '150px', textAlign: 'center',padding:'10px'};
-              }},
-            { dataField: 'UserName', text: 'User Name',style:{'width' : '20em',whiteSpace: 'normal', wordWrap: 'break-word'},headerStyle: (colum, colIndex) => {
-                return { width: '200px', textAlign: 'center'};
-              }},
-            { dataField: 'PhoneNumber', text: 'Phone Number'},
-            { dataField: 'Action', text: 'Action',formatter: (cellContent, row) => {
-                return (
-                  <h5>
-                  <button type="button" className="btn assign-terminal">Assign Terminal</button>
-
-                 </h5>
-                );
-              }},
-            { dataField: 'TerminalID', text: 'Terminal ID'},
-            { dataField: 'TransactionHistory', text: 'Transaction History',formatter: (cellContent, row) => {
-                return (
-                  <h5>
-                   <button type="button" className="btn view">view</button>
-
-                  </h5>
-                );}
-              },
-            { dataField: 'ActivationCode', text: 'Activation Code',formatter: (cellContent, row) => {
-                return (
-                  <h5>
-                   <button type="button" className="btn generate-code">Generate</button>
-
-                  </h5>
-                );
-              }},
-            { dataField: 'AgentManager', text: 'Agent Manager'},
-            { dataField: 'DateCreated', text: 'Date Created'},
-            
+            { dataField: 'AgentManagerName', text: ' Agent Manager Name'},
+            { dataField: 'AccountDetails', text: 'Account Details'},
+            { dataField: 'AmountAccured', text: 'Amount Accured'},
+            { dataField: 'Month', text: 'Month'},
+            { dataField: 'Year', text: 'Year'},
           ];
         
           const defaultSorted = [{
@@ -116,15 +82,15 @@ const FetchAgentsManager = (props) => {
  );
 };
 const mapStateToProps = state => (console.log(state),{
-  agents: state.agents.agents,
-  loading:state.agents.loading,
-  error:state.agents.error
+  settlement: state.agentmanager.settlement,
+  loading:state.agentmanager.loading,
+  error:state.agentmanager.error
 
 });
 
 export default connect(
   mapStateToProps,
   {
-    FetchAgent
+    FetchSettlement
   }
-)(FetchAgentsManager);
+)(FetchAgentsSettlement);
