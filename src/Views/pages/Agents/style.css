@@ -49,3 +49,12 @@
 
     color: #00249C;
 }
+.agent-table-wrapper{
+    background: #FFFFFF;
+    width: 100%;
+    padding: 30px;
+    border-radius: 10px;
+}
+h5{
+   color: #00249C;
+}
