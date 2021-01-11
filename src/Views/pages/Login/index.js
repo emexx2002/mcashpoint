@@ -4,34 +4,49 @@ import { loginUser } from "../../../Redux/requests/userRequest";
 import Loader from "../../../Components/secondLoader"
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {history} from '../../../utils/history'
+// import {history} from '../../../utils/history'
 import ErrorAlert from '../../../Components/alerts';
 import { removeToken } from '../../../utils/localStorage';
 import './style.css';
 
 
-const Login = ({ history, loginUser: handleLogin, loading ,user,error}) => {
-console.log(error)
+const Login = ({ history, loginUser: handleLogin, loading ,success,error}) => {
     const [userCredentials, setUserCredentials] = useState({
         username: null,
         password: null
     });
+    console.log(history)
 
     const [errors, setErrors] = useState([]);
-    
     function handleInputChange(event) {
         console.log(event)
         setUserCredentials({ ...userCredentials, [event.target.name]: event.target.value });
         console.log(userCredentials)
     };
+   
     useEffect(() => { 
+        
+        console.log("CJ big head")
         if(error){
-            return setErrors(['There was an error sending your request, please try again later.']);
+            console.log("CJ very big head")
 
+            return setErrors(['There was an error sending your request, please try again later.']);
         }
         removeToken() 
     }, [error]);
-console.log(error)
+
+    useEffect(() => { 
+       
+        if(success){
+            console.log("CJ very very very big head")
+
+            history.push("/dashboard")
+        }else{
+            history.push("/")
+
+        }
+    }, [success]);
+
     const onSubmit = (event) => {
         event.preventDefault();
         
@@ -40,9 +55,8 @@ console.log(error)
         if(username === null || username === '' || password=== null|| password=== '') {
             setErrors(["*username/password can't be empty"])
         }
-        
-        console.log(error)
-         handleLogin(userCredentials);
+            
+        handleLogin(userCredentials);
          
         
       }
@@ -96,7 +110,8 @@ console.log(error)
         login: state.users.user,
         loading:state.users.loading,
         user:state.users.user,
-        error:state.users.error
+        error:state.users.error,
+        success:state.users.success
 
       });
   

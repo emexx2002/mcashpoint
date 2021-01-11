@@ -1,12 +1,12 @@
 
 export const isLoggedIn = () => {
   const data = JSON.parse(localStorage.getItem("data"))
-
+console.log(data)
   if(data){
-    const exp = data.expires_in
+    // const exp = data.expires_in
  
-    let currentTime = Date.now().valueOf() / 1000;
-    console.log(currentTime, exp)
+    // let currentTime = Date.now().valueOf() / 1000;
+    // console.log(currentTime, exp)
     // if (currentTime > exp) {
     //   // // window.localStorage.clear();
     //   // const lastPageVisited = window.location.pathname + window.location.search;

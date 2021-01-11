@@ -1,19 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import {
   Modal,
   Form,
   Container,
   Button,
- 
+  Alert,
   Row,
   Col,
 } from "react-bootstrap";
 import Loader from "../secondLoader"
+import { connect } from "react-redux";
 
+import {
+  AssignTerminal
+} from "../../Redux/requests/agentRequest";
 import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
-const Filter = ({ show, close,bankTerminals,load }) => {
+const Filter = ({ show, close,bankTerminals,load ,success,agentsId,assignTerminal, AssignTerminal:AssignTerminals,reload}) => {
+  const [bankId, setbankId] = useState('');
+console.log(show,success)
+
+const onSubmit = (event) => {
+  event.preventDefault();
+  console.log(bankId,agentsId)
+
+  AssignTerminals(agentsId,bankId);
+
+}
+// const isDidMount = useRef(true)
+useEffect(() => { 
+  if(show && success){
+    reload()
+  }
+}, [success]);
+
   return (
     <Modal
       size="lg"
@@ -49,7 +70,14 @@ const Filter = ({ show, close,bankTerminals,load }) => {
         <Container>
           <h3>Assign agent to terminal</h3>
           <br />
-          <Form>
+
+          <Form onSubmit={onSubmit}>
+          {/* {
+            state.message ? <Alert variant="success">{state.message}</Alert> : null
+          }
+          {
+            state.error ? <Alert variant="danger">{state.error}</Alert> : null
+          } */}
             <Row>
               <Col>
                 <Form.Group controlId="">
@@ -59,7 +87,7 @@ const Filter = ({ show, close,bankTerminals,load }) => {
                     type="text"
                     placeholder="Chinweoke Adolphus Williams"
                     // onChange={updateInput}
-                    required
+                    
                   />
                 </Form.Group>
               </Col>
@@ -70,14 +98,15 @@ const Filter = ({ show, close,bankTerminals,load }) => {
                     size="sm"
                     as="select"
                    
-                    // onChange={updateInput}
-                  >
+                    onChange={e => setbankId(e.target.value)}
+                    >
                         <option >Select your bank</option>
                         {
                             bankTerminals.map((bank, i) => {
-                                return <option key={i} value = {bank.bankId}>{bank.bankName}</option>
+                                return <option key={i} name='bankId' value = {bank.bankId}>{bank.bankName}</option>
                             })
-                        }                  </Form.Control>
+                        }     
+                  </Form.Control>
                 </Form.Group>
               </Col>
             </Row>
@@ -91,7 +120,7 @@ const Filter = ({ show, close,bankTerminals,load }) => {
                     type="text"
                     placeholder="Enter Terminal ID"
                     // onChange={updateInput}
-                    required
+                    
                   ></Form.Control>
                 </Form.Group>
               </Col>
@@ -103,7 +132,7 @@ const Filter = ({ show, close,bankTerminals,load }) => {
                     type="text"
                     placeholder="Enter Activation Code"
                     // onChange={updateInput}
-                    required
+                    
                   ></Form.Control>
                 </Form.Group>
               </Col>
@@ -133,4 +162,21 @@ const Filter = ({ show, close,bankTerminals,load }) => {
     </Modal>
   );
 };
-export default Filter;
+const mapStateToProps = (state) => (
+  console.log(state),
+  {
+    assignTerminal: state.agents.assignTerminal,
+    loading: state.agents.loading,
+    error: state.agents.error,
+    success: state.agents.assignSuccess,
+  }
+);
+
+export default connect(
+  mapStateToProps,
+  {
+    AssignTerminal,
+
+  }
+)(Filter);
+

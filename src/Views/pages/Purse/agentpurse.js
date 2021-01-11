@@ -6,22 +6,27 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { FetchAgentPurse} from "../../../Redux/requests/agentPurseRequest";
 import Loader from "../../../Components/secondLoader"
 import { connect } from 'react-redux';
+import CreditDebit from "../../../Components/credit"
 import './style.css';
 
-const AgentPurse= (props) => {
+const AgentPurse = (props) => {
+  const[credit, showCredit]=useState(false)
   const { FetchAgentPurse: FetchAgentPurses, agentPurse, loading} = props;
-  console.log(loading)
+  console.log(agentPurse)
     useEffect(() => {
       FetchAgentPurses();
     }, []);
-   
+   const closeCredit = () => {
+     showCredit(false);
+   };
        
 
         const products = agentPurse.map((agent,index) => {
           console.log(agent)
+
           return {
           id:index,
-          AgentID:agent.agent.user.memberId === undefined ? '':agent.agent.user.memberId,
+          AgentID:agent.agent === undefined ? '':agent.agent.user.memberId,
           BusinessName:agent.agent.businessName  === 'undefined' ? '':agent.agent.businessName ,
           AgentName:agent.agent.user.username === 'undefined' ? '':agent.agent.user.username,
           Balance:agent.balance === 'undefined' ? '':agent.balance,
@@ -78,20 +83,38 @@ const AgentPurse= (props) => {
             }
           });
         
-      return (
         
-          <div>
-                           {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+      return (
+        <div>
+          {loading && (
+            <Loader
+              type="TailSpin"
+              type="Oval"
+              height={60}
+              width={60}
+              color="#1E4A86"
+            />
+          )}
 
-              <div className='table-wrapper'>
-
-                   <h4>All Agents</h4>
-                 <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
-
-             </div>
-            
+          <div className="table-wrapper">
+            <h4>All Agents</h4>
+            <BootstrapTable
+              bootstrap4
+              keyField="id"
+              data={products}
+              columns={columns}
+              defaultSorted={defaultSorted}
+              pagination={pagination}
+              bordered={false}
+              hover
+              condensed
+            />
+            <button onClick={() => showCredit(true)}>Credit</button>
+            <CreditDebit show={credit} close={closeCredit}/>
+            {/* <button onClick={""}>CREDIT</button> */}
           </div>
-      )
+        </div>
+      );
     
 }
 

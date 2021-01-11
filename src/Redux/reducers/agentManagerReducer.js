@@ -1,12 +1,13 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { FETCH_AGENTS_MANAGER , FETCH_STATE , FETCH_LGA, FETCH_BANK , CREATE_AGENTS_MANAGER} from "../actions/actionTypes";
+import { FETCH_AGENTS_MANAGER , FETCH_STATE , FETCH_LGA, FETCH_BANK , CREATE_AGENTS_MANAGER , AGENT_MANAGER_SETTLEMENT} from "../actions/actionTypes";
 
 const initialState = {
   agentmanager: [],
   agentStates: [],
   agentLga:[],
   agentBanks:[],
-  agentCreation:false
+  agentCreation:false,
+  settlement:[]
 };
 
 const AgentManagerReducer = (state = initialState, action) => {
@@ -113,6 +114,25 @@ const AgentManagerReducer = (state = initialState, action) => {
         loading:false,
         // failure
       };
+      case asyncActionName(AGENT_MANAGER_SETTLEMENT).loading:
+        return { ...state, loading:true };
+        case asyncActionName(AGENT_MANAGER_SETTLEMENT).success:
+    
+          return {
+            ...state,
+            settlement:action.payload,
+            success: true,
+            loading:false,
+            error: false,
+          };
+        case asyncActionName(AGENT_MANAGER_SETTLEMENT).failure:
+          return {
+            ...state,
+            error: true,
+            success: false,
+            loading:false,
+            // failure
+          };
     default:
       return state;
   }
