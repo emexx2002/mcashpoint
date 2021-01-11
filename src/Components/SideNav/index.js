@@ -11,13 +11,18 @@ import Agent from '../../Assets/img/agents.png'
 import Settings from '../../Assets/img/settings.png'
 import Logout from '../../Assets/img/logout.png'
 import { removeToken } from '../../utils/localStorage';
+import { logoutUser } from "../../Redux/requests/userRequest";
+import { connect } from 'react-redux';
 
 
-export default class SideNav extends Component {
-
+class SideNav extends Component {
+  constructor(props){
+        
+    super(props);
+  }
   _handleSignOut(){
-    removeToken()
-}  
+    this.props.logoutUser()
+  }  
 
   render() {
     return (
@@ -73,3 +78,12 @@ export default class SideNav extends Component {
     )
   }
 }
+
+
+
+export default connect(
+null,
+{
+  logoutUser
+}
+)(SideNav);

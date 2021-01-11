@@ -28,6 +28,7 @@ const Agents = (props) => {
     loading,
     activationCode,
     success,
+    unassignSuccess
   } = props;
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
@@ -43,22 +44,17 @@ const Agents = (props) => {
     FetchBankTerminals();
   }, []);
 
-  // const products = {}
+  const reload = ()=>{
+    FetchAgents();
+    FetchBankTerminals();
+  }
 
-  const products = agents.map((agent, index) => {
-    return {
-      agent: agent,
-      id: index,
-      AgentID: agent.id === null ? "" : agent.id,
-      BusinessName: agent.businessName === null ? "" : agent.businessName,
-      UserName: agent.user.username === null ? "" : agent.user.username,
-      PhoneNumber: agent.businessPhone === null ? "" : agent.businessPhone,
-      Action: agent.user === null ? "" : agent.user.memberId,
-      TerminalID:
-        agent.bankTerminal === null ? "" : agent.bankTerminal.terminalId,
-      DateCreated: agent.createdAt === null ? "" : agent.createdAt,
-    };
-  });
+  useEffect(() => { 
+    console.log(unassignSuccess)
+    if(unassignSuccess){
+      FetchAgents()
+    }
+  }, [unassignSuccess]);
 
   function ActivatateCode(agentId) {
     setActivation(null);
@@ -87,6 +83,23 @@ const Agents = (props) => {
     showTerminalID(false);
   };
 
+  const products = agents.map((agent, index) => {
+    return {
+      agent: agent,
+      id: index,
+      AgentID: agent.id === null ? "" : agent.id,
+      BusinessName: agent.businessName === null ? "" : agent.businessName,
+      UserName: agent.user.username === null ? "" : agent.user.username,
+      PhoneNumber: agent.businessPhone === null ? "" : agent.businessPhone,
+      Action: agent.user === null ? "" : agent.user.memberId,
+      TerminalID:
+        agent.bankTerminal === null ? "" : agent.bankTerminal.terminalId,
+      DateCreated: agent.createdAt === null ? "" : agent.createdAt,
+    };
+  });
+
+
+
   const columns = [
     // { dataField: 'id', text: 'Id'},
     { dataField: "AgentID", text: "Agent ID" },
@@ -110,7 +123,7 @@ const Agents = (props) => {
       dataField: "Action",
       text: "Action",
       formatter: (cellContent, row) => {
-        console.log(row.AgentID,cellContent)
+        console.log(row.agent.bankTerminal)
                 return (
           <h5>
             {row.agent.bankTerminal=== null ? (
@@ -209,7 +222,7 @@ const Agents = (props) => {
             condensed
           />
           {/* <button onClick={() => showTerminalID(true)}>Assign</button> */}
-          <AssignTerminal bankTerminals={bankTerminal} load={loading} show={terminalID} close={closeAssignTerminal} agentsId={agentID}/>
+          <AssignTerminal bankTerminals={bankTerminal} reload={reload} load={loading} show={terminalID} close={closeAssignTerminal} agentsId={agentID}/>
 
         </div>
      
@@ -224,7 +237,8 @@ const mapStateToProps = (state) => (
     bankTerminal: state.agents.bankTerminal,
     loading: state.agents.loading,
     error: state.agents.error,
-    success: state.agents.successmodal,
+    success: state.agents.success,
+    unassignSuccess:state.agents.unassignSuccess
   }
 );
 

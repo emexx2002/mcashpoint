@@ -1,12 +1,13 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { LOGIN_USER } from "../actions/actionTypes";
+import { LOGIN_USER,LOGOUT_USER } from "../actions/actionTypes";
 import { saveToken, removeToken } from '../../utils/localStorage';
 
 const initialState = {
   user: {},
   isAuthenticated: null,
   loading:false,
-  error:false
+  error:null,
+  success:false
   // failure:'user cant be logged in'
 };
 
@@ -17,7 +18,8 @@ const UsersReducer = (state = initialState, action) => {
       return { ...state, loading:true };
     case asyncActionName(LOGIN_USER).success:
       saveToken( JSON.stringify(action.payload));
-      window.location.replace('/dashboard')
+      console.log(action.payload)
+      // window.location.replace('/dashboard')
 
       // localStorage.token = JSON.stringify(action.payload)
       return {
@@ -26,17 +28,28 @@ const UsersReducer = (state = initialState, action) => {
         isAuthenticated: true,
         success: true,
         loading:false,
-        error: false,
+        error: null,
       };
     case asyncActionName(LOGIN_USER).failure:
       return {
         ...state,
         // error: action.payload?.error?.response?.data?.responseMessage,
-        error: true,
+        error: action.payload,
         success: false,
         loading:false,
         // failure
       };
+      case asyncActionName(LOGOUT_USER).success:
+        removeToken()
+        return { 
+        ...state, 
+        user: {},
+        isAuthenticated: null,
+        loading:false,
+        error:null,
+        success:false
+      };
+    
     default:
       return state;
   }

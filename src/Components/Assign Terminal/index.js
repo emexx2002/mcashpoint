@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import {
   Modal,
   Form,
@@ -17,18 +17,23 @@ import {
 import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
-const Filter = ({ show, close,bankTerminals,load ,activate,agentsId,assignTerminal, AssignTerminal:AssignTerminals}) => {
+const Filter = ({ show, close,bankTerminals,load ,success,agentsId,assignTerminal, AssignTerminal:AssignTerminals,reload}) => {
   const [bankId, setbankId] = useState('');
-console.log(bankId,agentsId)
+console.log(show,success)
 
 const onSubmit = (event) => {
   event.preventDefault();
   console.log(bankId,agentsId)
 
   AssignTerminals(agentsId,bankId);
-  // console.log(assignTerminal)
-}
 
+}
+// const isDidMount = useRef(true)
+useEffect(() => { 
+  if(show && success){
+    reload()
+  }
+}, [success]);
 
   return (
     <Modal
@@ -163,7 +168,7 @@ const mapStateToProps = (state) => (
     assignTerminal: state.agents.assignTerminal,
     loading: state.agents.loading,
     error: state.agents.error,
-    success: state.agents.successmodal,
+    success: state.agents.assignSuccess,
   }
 );
 
