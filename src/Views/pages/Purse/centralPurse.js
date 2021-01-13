@@ -8,7 +8,7 @@ import Loader from "../../../Components/secondLoader"
 import { connect } from 'react-redux';
 import './style.css';
 
-const CenttalPurse= (props) => {
+const CentralPurse= (props) => {
   const { FetchCentralPurse: FetchCentralPurses, centralPurse, loading} = props;
   console.log(centralPurse)
     useEffect(() => {
@@ -101,5 +101,5 @@ export default connect(
   {
     FetchCentralPurse
   }
-)(CenttalPurse);
+)(CentralPurse);
  

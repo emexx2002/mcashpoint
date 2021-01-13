@@ -7,7 +7,8 @@ const initialState = {
   agentLga:[],
   agentBanks:[],
   agentCreation:false,
-  settlement:[]
+  settlement:[],
+  createAgentMansuccess:false
 };
 
 const AgentManagerReducer = (state = initialState, action) => {
@@ -104,7 +105,8 @@ const AgentManagerReducer = (state = initialState, action) => {
         agentCreation:action.payload,
         success: true,
         loading:false,
-        error: false,
+        error: true,
+        createAgentMansuccess:true
       };
     case asyncActionName(CREATE_AGENTS_MANAGER).failure:
       return {
@@ -112,7 +114,9 @@ const AgentManagerReducer = (state = initialState, action) => {
         error: true,
         success: false,
         loading:false,
-        // failure
+        createAgentMansuccess:false,
+        errorMessage:action.payload,
+
       };
       case asyncActionName(AGENT_MANAGER_SETTLEMENT).loading:
         return { ...state, loading:true };

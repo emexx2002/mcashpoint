@@ -1,6 +1,6 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { AGENT_PURSE,CENTRAL_PURSE } from "../actions/actionTypes";
+import { AGENT_PURSE,CENTRAL_PURSE,CREDIT_DEBIT_PURSE } from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
@@ -57,3 +57,43 @@ export const FetchCentralPurse = () => dispatch => {
             dispatch(asyncActions(CENTRAL_PURSE).failure(true, error))
         });
 };
+
+export const CreditDebitPurse = ({
+    amount,
+    action,
+    reason,
+    transactionId
+},agentId) => dispatch => {
+    console.log(    
+        agentId,
+        amount,
+        action,
+        reason,
+        transactionId)
+    dispatch(asyncActions(CREDIT_DEBIT_PURSE).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"))
+    axios
+      .post(`${AgentConstant.CREDIT_DEBIT_PURSE_URL}`, {
+        agentId,
+        amount,
+        action,
+        reason,
+        transactionId
+      }, {
+        headers: {
+            'Authorization': `bearer ${token.access_token}`,
+            'Content-Type': 'application/json'
+        },
+    })
+      .then(res => {
+        const response = res.data
+        console.log(response)
+        if (response.responseCode === "00") {
+          dispatch(asyncActions(CREDIT_DEBIT_PURSE).success(response.data));
+        }
+        else if (response.responseCode === "XX") {
+          dispatch(asyncActions(CREDIT_DEBIT_PURSE).failure(true, response.responseMessage));
+        }
+      })
+      .catch(error => dispatch(asyncActions(CREDIT_DEBIT_PURSE).failure(true, error)));
+  };

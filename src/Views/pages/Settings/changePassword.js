@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import { Container, Row, Col,Nav,Form,Button} from "react-bootstrap";
+import { Container, Row, Col,Nav,Form,Button,Alert} from "react-bootstrap";
 import { ChangePassword } from "../../../Redux/requests/settingsRequest";
 import Loader from "../../../Components/secondLoader"
 import PropTypes from 'prop-types';
@@ -11,7 +11,7 @@ import ErrorAlert from '../../../Components/alerts';
 import './style.css';
 
 
-const PasswordChange = ({ history, ChangePassword: handlePassword, loading ,error}) => {
+const PasswordChange = ({ history, ChangePassword: handlePassword, loading ,error,success,erroMessage,passworderror}) => {
     const getToken = JSON.parse(localStorage.getItem("data"))
     const {username} = getToken.user
     const [userCredentials, setUserCredentials] = useState({
@@ -20,8 +20,9 @@ const PasswordChange = ({ history, ChangePassword: handlePassword, loading ,erro
         newPassword: null,
         confirmPassword:null
     });
-
     const [errors, setErrors] = useState([]);
+    const [successMessage, SetSuccessMessage] = useState([]);
+
     
     function handleInputChange(event) {
         setErrors([])
@@ -29,7 +30,21 @@ const PasswordChange = ({ history, ChangePassword: handlePassword, loading ,erro
         console.log(userCredentials)
     };
 
+    useEffect(() => { 
+        console.log(error)
+        if(passworderror){
 
+            return setErrors(['There was an error sending your request, please try again later.']);
+        }
+    }, [passworderror]);
+
+    useEffect(() => { 
+       
+        if(success){
+            
+            history.push("/")
+        }
+    }, [success]);
 
     const {
         userName,oldPassword,newPassword,confirmPassword
@@ -47,7 +62,13 @@ const PasswordChange = ({ history, ChangePassword: handlePassword, loading ,erro
       return ( 
         <div className='main-tabs'>
             <Form onSubmit={onSubmit}>
-            <ErrorAlert errors={errors} />
+            {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+            {
+                    success ? <Alert variant="success">{successMessage}</Alert> : null
+                }
+                {
+                    error ? <Alert variant="danger">{errors}</Alert> : null
+                }
                 <div className='d-flex justify-content-between'>
                     <div>Password</div>
                     <div>Change Password</div>
@@ -91,11 +112,13 @@ ChangePassword.propTypes = {
     };
 
     const mapStateToProps = state => ({
-        login: state.users.user,
-        loading:state.users.loading,
-        user:state.users.user,
-        error:state.users.error
-
+        login: state.settings.user,
+        loading:state.settings.loading,
+        user:state.settings.user,
+        error:state.settings.passworderror,
+        passworderror:state.settings.passworderror,
+        erroMessage:state.settings.erroMessage,
+        success:state.settings.passwordSuccess
       });
   
   export default connect(

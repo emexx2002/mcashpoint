@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-import { FetchAgentPurse} from "../../../Redux/requests/agentPurseRequest";
+import { FetchAgentPurse, CreditDebitPurse} from "../../../Redux/requests/agentPurseRequest";
 import Loader from "../../../Components/secondLoader"
 import { connect } from 'react-redux';
 import CreditDebit from "../../../Components/credit"
@@ -11,6 +11,9 @@ import './style.css';
 
 const AgentPurse = (props) => {
   const[credit, showCredit]=useState(false)
+  const [agentID, setAgentId] = useState('');
+  const [businessName, setBusinessName] = useState('');
+
   const { FetchAgentPurse: FetchAgentPurses, agentPurse, loading} = props;
   console.log(agentPurse)
     useEffect(() => {
@@ -19,14 +22,17 @@ const AgentPurse = (props) => {
    const closeCredit = () => {
      showCredit(false);
    };
-       
+  
+   const handleCreditDebit = (agentId, businessName) => {
+    setBusinessName(businessName)
+    setAgentId(agentId)
+    showCredit(true);
 
+  };
         const products = agentPurse.map((agent,index) => {
-          console.log(agent)
-
           return {
           id:index,
-          AgentID:agent.agent === undefined ? '':agent.agent.user.memberId,
+          AgentID:agent.agent === undefined ? '':agent.agent.id,
           BusinessName:agent.agent.businessName  === 'undefined' ? '':agent.agent.businessName ,
           AgentName:agent.agent.user.username === 'undefined' ? '':agent.agent.user.username,
           Balance:agent.balance === 'undefined' ? '':agent.balance,
@@ -51,7 +57,7 @@ const AgentPurse = (props) => {
               console.log(cellContent,row)
                 return (
                   <h5>
-                  <button type="button"  className="btn assign-terminal">CREDIT/DEBIT</button>
+                  <button type="button" onClick={() => handleCreditDebit(row.AgentID,row.BusinessName)} className="btn assign-terminal">CREDIT/DEBIT</button>
                  </h5>
                 );
               }},
@@ -109,9 +115,7 @@ const AgentPurse = (props) => {
               hover
               condensed
             />
-            <button onClick={() => showCredit(true)}>Credit</button>
-            <CreditDebit show={credit} close={closeCredit}/>
-            {/* <button onClick={""}>CREDIT</button> */}
+            <CreditDebit show={credit} close={closeCredit} idAgent = {agentID} businessName = {businessName}/>
           </div>
         </div>
       );
@@ -128,6 +132,6 @@ const mapStateToProps = state => (console.log(state),{
 export default connect(
   mapStateToProps,
   {
-     FetchAgentPurse
+     FetchAgentPurse,CreditDebitPurse
   }
 )(AgentPurse);

@@ -1,10 +1,53 @@
-import React, { useState } from "react";
-import { Modal, Form, Container, Button, Row, Col } from "react-bootstrap";
-
+import React, { useState, useEffect } from "react";
+import { Modal, Form, Container, Button, Row, Col, Alert } from "react-bootstrap";
+import { connect } from "react-redux";
+import Loader from "../secondLoader"
+import {
+  CreditDebitPurse
+} from "../../Redux/requests/agentPurseRequest";
 import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
-const CreditDebit = ({ show, close }) => {
+const CreditDebit = ({ show, close,CreditDebitPurse:CreditDebitPurses,idAgent,businessName ,loading,error,success}) => {
+  console.log(idAgent)
+  const [CreditDebitData, setCreditDebitData] = useState({
+    agentId:idAgent,
+    amount: "" ,
+    action: "" ,
+    reason: "" ,
+    transactionId: "" ,
+  });
+  const [errors, setErrors] = useState([]);
+  const [successMessage, SetSuccessMessage] = useState([]);
+
+
+  useEffect(() => { 
+    if(error){
+        return setErrors(['There was an error sending your request, please try again later.']);
+    }
+}, [error]);
+
+  useEffect(() => { 
+    if(success){
+      return SetSuccessMessage(['operatrion Successful']);
+
+    }
+}, [success]);
+
+  const onSubmit = (event) => {
+    console.log(idAgent)
+    console.log(CreditDebitData,idAgent)
+    event.preventDefault();  
+    CreditDebitPurses(CreditDebitData,idAgent);
+  
+  }
+  const updateInput = (event) => {
+    setCreditDebitData({
+      ...CreditDebitData,
+      [event.target.name]:  event.target.value,
+    });
+  };
+
   return (
     <Modal
       size="lg"
@@ -15,6 +58,15 @@ const CreditDebit = ({ show, close }) => {
       className="rounded border"
     >
       <Modal.Body>
+      {loading && (
+            <Loader
+              type="TailSpin"
+              type="Oval"
+              height={60}
+              width={60}
+              color="#1E4A86"
+            />
+          )}
         <Container>
           <div
             className="header-wrapper d-flex justify-content-between align-item-center  justify-content-center"
@@ -29,7 +81,13 @@ const CreditDebit = ({ show, close }) => {
         <hr />
 
         <Container>
-          <Form>
+          <Form onSubmit={onSubmit}>
+             {
+            success ? <Alert variant="success">{successMessage}</Alert> : null
+          }
+          {
+            error ? <Alert variant="danger">{error}</Alert> : null
+          }
             <Row>
               <Col>
                 <Form.Group controlId="">
@@ -38,7 +96,9 @@ const CreditDebit = ({ show, close }) => {
                     size="sm"
                     type="text"
                     placeholder="Chinweoke Adolphus Williams"
-                    // onChange={updateInput}
+                    onChange={updateInput}
+                    disabled
+                    value={businessName}
                     required
                   />
                 </Form.Group>
@@ -49,10 +109,13 @@ const CreditDebit = ({ show, close }) => {
                   <Form.Control
                     size="sm"
                     as="select"
-
-                    // onChange={updateInput}
+                    name="action"
+                    onChange={updateInput}
+                    required
                   >
                     <option>Select action</option>
+                    <option value="credit">Credit</option>
+                    <option value="debit"> Debit </option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -66,7 +129,8 @@ const CreditDebit = ({ show, close }) => {
                     size="sm"
                     type="text"
                     placeholder="Enter amount"
-                    // onChange={updateInput}
+                    name="amount"
+                    onChange={updateInput}
                     required
                   ></Form.Control>
                 </Form.Group>
@@ -78,7 +142,8 @@ const CreditDebit = ({ show, close }) => {
                     size="sm"
                     type="text"
                     placeholder="Enter reason"
-                    // onChange={updateInput}
+                    name="reason"
+                    onChange={updateInput}
                     required
                   ></Form.Control>
                 </Form.Group>
@@ -92,7 +157,8 @@ const CreditDebit = ({ show, close }) => {
                     size="sm"
                     type="text"
                     placeholder="Enter Transaction ID"
-                    // onChange={updateInput}
+                    name="transactionId"
+                    onChange={updateInput}
                     required
                   ></Form.Control>
                 </Form.Group>
@@ -103,7 +169,7 @@ const CreditDebit = ({ show, close }) => {
               <Button
                 variant="outline-primary"
                 className="filter-btn  "
-                type="submit"
+                onClick={close}
               >
                 CANCEL
               </Button>
@@ -122,4 +188,18 @@ const CreditDebit = ({ show, close }) => {
     </Modal>
   );
 };
-export default CreditDebit;
+
+const mapStateToProps = state => (console.log(state),{
+  agentPurse:state.purse.agentPurse,
+  loading:state.purse.loading,
+  error:state.purse.error,
+  success:state.purse.cdsuccess
+  
+});
+
+export default connect(
+  mapStateToProps,
+  {
+     CreditDebitPurse
+  }
+)(CreditDebit);

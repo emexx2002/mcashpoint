@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
 import {
   Modal,
   Form,
@@ -7,6 +8,7 @@ import {
   Image,
   Row,
   Col,
+  Alert
 } from "react-bootstrap";
 import Cancel from "../../../Assets/img/x.png";
 import { connect } from "react-redux";
@@ -27,14 +29,15 @@ const CreateAgentModal = ({
   FetchState: FetchStates,
   FetchLga: FetchLgas,
   FetchBank: FetchBankS,
-  loading,
+  success,error,loading,erroMessage,  
   agentStates,
   agentLgas,
   agentBanks,
   createAgent
 }) => {
   const [isPublic, setIsPublic] = useState(true);
-
+  const [errors, setErrors] = useState([]);
+  const [successMessage, SetSuccessMessage] = useState([]);
   const [logvt, setIsLogvt] = useState({});
   const [CreateAgentData, setCreateAgentData] = useState({
     accountNumber: "" ,
@@ -58,6 +61,25 @@ const CreateAgentModal = ({
     FetchStates();
     FetchBankS();
   }, []);
+
+  useEffect(() => { 
+    console.log(error,erroMessage)
+    if(erroMessage){
+      if (error && erroMessage.error!="Already registered user"){
+        return setErrors(['There was an error sending your request, please try again later.']),SetSuccessMessage([]);
+    }else if(erroMessage){
+      return setErrors(erroMessage.error);
+    }
+    }
+   
+  }, [error, erroMessage]);
+  
+    useEffect(() => { 
+      if(success){
+        return SetSuccessMessage(['operation Successful']), setErrors([]);
+  
+      }
+  }, [success]);
 
   const updateInput = (event) => {
     setCreateAgentData({
@@ -114,6 +136,12 @@ const CreateAgentModal = ({
               <h5>Create Agent</h5>
             <hr/>
           <Form onSubmit={onSubmit}>
+          {
+            success ? <Alert variant="success">{successMessage}</Alert> : null
+          }
+          {
+            error ? <Alert variant="danger">{errors}</Alert> : null
+          }
             <h6>Personal Information</h6>
             <br />
             <Row>
@@ -156,8 +184,8 @@ const CreateAgentModal = ({
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Date of birth</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="name@example.com"
+                    type="date"
+                    placeholder="date of birth"
                     name="dateOfBirth"
                     onChange={updateInput}
                   />
@@ -361,8 +389,9 @@ const mapStateToProps = (state) => (
     agentLgas: state.agentmanager.agentLga,
     agentBanks: state.agentmanager.agentBanks,
     loading: state.agents.loading,
-    // loadings: state.agentmanager.loading,
-    error: state.agentmanager.error,
+    erroMessage:state.agents.errorMessage,
+    success:state.agents.createAgentsuccess,
+    error: state.agents.error,
   }
 );
 

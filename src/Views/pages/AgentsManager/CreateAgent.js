@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Modal, Form, Container, Button, Image,Row, Col } from "react-bootstrap";
+import { Modal, Form, Container, Button, Image,Row, Col,  Alert} from "react-bootstrap";
 import Cancel from '../../../Assets/img/x.png'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,14 +8,13 @@ import Loader from "../../../Components/secondLoader"
 
 
 const CreateAgentModal = ({ 
-    create,show,CreateAgentManager:handleCreateAgentManager, close,FetchState: FetchStates ,FetchLga:FetchLgas ,FetchBank: FetchBankS ,loading,agentStates, agentLgas, agentBanks
+    create,show,CreateAgentManager:handleCreateAgentManager, close,FetchState: FetchStates ,FetchLga:FetchLgas ,FetchBank: FetchBankS ,loading,agentStates, agentLgas, agentBanks,success,error,erroMessage
 }) => {
-
+console.log(error,erroMessage)
     const [isPublic, setIsPublic] = useState(true);
+    const [errors, setErrors] = useState([]);
+    const [successMessage, SetSuccessMessage] = useState([]);
 
-    const [logvt, setIsLogvt] = useState({
-
-    });
     const [CreateAgentData, setCreateAgentData] = useState({
         firstname: "",
         lastname: "",
@@ -40,6 +39,24 @@ const CreateAgentModal = ({
           FetchBankS();
       }, []);
 
+      useEffect(() => { 
+        console.log(error,erroMessage)
+        if(erroMessage){
+          if (error && erroMessage.error!="User with the provided username already exists."){
+            return setErrors(['There was an error sending your request, please try again later.']);
+        }else if(erroMessage){
+          return setErrors(erroMessage.error);
+        }
+        }
+       
+      }, [error, erroMessage]);
+      
+        useEffect(() => { 
+          if(success){
+            return SetSuccessMessage(['operation Successful']);
+          }
+      }, [success]);
+
       const updateInput = (event) => {
         setCreateAgentData({
           ...CreateAgentData, [event.target.name]: event.target.value
@@ -47,14 +64,29 @@ const CreateAgentModal = ({
       };
 
 
-      const _handleSelectState = (e) => {
-        let stateCode = e.target.value;
-        FetchLgas(stateCode)
+    //   const _handleSelectState = (e) => {
+    //     let stateCode = e.target.value;
+    //     FetchLgas(stateCode)
 
-        setCreateAgentData({
-          ...CreateAgentData, [e.target.name]: stateCode
-        });
+    //     setCreateAgentData({
+    //       ...CreateAgentData, [e.target.name]: stateCode
+    //     });
+    //   };
+      const _handleSelectState = (e) => {
+        agentStates.map((state, i) => {
+          let stateId = state.id;
+    
+          setCreateAgentData({
+            ...CreateAgentData,
+            [e.target.name]: stateId,
+          });
+        })
+        let stateCode = e.target.value;
+        FetchLgas(stateCode);
+    
+    
       };
+    
 
       const _handleSelectBank = (e) => {
         let stateCode = e.target.value;
@@ -67,6 +99,8 @@ const CreateAgentModal = ({
 
 
       const onSubmit = (event) => {
+        setErrors([])
+        SetSuccessMessage([])
         event.preventDefault();
         handleCreateAgentManager(CreateAgentData);
         
@@ -92,25 +126,31 @@ const CreateAgentModal = ({
             <hr />
             <Container>
             <Form onSubmit={onSubmit}>
+                {
+                    success ? <Alert variant="success">{successMessage}</Alert> : null
+                }
+                {
+                    error ? <Alert variant="danger">{errors}</Alert> : null
+                }
                 <div>Personal Infromation</div>
                 <br />
                 <Row>
                     <Col md={4} sm={12}>
                     <Form.Group controlId="exampleForm.ControlInput1">
                         <Form.Label>FIRST NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter first name" name='firstname'  onChange={updateInput} />
+                        <Form.Control type="text" placeholder="Enter first name" name='firstname'  onChange={updateInput}  required/>
                      </Form.Group>
                     </Col>
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>MIDDLE NAME</Form.Label>
-                            <Form.Control type="text" placeholder="Enter middle name" name='middlename' onChange={updateInput}/>
+                            <Form.Control type="text" placeholder="Enter middle name" name='middlename' onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>LAST NAME</Form.Label>
-                            <Form.Control type="text" placeholder="Enter last name"  name='lastname' onChange={updateInput}/>
+                            <Form.Control type="text" placeholder="Enter last name"  name='lastname' onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                 </Row>
@@ -118,19 +158,19 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                     <Form.Group controlId="exampleForm.ControlInput1">
                         <Form.Label>USER NAME</Form.Label>
-                        <Form.Control type="text" placeholder="Enter username"  name='username' onChange={updateInput}/>
+                        <Form.Control type="text" placeholder="Enter username"  name='username' onChange={updateInput} required/>
                      </Form.Group>
                     </Col>
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>EMAIL</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email address" name='email' onChange={updateInput}/>
+                            <Form.Control type="email" placeholder="Enter email address" name='email' onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>PHONE NUMBER</Form.Label>
-                            <Form.Control type="text" placeholder="Enter phone number" name='phone' onChange={updateInput}/>
+                            <Form.Control type="text" placeholder="Enter phone number" name='phone' onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                 </Row>
@@ -138,7 +178,7 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Gender</Form.Label>
-                        <Form.Control   as="select"  name='gender' onChange={updateInput}>
+                        <Form.Control   as="select"  name='gender' onChange={updateInput} required>
                         <option>Select Gender</option>
                         <option>MALE</option>
                         <option>FEMALE</option>
@@ -149,7 +189,7 @@ const CreateAgentModal = ({
                     <Col md={8} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>Address</Form.Label>
-                            <Form.Control type="text" placeholder="Enter address" name='address' onChange={updateInput}/>
+                            <Form.Control type="text" placeholder="Enter address" name='address' onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                     
@@ -158,7 +198,7 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                     <Form.Group controlId="exampleForm.ControlSelect1"   >
                         <Form.Label>State</Form.Label>
-                        <Form.Control name="stateId" as="select" onChange={_handleSelectState}>
+                        <Form.Control name="stateId" as="select" onChange={_handleSelectState} required>
                         <option >Select your state</option>
                         {
                             agentStates.map((state, i) => {
@@ -171,11 +211,11 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label>Local Govt Area</Form.Label>
-                            <Form.Control as="select" name='lgaId' onChange={updateInput}>
+                            <Form.Control as="select" name='lgaId' onChange={updateInput} required>
                             <option disabled>Select your LGA</option>
                                 {agentLgas.map((lga, i) => {
                                 return (
-                                    <option value={lga.lga} key={i}>
+                                    <option value={lga.id} key={i}>
                                     {lga.lga}
                                     </option>
                                 );
@@ -186,7 +226,7 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>Nationality</Form.Label>
-                            <Form.Control type="text" placeholder="name@example.com" name='nationality' onChange={updateInput}/>
+                            <Form.Control type="text" placeholder="name@example.com" name='nationality' onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                 </Row>
@@ -195,7 +235,7 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                                 <Form.Label>ID type</Form.Label>
-                                <Form.Control as="select"  name='identityType' onChange={updateInput}>
+                                <Form.Control as="select"  name='identityType' onChange={updateInput} required>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -208,7 +248,7 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>Date of birth</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" name="dateOfBirth"  onChange={updateInput}/>
+                            <Form.Control type="date" placeholder="name@example.com" name="dateOfBirth"  onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
 
@@ -220,11 +260,11 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                     <Form.Group controlId="exampleForm.ControlInput1">
                         <Form.Label>Bank Name</Form.Label>
-                        <Form.Control name="stateId" as="select" onChange={_handleSelectBank}>
+                        <Form.Control name="bankId" as="select" onChange={_handleSelectBank} required>
                         <option >Select your bank</option>
                         {
                             agentBanks.map((bank, i) => {
-                                return <option key={i} value = {bank.name}>{bank.name}</option>
+                                return <option key={i} value={bank.id}>{bank.name}</option>
                             })
                         }
                         </Form.Control>                    
@@ -233,13 +273,13 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>Account Number</Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" name="accountNumber" onChange={updateInput}/>
+                            <Form.Control type="text" placeholder="name@example.com" name="accountNumber" onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                     <Col md={4} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">
                             <Form.Label>Account Name </Form.Label>
-                            <Form.Control type="email" placeholder="name@example.com" name="accountName" onChange={updateInput}/>
+                            <Form.Control type="text" placeholder="name@example.com" name="accountName" onChange={updateInput} required/>
                         </Form.Group>                       
                     </Col>
                 </Row>
@@ -247,7 +287,7 @@ const CreateAgentModal = ({
                     <Col md={4} sm={12}>
                     <Form.Group controlId="exampleForm.ControlInput1">
                         <Form.Label>Account BVN</Form.Label>
-                        <Form.Control type="email" placeholder="name@example.com"  name ="accountBvn" onChange={updateInput}/>
+                        <Form.Control type="text" placeholder="name@example.com"  name ="accountBvn" onChange={updateInput} required/>
                      </Form.Group>
                     </Col>
                    
@@ -272,12 +312,14 @@ CreateAgentModal.propTypes = {
 
   };
 
-const mapStateToProps = state => (console.log(state),{
+const mapStateToProps = state => (console.log(state.agentmanager.error),{
     agentStates: state.agentmanager.agentStates,
     agentLgas: state.agentmanager.agentLga,
     agentBanks: state.agentmanager.agentBanks,
     loading:state.agentmanager.loading,
-    error:state.agentmanager.error
+    erroMessage:state.agentmanager.errorMessage,
+    success:state.agentmanager.createAgentMansuccess,
+    error: state.agentmanager.error,
 });
 
 export default connect(

@@ -1,9 +1,10 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { AGENT_PURSE, CENTRAL_PURSE } from "../actions/actionTypes";
+import { AGENT_PURSE, CENTRAL_PURSE, CREDIT_DEBIT_PURSE } from "../actions/actionTypes";
 
 const initialState = {
   agentPurse: [],
-  centralPurse: []
+  centralPurse: [],
+  cdsuccess:false
 };
 
 const AgentPurse = (state = initialState, action) => {
@@ -46,6 +47,25 @@ const AgentPurse = (state = initialState, action) => {
           loading:false,
           // failure
         };
+        case asyncActionName(CREDIT_DEBIT_PURSE).loading:
+          return { ...state, loading:true };
+        case asyncActionName(CREDIT_DEBIT_PURSE).success:
+    
+          return {
+            ...state,
+            cdsuccess: true,
+            loading:false,
+            error: false,
+          };
+        case asyncActionName(CREDIT_DEBIT_PURSE).failure:
+          return {
+            ...state,
+            error: true,
+            cdsuccess: false,
+            loading:false,
+            // failure
+          };
+  
     default:
       return state;
   }

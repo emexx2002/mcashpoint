@@ -1,11 +1,16 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { CHANGE_PASSWORD } from "../actions/actionTypes";
-import { saveToken, removeToken } from '../../utils/localStorage';
+import { CHANGE_PASSWORD, FETCH_ROLE_GROUP ,CREATE_ROLE_GROUP} from "../actions/actionTypes";
 
 const initialState = {
   passwordSuccess:false,
   loading:false,
-  error:false
+  error:false,
+  roleGroups:[],
+  rolesuccess:false,
+  successRole:false,
+  createRole:[],
+  errorMessage:null,
+  passworderror:false
   // failure:'user cant be logged in'
 };
 
@@ -23,15 +28,60 @@ const SettingsReducer = (state = initialState, action) => {
         success: true,
         loading:false,
         error: false,
+        passworderror:false
       };
     case asyncActionName(CHANGE_PASSWORD).failure:
       return {
         ...state,
+        passwordSuccess:false,
         error: true,
         success: false,
         loading:false,
+        passworderror:true,
+        errorMessage:action.payload
         // failure
       };
+      case asyncActionName(FETCH_ROLE_GROUP).loading:
+        return { ...state, loading:true };
+      case asyncActionName(FETCH_ROLE_GROUP).success:
+        // window.location.replace('/')
+  
+        return {
+          ...state,
+          roleGroups:action.payload,
+          rolesuccess: true,
+          loading:false,
+          error: false,
+        };
+      case asyncActionName(FETCH_ROLE_GROUP).failure:
+        return {
+          ...state,
+          error: true,
+          rolesuccess: false,
+          loading:false,
+          // failure
+        };
+        case asyncActionName(CREATE_ROLE_GROUP).loading:
+          return { ...state, loading:true };
+        case asyncActionName(CREATE_ROLE_GROUP).success:
+          // window.location.replace('/')
+    
+          return {
+            ...state,
+            createRole:action.payload,
+            successRole: true,
+            loading:false,
+            error: false,
+          };
+        case asyncActionName(CREATE_ROLE_GROUP).failure:
+          return {
+            ...state,
+            error: true,
+            successRole: false,
+            errorMessage:action.payload,
+            loading:false,
+            // failure
+          };
     default:
       return state;
   }

@@ -5,6 +5,7 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import AssignTerminal from "../../../Components/Assign Terminal"
 import Loader from "../../../Components/secondLoader"
+import { Modal } from "react-bootstrap";
 
 import {
   FetchAgent,
@@ -13,8 +14,6 @@ import {
   UnAssignTerminal
 } from "../../../Redux/requests/agentRequest";
 import { connect } from "react-redux";
-
-
 import "./style.css";
 
 const Agents = (props) => {
@@ -28,7 +27,8 @@ const Agents = (props) => {
     loading,
     activationCode,
     success,
-    unassignSuccess
+    unassignSuccess,
+    successActivation
   } = props;
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
@@ -50,26 +50,28 @@ const Agents = (props) => {
   }
 
   useEffect(() => { 
-    console.log(unassignSuccess)
+    if(successActivation && activationCode!=null){
+      setSmShow(true);
+      setActivation(activationCode);
+      return 
+    }
+}, [successActivation,activationCode]);
+
+  useEffect(() => { 
     if(unassignSuccess){
       FetchAgents()
     }
   }, [unassignSuccess]);
 
   function ActivatateCode(agentId) {
-    setActivation(null);
+    // setActivation(null);
     ActivatateCodes(agentId);
-    if (activation !== null) {
-      setSmShow(true);
-      setActivation(activationCode);
-    }
+    
   }
   const AssignTerminals = (agentId) => {
     showTerminalID(true);
     setAgentId(agentId)
     FetchBankTerminals(agentId);
-
-
   };
 
   const UnAssignTerminal = (agentId) => {
@@ -200,6 +202,17 @@ const Agents = (props) => {
   return (
     
         <div className="table-wrapper">
+      <Modal
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+         
+        </Modal.Header>
+        <Modal.Body>{activationCode}</Modal.Body>
+      </Modal>
             {loading && (
               <Loader
                 type="TailSpin"
@@ -238,7 +251,8 @@ const mapStateToProps = (state) => (
     loading: state.agents.loading,
     error: state.agents.error,
     success: state.agents.success,
-    unassignSuccess:state.agents.unassignSuccess
+    unassignSuccess:state.agents.unassignSuccess,
+    successActivation:state.agents.successActivation
   }
 );
 

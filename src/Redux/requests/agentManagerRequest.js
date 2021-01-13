@@ -134,8 +134,8 @@ export const CreateAgentManager = ({
         if (response.responseCode === "00") {
           dispatch(asyncActions(CREATE_AGENTS_MANAGER).success(response.data));
         }
-        else if (response.status === 400) {
-          dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, response.data.error.message));
+        else if (response.responseCode === "XX") {
+          dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, response.responseMessage));
         }
       })
       .catch(error => dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, error)));

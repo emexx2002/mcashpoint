@@ -28,6 +28,7 @@ export const FetchAgent = () => dispatch => {
 };
 
 export const ActivatateCode = (agentid) => dispatch => {
+  console.log(agentid)
     dispatch(asyncActions(ACTIVATION_CODE).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
     console.log(token)
@@ -40,7 +41,6 @@ export const ActivatateCode = (agentid) => dispatch => {
             },
         })
         .then(res => {
-            console.log(res)
             const response = res.data
             if (response.responseCode === '00') {
                dispatch(asyncActions(ACTIVATION_CODE).success(res.data.activationCode));
@@ -49,6 +49,7 @@ export const ActivatateCode = (agentid) => dispatch => {
             }
         })
         .catch(error => {
+          console.dir(error)
             dispatch(asyncActions(ACTIVATION_CODE).failure(true, error))
         });
 };

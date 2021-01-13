@@ -8,7 +8,9 @@ const initialState = {
   createAgent:null,
   success:false,
   assignSuccess:false,
-  unassignSuccess:false
+  unassignSuccess:false,
+  successActivation:false,
+  createAgentsuccess:false
 };
 
 const AgentsReducer = (state = initialState, action) => {
@@ -41,14 +43,14 @@ const AgentsReducer = (state = initialState, action) => {
           ...state,
           loading:false,
           activationCode: action.payload,
-          successmodal: true
+          successActivation: true
         };
       case asyncActionName(ACTIVATION_CODE).failure:
         return {
           ...state,
           loading:false,
           error: true,
-          successmodal: false
+          successActivation: false
         };
       case asyncActionName(FETCH_BANK_TERMINAL).loading:
         return { ...state, loading: true };
@@ -105,14 +107,15 @@ const AgentsReducer = (state = initialState, action) => {
               ...state,
               loading:false,
               createAgent: action.payload,
-              success: true
+              createAgentsuccess: true
             };
           case asyncActionName(CREATE_AGENTS).failure:
             return {
               ...state,
               loading:false,
+              errorMessage:action.payload,
               error: true,
-              successmodal: false
+              createAgentsuccess:false
             };
     default:
       return state;

@@ -1,4 +1,5 @@
 const BASE_URL = "https://mcashpoint.paypad.com.ng";
+// const BASE_URL = "https://cors-anywhere.herokuapp.com/https://mcashpoint.paypad.com.ng";
 
 export const AgentConstant = {
     LOGIN_AGENT_URL: `${BASE_URL}/api/v1/login`,
@@ -21,4 +22,7 @@ export const AgentConstant = {
     UNACTIVATE_ASSIGN_TERMINAL_URL:`${BASE_URL}/api/v1/terminal/unassign?agentId`,
     CREATE_AGENT_URL: `${BASE_URL}/api/v1/agent`,
     AGENT_MANAGER_SETTLEMENT_URL:`${BASE_URL}/api/v1/agent/manager/settlement`,
+    CREDIT_DEBIT_PURSE_URL:`${BASE_URL}/api/v1/purse/creditordebit`,
+    FETCH_ROLE_GROUP_URL:`${BASE_URL}/api/v1/rolegroup/roles`,
+    CREATE_ROLE_GROUP_URL:`${BASE_URL}/api/v1/rolegroup`,
 };

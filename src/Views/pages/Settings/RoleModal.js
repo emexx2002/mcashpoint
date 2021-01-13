@@ -1,8 +1,52 @@
-import React from 'react';
-import { Modal, Form, Container, Button, Image, Row, Col } from "react-bootstrap";
-import Cancel from "../../../Assets/img/x.png";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 
-const createRole = ({ show, close }) => {
+import { Modal, Form, Container, Button, Image, Row, Col,Alert } from "react-bootstrap";
+import Cancel from "../../../Assets/img/x.png";
+import Loader from "../../../Components/secondLoader"
+
+import { connect } from "react-redux";
+import { FetchRoleGroup ,CreateRoleGroup} from "../../../Redux/requests/settingsRequest";
+
+const CreateRole = ({ show, close, FetchRoleGroup:FetchRoleGroups,CreateRoleGroup:CreateRoleGroups,roleGroups,success,error,loading,erroMessage }) => {
+  const [errors, setErrors] = useState([]);
+  const [successMessage, SetSuccessMessage] = useState([]);
+  useEffect(() => {
+    FetchRoleGroups();
+
+  }, []);
+console.log(erroMessage)
+//   useEffect(() => { 
+//     if (erroMessage !=null){
+//       return setErrors(erroMessage.error);
+
+//     }
+// }, [erroMessage ]);
+
+useEffect(() => { 
+  console.log(error,erroMessage)
+if(erroMessage){
+  if (error && erroMessage.error!="Rolegroup already registered"){
+    return setErrors(['There was an error sending your request, please try again later.']);
+}else if(erroMessage){
+  return setErrors(erroMessage.error);
+}
+}
+ 
+}, [error, erroMessage]);
+
+  useEffect(() => { 
+    if(success){
+      return SetSuccessMessage(['operation Successful']);
+
+    }
+}, [success]);
+  const { register, handleSubmit } = useForm();
+  const onSubmit = data => {
+    CreateRoleGroups(data)
+console.log(data) 
+ };
+
     return (
       <Modal
         size="lg"
@@ -12,6 +56,15 @@ const createRole = ({ show, close }) => {
         className="rounded border"
       >
         <Modal.Body>
+        {loading && (
+              <Loader
+                type="TailSpin"
+                type="Oval"
+                height={60}
+                width={60}
+                color="#1E4A86"
+              />
+            )}
           <Container>
             <div
               className="header-wrapper d-flex justify-content-between align-item-center  justify-content-center"
@@ -26,7 +79,13 @@ const createRole = ({ show, close }) => {
 
           <hr />
           <Container>
-            <Form>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+            {
+            success ? <Alert variant="success">{successMessage}</Alert> : null
+          }
+          {
+            error ? <Alert variant="danger">{errors}</Alert> : null
+          }
               <Row>
                 <Col md={4} sm={12}>
                   <Form.Group controlId="exampleForm.ControlInput1">
@@ -35,6 +94,8 @@ const createRole = ({ show, close }) => {
                       type="text"
                       placeholder="Enter Role group name"
                       onChange={""}
+                      name="name"
+                      ref={register}
                       required
                     />
                   </Form.Group>
@@ -42,76 +103,17 @@ const createRole = ({ show, close }) => {
               </Row>
 
               <Form.Label>Select Role Permission</Form.Label>
-              {["checkbox"].map((type) => (
-                <div key={`default-${type}`} className="mb-3">
-                  <Form.Check
-                    type={type}
-                    id="view-dashboard"
-                    label="View Dashboard "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="view-transaction"
-                    label="View All Transactions "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="view-set-agent-fee"
-                    label="View and Set Agent Fee "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="view-admin"
-                    label="View All Admin "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="create-agent"
-                    label="Create Agent "
-                  />
-                  <Form.Check type={type} id="view-agent" label="View Agent " />
-                  <Form.Check
-                    type={type}
-                    id="create-role-group"
-                    label="Create Role Group "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="view-aggregator"
-                    label="View Aggregator "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="create-aggregator"
-                    label="Create Aggregator "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="view-report"
-                    label="View Report "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="view-audit-log"
-                    label="View Audit Log "
-                  />
-                  <Form.Check
-                    type={type}
-                    id="create-admin"
-                    label="Create Admin"
-                  />
-                  <Form.Check
-                    type={type}
-                    id="view-central-purse"
-                    label="View Central Purse"
-                  />
-                  <Form.Check
-                    type={type}
-                    id="settle-aggregator"
-                    label="Settle Aggregator"
-                  />
-                </div>
-              ))}
+              {
+                roleGroups .map((role, index) => {
+                    console.log(role.description)
+                    return(
+                      <div  className="mb-3">
+                           <Form.Check type="checkbox" name="roleIds" ref={register} value={role.id} label={role.description} />
+                      </div>
+                    )
+                  
+                }) 
+              }
 
               <div className=" text-right">
                 <Button variant="primary" className="text-white " type="submit">
@@ -125,4 +127,18 @@ const createRole = ({ show, close }) => {
     );
 
 }
- export default createRole;
+ const mapStateToProps = state => (console.log(state),{
+  roleGroups:state.settings.roleGroups,
+  loading:state.settings.loading,
+  error:state.settings.error,
+  success:state.settings.successRole,
+  erroMessage:state.settings.errorMessage
+  
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    FetchRoleGroup,CreateRoleGroup
+  }
+)(CreateRole);

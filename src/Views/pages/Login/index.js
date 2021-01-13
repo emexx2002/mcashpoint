@@ -26,9 +26,7 @@ const Login = ({ history, loginUser: handleLogin, loading ,success,error}) => {
    
     useEffect(() => { 
         
-        console.log("CJ big head")
         if(error){
-            console.log("CJ very big head")
 
             return setErrors(['There was an error sending your request, please try again later.']);
         }
@@ -38,8 +36,7 @@ const Login = ({ history, loginUser: handleLogin, loading ,success,error}) => {
     useEffect(() => { 
        
         if(success){
-            console.log("CJ very very very big head")
-
+            
             history.push("/dashboard")
         }else{
             history.push("/")
