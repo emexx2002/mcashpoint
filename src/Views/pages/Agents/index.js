@@ -5,6 +5,7 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import Upload from "../../../Assets/img/upload.png";
 import Filter from "../../../Assets/img/filter.png";
+import Print from "../../../Assets/img/printer.png";
 import Plus from "../../../Assets/img/+.png";
 import DashboardTemplate from "../../template/dashboardtemplate";
 import Tabs from "react-bootstrap/Tabs";
@@ -63,19 +64,19 @@ const AgentsManager = () => {
   return (
     <DashboardTemplate>
       <div className="transact-wrapper">
-    
+        <div className="header-title">
+          <h3>Agents</h3>
+        </div>
 
-        <p>Agents</p>
         <div className="agent-transact-header">
           <div>
-            <div className="manage-agent">
-              <span>A list of all agents on McashPoint</span>
-              {/* <span><img src={Plus} />Create Agent Manager</span>
-                            <span><img src={Plus} />Settlement</span> */}
-            </div>
+            <div>A list of all agents on McashPoint</div>
           </div>
           <div className="manage-agent">
-            <span>Print</span>
+            <span>
+              <img src={Print} />
+              Print
+            </span>
 
             <span onClick={() => showFilterModal(true)}>
               <img src={Filter} />

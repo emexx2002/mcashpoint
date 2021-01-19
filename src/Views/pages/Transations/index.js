@@ -7,6 +7,7 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import Upload from "../../../Assets/img/upload.png";
 import Filter from "../../../Assets/img/filter.png";
+import Print from "../../../Assets/img/printer.png";
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { FetchTransaction } from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader";
@@ -213,13 +214,16 @@ const Transactions = (props) => {
             color="#1E4A86"
           />
         )}
+        <div className="header-title">
+          <h3>Transactions</h3>
+        </div>
         <div className="agent-transact-header">
+          <div>An overview of all transactions on mCashPoint</div>
           <div>
-            <p>Transactions</p>
-            <p>An overview of all transactions on mCashPoint</p>
-          </div>
-          <div>
-            <span>Print</span>
+            <span>
+              <img src={Print} />
+              Print
+            </span>
 
             <span onClick={() => showFilterModal(true)}>
               <img src={Filter} />
@@ -257,7 +261,7 @@ const Transactions = (props) => {
         length={length}
         loadPage={FetchTransaction}
         handleFilterValue={_handleFilterValue}
-        submitFilter = {onFilterSubmit}
+        submitFilter={onFilterSubmit}
         name={"transaction"}
       />
       <ExportModal show={exportModalActive} close={closeExport} />
