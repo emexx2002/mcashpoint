@@ -3,6 +3,8 @@ import { FETCH_TRANSACTIONS } from "../actions/actionTypes";
 
 const initialState = {
   transactions: [],
+  transactionTotal:0,
+  successTransaction:false
   // failure:'user cant be logged in'
 };
 
@@ -13,12 +15,13 @@ const TransactionsReducer = (state = initialState, action) => {
         // console.log('1')
       return { ...state, loading:true };
     case asyncActionName(FETCH_TRANSACTIONS).success:
-        // console.log('2')
+        console.log(action.payload.recordsFiltered)
 
       return {
         ...state,
-        transactions:action.payload,
-        success: true,
+        transactions:action.payload.data,
+        transactionTotal:action.payload.recordsFiltered,
+        successTransaction: true,
         loading:false,
         error: false,
       };
@@ -26,8 +29,9 @@ const TransactionsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: true,
-        success: false,
         loading:false,
+        transactionTotal:'',
+        successTransaction:false
         // failure
       };
     default:

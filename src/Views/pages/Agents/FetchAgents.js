@@ -3,24 +3,25 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import AssignTerminal from "../../../Components/Assign Terminal"
-import Loader from "../../../Components/secondLoader"
+import AssignTerminal from "../../../Components/Assign Terminal";
+import Loader from "../../../Components/secondLoader";
 import { Modal } from "react-bootstrap";
 
 import {
   FetchAgent,
   ActivatateCode,
   FetchBankTerminal,
-  UnAssignTerminal
+  UnAssignTerminal,
 } from "../../../Redux/requests/agentRequest";
 import { connect } from "react-redux";
 import "./style.css";
+import Pagination from "react-js-pagination";
 
 const Agents = (props) => {
   const {
     FetchBankTerminal: FetchBankTerminals,
     FetchAgent: FetchAgents,
-    UnAssignTerminal:UnAssignTerminals,
+    UnAssignTerminal: UnAssignTerminals,
     ActivatateCode: ActivatateCodes,
     bankTerminal,
     agents,
@@ -28,62 +29,82 @@ const Agents = (props) => {
     activationCode,
     success,
     unassignSuccess,
-    successActivation
+    successActivation,
+    agentTotal
   } = props;
+  console.log(agentTotal)
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
   const [terminalID, showTerminalID] = useState(false);
-  const [agentID, setAgentId] = useState('');
-
-  // const [agentsId, showAgentID] = useState(false);
-  // const [status, setStatus] = useState([FetchTransactions]);
-  console.log(agentID);
+  const [agentID, setAgentId] = useState("");
+  const [nextPage, setNextPage] = useState(1);
+  const [length, setLength] = useState(10);
+  const [activePage, setActivePage] = useState(1);
+  const initialState = {
+    startDate: "",
+    endDate: "",
+    terminalId: "",
+    status: "",
+    transactionType: "",
+    transactionId: "",
+    rrn: "",
+    pan: "",
+    stan: "",
+    agentId: "",
+    draw: "",
+  };
+  const [filterValues, setFilterValues] = useState(initialState);
 
   useEffect(() => {
+    FetchAgents(nextPage,length);
+    FetchBankTerminals();
+  }, [nextPage,length]);
+
+  const reload = () => {
     FetchAgents();
     FetchBankTerminals();
-  }, []);
+  };
 
-  const reload = ()=>{
-    FetchAgents();
-    FetchBankTerminals();
-  }
-
-  useEffect(() => { 
-    if(successActivation && activationCode!=null){
+  useEffect(() => {
+    if (successActivation && activationCode != null) {
       setSmShow(true);
       setActivation(activationCode);
-      return 
+      return;
     }
-}, [successActivation,activationCode]);
+  }, [successActivation, activationCode]);
 
-  useEffect(() => { 
-    if(unassignSuccess){
-      FetchAgents()
+  useEffect(() => {
+    if (unassignSuccess) {
+      FetchAgents();
     }
   }, [unassignSuccess]);
 
   function ActivatateCode(agentId) {
     // setActivation(null);
     ActivatateCodes(agentId);
-    
   }
   const AssignTerminals = (agentId) => {
     showTerminalID(true);
-    setAgentId(agentId)
+    setAgentId(agentId);
     FetchBankTerminals(agentId);
   };
 
   const UnAssignTerminal = (agentId) => {
     FetchAgents();
 
-    UnAssignTerminals(agentId)
-
+    UnAssignTerminals(agentId);
   };
-    
+
   const closeAssignTerminal = () => {
     showTerminalID(false);
   };
+
+  const _handlePageChange = (pageNumber) => {
+    console.log(pageNumber);
+    setActivePage(pageNumber);
+    setNextPage((prev) => prev + 10);
+  };
+
 
   const products = agents.map((agent, index) => {
     return {
@@ -99,8 +120,6 @@ const Agents = (props) => {
       DateCreated: agent.createdAt === null ? "" : agent.createdAt,
     };
   });
-
-
 
   const columns = [
     // { dataField: 'id', text: 'Id'},
@@ -125,27 +144,25 @@ const Agents = (props) => {
       dataField: "Action",
       text: "Action",
       formatter: (cellContent, row) => {
-        console.log(row.agent.bankTerminal)
-                return (
+        console.log(row.agent.bankTerminal);
+        return (
           <h5>
-            {row.agent.bankTerminal=== null ? (
-              
+            {row.agent.bankTerminal === null ? (
               <button
-              type="button"
-              className="assign-terminal"
-              onClick={() => AssignTerminals(row.AgentID)}
-            >
-              Assign Terminal
-            </button>
+                type="button"
+                className="assign-terminal"
+                onClick={() => AssignTerminals(row.AgentID)}
+              >
+                Assign Terminal
+              </button>
             ) : (
               <button
-              type="button"
-              className="unassign-terminal"
-              onClick={() => UnAssignTerminal(row.AgentID)}
-            >
-              Unassign Terminal
-            </button>
-
+                type="button"
+                className="unassign-terminal"
+                onClick={() => UnAssignTerminal(row.AgentID)}
+              >
+                Unassign Terminal
+              </button>
             )}
           </h5>
         );
@@ -156,7 +173,6 @@ const Agents = (props) => {
       dataField: "ActivationCode",
       text: "Activation Code",
       formatter: (cellContent, row) => {
-        
         return (
           <h5>
             <button
@@ -179,67 +195,60 @@ const Agents = (props) => {
       order: "desc",
     },
   ];
-  const pagination = paginationFactory({
-    page: 1,
-    sizePerPage: 10,
-    lastPageText: ">>",
-    firstPageText: "<<",
-    nextPageText: ">",
-    prePageText: "<",
-    showTotal: true,
-    alwaysShowAllBtns: true,
-    onPageChange: function (page, sizePerPage) {
-      console.log("page", page);
-      console.log("sizePerPage", sizePerPage);
-    },
-    onSizePerPageChange: function (page, sizePerPage) {
-      console.log("page", page);
-      console.log("sizePerPage", sizePerPage);
-    },
-  });
-  
 
   return (
-    
-        <div className="table-wrapper">
+    <div className="table-wrapper">
       <Modal
         size="sm"
         show={smShow}
         onHide={() => setSmShow(false)}
         aria-labelledby="example-modal-sizes-title-sm"
       >
-        <Modal.Header closeButton>
-         
-        </Modal.Header>
+        <Modal.Header closeButton></Modal.Header>
         <Modal.Body>{activationCode}</Modal.Body>
       </Modal>
-            {loading && (
-              <Loader
-                type="TailSpin"
-                type="Oval"
-                height={60}
-                width={60}
-                color="#1E4A86"
-              />
-            )}
-          <h4>All Agents</h4>
-          <BootstrapTable
-            bootstrap4
-            keyField="id"
-            data={products}
-            columns={columns}
-            defaultSorted={defaultSorted}
-            pagination={pagination}
-            bordered={false}
-            hover
-            condensed
+      {loading && (
+        <Loader
+          type="TailSpin"
+          type="Oval"
+          height={60}
+          width={60}
+          color="#1E4A86"
+        />
+      )}
+      <h4>All Agents</h4>
+      <BootstrapTable
+        bootstrap4
+        keyField="id"
+        data={products}
+        columns={columns}
+        defaultSorted={defaultSorted}
+        bordered={false}
+        hover
+        condensed
+      />
+      {/* <button onClick={() => showTerminalID(true)}>Assign</button> */}
+      <AssignTerminal
+        bankTerminals={bankTerminal}
+        reload={reload}
+        load={loading}
+        show={terminalID}
+        close={closeAssignTerminal}
+        agentsId={agentID}
+      />
+      <div className="pagination_wrap">
+        <p>Showing 1 to 10 of {agentTotal}</p>
+        <div className="pagination">
+          <Pagination
+            activePage={activePage}
+            itemsCountPerPage={10}
+            totalItemsCount={agentTotal}
+            pageRangeDisplayed={5}
+            onChange={_handlePageChange}
           />
-          {/* <button onClick={() => showTerminalID(true)}>Assign</button> */}
-          <AssignTerminal bankTerminals={bankTerminal} reload={reload} load={loading} show={terminalID} close={closeAssignTerminal} agentsId={agentID}/>
-
         </div>
-     
-      
+      </div>
+    </div>
   );
 };
 const mapStateToProps = (state) => (
@@ -251,8 +260,10 @@ const mapStateToProps = (state) => (
     loading: state.agents.loading,
     error: state.agents.error,
     success: state.agents.success,
-    unassignSuccess:state.agents.unassignSuccess,
-    successActivation:state.agents.successActivation
+    unassignSuccess: state.agents.unassignSuccess,
+    successActivation: state.agents.successActivation,
+    agentTotal: state.agents.agentTotal,
+
   }
 );
 
@@ -260,5 +271,5 @@ export default connect(mapStateToProps, {
   FetchAgent,
   ActivatateCode,
   FetchBankTerminal,
-  UnAssignTerminal
+  UnAssignTerminal,
 })(Agents);

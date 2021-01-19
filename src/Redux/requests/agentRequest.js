@@ -5,12 +5,15 @@ import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
 
-export const FetchAgent = () => dispatch => {
+export const FetchAgent = (
+  page,
+  length,
+) => dispatch => {
     dispatch(asyncActions(FETCH_AGENTS).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
     console.log(`bearer ${token.access_token}`, )
     axios
-        .get(`${AgentConstant.FETCH_AGENT_URL}`, {
+        .get(`${AgentConstant.FETCH_AGENT_URL}start=${page}&length=${length}`, {
             headers: {
                 'Authorization': `bearer ${token.access_token}`,
                 'Content-Type': 'application/json'
@@ -19,7 +22,7 @@ export const FetchAgent = () => dispatch => {
         .then(res => {
             console.log(res.status == 200)
             if (res.status == 200) {
-                dispatch(asyncActions(FETCH_AGENTS).success(res.data.data));
+                dispatch(asyncActions(FETCH_AGENTS).success(res.data));
             }
         })
         .catch(error => {

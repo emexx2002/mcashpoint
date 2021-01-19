@@ -10,7 +10,8 @@ const initialState = {
   assignSuccess:false,
   unassignSuccess:false,
   successActivation:false,
-  createAgentsuccess:false
+  createAgentsuccess:false,
+  agentTotal:0
 };
 
 const AgentsReducer = (state = initialState, action) => {
@@ -19,11 +20,11 @@ const AgentsReducer = (state = initialState, action) => {
         console.log('1')
       return { ...state, loading:true };
     case asyncActionName(FETCH_AGENTS).success:
-        console.log('2')
 
       return {
         ...state,
-        agents:action.payload,
+        agents:action.payload.data,
+        agentTotal:action.payload.recordsFiltered,
         success: true,
         loading:false,
         error: false,
@@ -32,6 +33,7 @@ const AgentsReducer = (state = initialState, action) => {
       return {
         ...state,
         error: true,
+        agentTotal:'',
         success: false,
         loading:false,
         // failure

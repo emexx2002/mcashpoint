@@ -12,7 +12,9 @@ import {
 import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
-const Filter= ({ show, close,...props }) => {
+const Filter = ({ show, close, ...props }) => {
+  const { nextPage, length, loadPage ,handleFilterValue,submitFilter} = props;
+console.log(`${props.type}id`)
   return (
     <Modal
       size="xl"
@@ -38,17 +40,17 @@ const Filter= ({ show, close,...props }) => {
 
         <Container>
           <h3>Enter Filter Parameters</h3>
-          <Form>
+          <Form onSubmit={submitFilter}>
             <Row>
               <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>Start Date</Form.Label>
                   <Form.Control
                     size="sm"
-                    type="text"
+                    type="date"
                     placeholder="Start Date"
-                    // onChange={updateInput}
-                    required
+                    name="startDate"
+                    onChange={handleFilterValue}
                   />
                 </Form.Group>
               </Col>
@@ -57,9 +59,10 @@ const Filter= ({ show, close,...props }) => {
                   <Form.Label>End Date</Form.Label>
                   <Form.Control
                     size="sm"
-                    type="text"
+                    type="date"
                     placeholder="Enter End Date"
-                    // onChange={updateInput}
+                    name="endDate"
+                    onChange={handleFilterValue}
                   />
                 </Form.Group>
               </Col>
@@ -69,8 +72,8 @@ const Filter= ({ show, close,...props }) => {
                   <Form.Control
                     size="sm"
                     as="select"
-
-                    // onChange={updateInput}
+                    name="status"
+                    onChange={handleFilterValue}
                   >
                     <option>Select Status</option>
                   </Form.Control>
@@ -81,12 +84,12 @@ const Filter= ({ show, close,...props }) => {
             <Row>
               <Col md={4} sm={12}>
                 <Form.Group controlId="">
-                  <Form.Label>{props.type}Type</Form.Label>
+                  <Form.Label>{props.type} Type</Form.Label>
                   <Form.Control
                     size="sm"
                     as="select"
-                    // onChange={updateInput}
-                    required
+                    name={`${props.name}Type`}
+                    onChange={handleFilterValue}
                   >
                     <option>{props.typetext}</option>
                   </Form.Control>
@@ -97,12 +100,11 @@ const Filter= ({ show, close,...props }) => {
                   <Form.Label>{props.type} ID</Form.Label>
                   <Form.Control
                     size="sm"
-                    as="select"
-                    // onChange={updateInput}
-                    required
-                  >
-                    <option>{props.idtext}</option>
-                  </Form.Control>
+                    type="text"
+                    name={`${props.name}Id`}
+                    placeholder="Enter RRN"
+                    onChange={handleFilterValue}
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -114,9 +116,9 @@ const Filter= ({ show, close,...props }) => {
                   <Form.Control
                     size="sm"
                     type="text"
+                    name="rrn"
                     placeholder="Enter RRN"
-                    // onChange={updateInput}
-                    required
+                    onChange={handleFilterValue}
                   />
                 </Form.Group>
               </Col>
@@ -127,7 +129,8 @@ const Filter= ({ show, close,...props }) => {
                     size="sm"
                     type="text"
                     placeholder="Enter PAN"
-                    // onChange={updateInput}
+                    name="pan"
+                    onChange={handleFilterValue}
                   />
                 </Form.Group>
               </Col>
@@ -137,8 +140,9 @@ const Filter= ({ show, close,...props }) => {
                   <Form.Control
                     size="sm"
                     type="text"
+                    name="stan"
                     placeholder="STAN"
-                    // onChange={updateInput}
+                    onChange={handleFilterValue}
                   />
                 </Form.Group>
               </Col>
@@ -152,8 +156,9 @@ const Filter= ({ show, close,...props }) => {
                     size="sm"
                     type="text"
                     // variant="light"
+                    name="terminalId"
                     placeholder="Enter Terminal ID"
-                    // onChange={updateInput}
+                    onChange={handleFilterValue}
                   />
                 </Form.Group>
               </Col>
@@ -162,9 +167,9 @@ const Filter= ({ show, close,...props }) => {
                   <Form.Label>Period</Form.Label>
                   <Form.Control
                     size="sm"
+                    name="period"
                     as="select"
-
-                    // onChange={updateInput}
+                    onChange={handleFilterValue}
                   >
                     <option>Select Period</option>
                   </Form.Control>
@@ -178,6 +183,7 @@ const Filter= ({ show, close,...props }) => {
                 className="filter-btn btn "
                 type="submit"
                 size="sm"
+                // onClick={resetFilter}
               >
                 CLEAR FILTER
               </Button>

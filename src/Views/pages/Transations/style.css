@@ -85,3 +85,43 @@
     color: #FFFFFF;
     padding: 5px 10px;
 }
+
+
+.pagination_wrap{
+    /* background-color: #f9f9f9; */
+    padding: 0px 60px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+}
+.pagination_wrap p{
+    color: #393B3E;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+    line-height: 18px;
+    margin-bottom: 0px;
+    padding: 8px;
+}
+
+
+.pagination li {
+    border: 1px solid #393B3E;
+    font-size: 15px;
+    margin: 3px;
+    padding: 1px 10px;
+}
+
+.pagination .active{
+    background-color: #1E4A86;
+    color: #ffffff;
+}
+
+.pagination .active a{
+    color: #ffffff;
+}
+.pagination li a{
+    color: #393B3E;
+    font-weight: 700;
+    text-decoration: none;
+}
