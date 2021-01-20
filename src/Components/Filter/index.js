@@ -14,7 +14,7 @@ import "./style.css";
 
 const Filter = ({ show, close, ...props }) => {
   const { nextPage, length, loadPage ,handleFilterValue,submitFilter} = props;
-console.log(`${props.type}id`)
+console.log(props.name)
   return (
     <Modal
       size="xl"
@@ -82,19 +82,23 @@ console.log(`${props.type}id`)
             </Row>
 
             <Row>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>{props.type} Type</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    as="select"
-                    name={`${props.name}Type`}
-                    onChange={handleFilterValue}
-                  >
-                    <option>{props.typetext}</option>
-                  </Form.Control>
-                </Form.Group>
-              </Col>
+             {
+               props.name == "transaction" ?
+               <Col md={4} sm={12}>
+               <Form.Group controlId="">
+                 <Form.Label>{props.type} Type</Form.Label>
+                 <Form.Control
+                   size="sm"
+                   as="select"
+                   name={`${props.name}Type`}
+                   onChange={handleFilterValue}
+                 >
+                   <option>{props.typetext}</option>
+                 </Form.Control>
+               </Form.Group>
+             </Col>
+             :''
+             }
               <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>{props.type} ID</Form.Label>
@@ -109,7 +113,9 @@ console.log(`${props.type}id`)
               </Col>
             </Row>
 
-            <Row>
+            {
+                props.name=="transaction"?
+                <Row>
               <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>RRN</Form.Label>
@@ -146,9 +152,60 @@ console.log(`${props.type}id`)
                   />
                 </Form.Group>
               </Col>
-            </Row>
+            </Row>:''
 
-            <Row>
+            }
+
+            
+
+            {
+              props.name=="agent" || props.name == "agentmanager"?
+              <Row>
+                <Col md={4} sm={12}>
+                <Form.Group controlId="">
+                  <Form.Label>User Name</Form.Label>
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    placeholder="Enter user Name"
+                    name="userName"
+                    onChange={handleFilterValue}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={4} sm={12}>
+                <Form.Group controlId="">
+                  <Form.Label>Business Name</Form.Label>
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    name="businessName"
+                    placeholder="Enter business Name"
+                    onChange={handleFilterValue}
+                  />
+                </Form.Group>
+              </Col>
+              
+              <Col md={4} sm={12}>
+                <Form.Group controlId="">
+                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    name="phone"
+                    placeholder="phone number"
+                    onChange={handleFilterValue}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>:
+            ""
+            }
+
+          
+            {
+              props.name=="transaction"?
+              <Row>
               <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>Enter Terminal ID</Form.Label>
@@ -176,7 +233,8 @@ console.log(`${props.type}id`)
                 </Form.Group>
               </Col>
             </Row>
-
+            :''
+            }
             <div className="filter-btns">
               <Button
                 variant="outline-primary"

@@ -29,22 +29,17 @@ const AgentsManager = () => {
         console.log(active)
         renderTab()
       }, [active]);
-    
-        const onclose = () => {
-          showActive('home')
-          showCreateModal(false) 
-        }
-        const closeExport = () => {
-          showExportModal(false);
-        };
-        const closeFilter = () => {
-          showFilterModal(false);
-        };
+
+      const onclose = () => {
+        showActive('home')
+        showCreateModal(false) 
+      }
+       
         
         const renderTab = () =>(
             <Tabs defaultActiveKey={active} id="uncontrolled-tab-example" onSelect={(key) => {key=='profile'?showCreateModal(true):showActive('home')}}>
                       <Tab eventKey={"home"} title="View Agent Manager">
-                        <FetchAgentsManager />
+                        <FetchAgentsManager ExportModalActive ={ExportModalActive } FilterModalActive={FilterModalActive} showExportModal={showExportModal} showFilterModal={showFilterModal}/>
                       </Tab>
                       <Tab eventKey={"profile"} title="Create Agent Manager">
                       <CreateAgentModal
@@ -53,7 +48,7 @@ const AgentsManager = () => {
                       />
                       </Tab>
                       <Tab eventKey={"contact"} title="Settlement" >
-                      <Settlement />
+                      <Settlement ExportModalActive ={ExportModalActive } FilterModalActive={FilterModalActive} showExportModal={showExportModal} showFilterModal={showFilterModal}/>
                       </Tab>
             </Tabs>
         )
@@ -87,14 +82,7 @@ const AgentsManager = () => {
 
             {renderTab()}
           </div>
-          <FilterModal
-            type={"Agent Manager "}
-            typetext={"Enter Agent Manager Type"}
-            idtext={"Enter Agent Manager ID"}
-            show={FilterModalActive}
-            close={closeFilter}
-          />
-          <ExportModal show={ExportModalActive} close={closeExport} />
+        
         </DashboardTemplate>
       );
     

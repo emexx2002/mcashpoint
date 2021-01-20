@@ -6,6 +6,8 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import AssignTerminal from "../../../Components/Assign Terminal";
 import Loader from "../../../Components/secondLoader";
 import { Modal } from "react-bootstrap";
+import ExportModal from "../../../Components/Exports/index";
+import FilterModal from "../../../Components/Filter/index";
 
 import {
   FetchAgent,
@@ -30,9 +32,12 @@ const Agents = (props) => {
     success,
     unassignSuccess,
     successActivation,
-    agentTotal
+    agentTotal,
+    showFilterModal,
+    FilterModalActive,
+    showExportModal,
+    ExportModalActive,
   } = props;
-  console.log(agentTotal)
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
   const [terminalID, showTerminalID] = useState(false);
@@ -40,30 +45,41 @@ const Agents = (props) => {
   const [nextPage, setNextPage] = useState(1);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
+
   const initialState = {
     startDate: "",
     endDate: "",
-    terminalId: "",
-    status: "",
-    transactionType: "",
-    transactionId: "",
-    rrn: "",
-    pan: "",
-    stan: "",
+    username: "",
+    businessName: "",
+    phone: "",
     agentId: "",
-    draw: "",
   };
   const [filterValues, setFilterValues] = useState(initialState);
 
   useEffect(() => {
-    FetchAgents(nextPage,length);
+    FetchAgents(nextPage, length, filterValues);
     FetchBankTerminals();
-  }, [nextPage,length]);
+  }, [nextPage, length, filterValues]);
 
   const reload = () => {
     FetchAgents();
     FetchBankTerminals();
   };
+  const closeExport = () => {
+    showExportModal(false);
+  };
+  const closeFilter = () => {
+    showFilterModal(false);
+  };
+
+  function _handleFilterValue(event) {
+    console.log(event);
+    setFilterValues({
+      ...filterValues,
+      [event.target.name]: event.target.value,
+    });
+    showExportModal(false);
+  }
 
   useEffect(() => {
     if (successActivation && activationCode != null) {
@@ -105,7 +121,11 @@ const Agents = (props) => {
     setNextPage((prev) => prev + 10);
   };
 
-
+  const onFilterSubmit = (event) => {
+    event.preventDefault();
+    FetchAgents(nextPage, length, filterValues);
+    showExportModal(false);
+  };
   const products = agents.map((agent, index) => {
     return {
       agent: agent,
@@ -248,6 +268,20 @@ const Agents = (props) => {
           />
         </div>
       </div>
+      <FilterModal
+        type={"Agent  "}
+        typetext={"Enter Agent  Type"}
+        idtext={"Enter Agent  ID"}
+        show={FilterModalActive}
+        name={"agent"}
+        close={closeFilter}
+        nextPage={nextPage}
+        length={length}
+        loadPage={FetchAgents}
+        handleFilterValue={_handleFilterValue}
+        submitFilter={onFilterSubmit}
+      />
+      <ExportModal show={ExportModalActive} close={closeExport} />
     </div>
   );
 };
@@ -263,7 +297,6 @@ const mapStateToProps = (state) => (
     unassignSuccess: state.agents.unassignSuccess,
     successActivation: state.agents.successActivation,
     agentTotal: state.agents.agentTotal,
-
   }
 );
 

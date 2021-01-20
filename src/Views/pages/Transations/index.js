@@ -58,20 +58,20 @@ const Transactions = (props) => {
       ...filterValues,
       [event.target.name]: event.target.value,
     });
+    setNextPage(0)
     showExportModal(false)
   }
 
-  const resetFilter = (event) => {
-    event.preventDefault();
+  // const resetFilter = (event) => {
+  //   event.preventDefault();
 
-    setFilterValues({...initialState});
-    console.log(filterValues);
-  };
+  //   setFilterValues({...initialState});
+  // };
   const onFilterSubmit = (event) => {
     event.preventDefault();
-    console.log(filterValues)
     FetchTransactions(nextPage, length, filterValues);
     showExportModal(false)
+    setNextPage(0)
 
   };
 
