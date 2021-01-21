@@ -8,12 +8,20 @@ import { history } from '../../utils/history'
 export const FetchAgent = (
   page,
   length,
+  {
+    startDate,
+    endDate,
+    username,
+    businessName,
+    phone,
+    agentId,
+  }
 ) => dispatch => {
     dispatch(asyncActions(FETCH_AGENTS).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
     console.log(`bearer ${token.access_token}`, )
     axios
-        .get(`${AgentConstant.FETCH_AGENT_URL}start=${page}&length=${length}`, {
+        .get(`${AgentConstant.FETCH_AGENT_URL}start=${page}&length=${length}&startDate=${startDate}&endDate=${endDate}&username=${username}&businessName=${businessName}&phone=${phone}&agentId=${agentId}`, {
             headers: {
                 'Authorization': `bearer ${token.access_token}`,
                 'Content-Type': 'application/json'

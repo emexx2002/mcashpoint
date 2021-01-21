@@ -5,11 +5,18 @@ import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
 
-export const FetchAgentManager = () => dispatch => {
+export const FetchAgentManager = (
+  page,
+  length,
+  {
+    username,
+    phone
+  }
+) => dispatch => {
     dispatch(asyncActions(FETCH_AGENTS_MANAGER).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
     axios
-        .get(`${AgentConstant.FETCH_AGENT_MANAGER_URL}`, {
+        .get(`${AgentConstant.FETCH_AGENT_MANAGER_URL}start=${page}&length=${length}&username=${username}&phone=${phone}`, {
             headers: {
                 'Authorization': `bearer ${token.access_token}`,
                 'Content-Type': 'application/json'
@@ -18,7 +25,7 @@ export const FetchAgentManager = () => dispatch => {
         .then(res => {
             console.log(res.status == 200)
             if (res.status == 200) {
-                dispatch(asyncActions(FETCH_AGENTS_MANAGER).success(res.data.data));
+                dispatch(asyncActions(FETCH_AGENTS_MANAGER).success(res.data));
             }
         })
         .catch(error => {
@@ -141,11 +148,19 @@ export const CreateAgentManager = ({
       .catch(error => dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, error)));
   };
 
-  export const FetchSettlement = () => dispatch => {
+  export const FetchSettlement = (
+    page,
+    length,
+    {
+      username,
+      month,
+      year
+    }
+  ) => dispatch => {
     dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
     axios
-       .get(`${AgentConstant.AGENT_MANAGER_SETTLEMENT_URL}`, {
+       .get(`${AgentConstant.AGENT_MANAGER_SETTLEMENT_URL}start=${page}&length=${length}`, {
             headers: {
                 'Authorization': `bearer ${token.access_token}`,
                 'Content-Type': 'application/json'
@@ -155,7 +170,7 @@ export const CreateAgentManager = ({
         const response = res.data
         console.log(response.data.data)
         if (response.responseCode === "00") {
-          dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).success(response.data.data));
+          dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).success(response.data));
         }
         else if (response.status === 400) {
           dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).failure(true, response.data.error.message));

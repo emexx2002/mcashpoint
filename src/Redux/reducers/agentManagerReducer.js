@@ -8,7 +8,9 @@ const initialState = {
   agentBanks:[],
   agentCreation:false,
   settlement:[],
-  createAgentMansuccess:false
+  createAgentMansuccess:false,
+  agentManagerTotal:'',
+  agentSettleTotal:''
 };
 
 const AgentManagerReducer = (state = initialState, action) => {
@@ -22,7 +24,8 @@ const AgentManagerReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        agentmanager:action.payload,
+        agentmanager:action.payload.data,
+        agentManagerTotal:action.payload.recordsFiltered,
         success: true,
         loading:false,
         error: false,
@@ -31,6 +34,7 @@ const AgentManagerReducer = (state = initialState, action) => {
       return {
         ...state,
         error: true,
+        agentManagerTotal:'',
         success: false,
         loading:false,
         // failure
@@ -124,10 +128,11 @@ const AgentManagerReducer = (state = initialState, action) => {
     
           return {
             ...state,
-            settlement:action.payload,
+            settlement:action.payload.data,
             success: true,
             loading:false,
             error: false,
+            agentSettleTotal:action.payload.recordsFiltered
           };
         case asyncActionName(AGENT_MANAGER_SETTLEMENT).failure:
           return {
@@ -135,6 +140,7 @@ const AgentManagerReducer = (state = initialState, action) => {
             error: true,
             success: false,
             loading:false,
+            agentSettleTotal:''
             // failure
           };
     default:

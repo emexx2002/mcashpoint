@@ -13,13 +13,11 @@ import Tab from "react-bootstrap/Tab";
 import CreateAgentModal from "./CreateAgent";
 // import FetchAgentsManager from "./fetchAgentsManager";
 // import Settlement from "./settlement";
-import ExportModal from "../../../Components/Exports/index";
-import FilterModal from "../../../Components/Filter/index";
 
 import "./style.css";
 import FetchAgents from "./FetchAgents";
 
-const AgentsManager = () => {
+const AgentsWrapper = () => {
   const [createModalActive, showCreateModal] = React.useState(false);
   const [active, showActive] = React.useState("home");
   const [ExportModalActive, showExportModal] = React.useState(false);
@@ -34,12 +32,6 @@ const AgentsManager = () => {
     showActive("home");
     showCreateModal(false);
   };
-  const closeExport = () => {
-    showExportModal(false);
-  };
-  const closeFilter = () => {
-    showFilterModal(false);
-  };
 
   const renderTab = () => (
     <Tabs
@@ -50,7 +42,7 @@ const AgentsManager = () => {
       }}
     >
       <Tab eventKey={"home"} title="View Agents">
-        <FetchAgents />
+        <FetchAgents ExportModalActive ={ExportModalActive } FilterModalActive={FilterModalActive} showExportModal={showExportModal} showFilterModal={showFilterModal}/>
       </Tab>
       <Tab eventKey={"profile"} title="Create Agent ">
         <CreateAgentModal show={createModalActive} close={onclose} />
@@ -92,15 +84,7 @@ const AgentsManager = () => {
 
         {renderTab()}
       </div>
-      <FilterModal
-        type={"Agent  "}
-        typetext={"Enter Agent  Type"}
-        idtext={"Enter Agent  ID"}
-        show={FilterModalActive}
-        close={closeFilter}
-      />
-      <ExportModal show={ExportModalActive} close={closeExport} />
     </DashboardTemplate>
   );
 };
-export default AgentsManager;
+export default AgentsWrapper;
