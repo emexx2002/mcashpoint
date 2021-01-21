@@ -1,15 +1,17 @@
 .agent-transact-header{
-    margin: 0px 50px 0px 0px;
     display: flex;
-    flex-direction: row;
+   font-size: medium;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .agent-transact-header span{
     margin: 18px;
     padding-left: 20px;
     cursor: pointer;
+    font-size: small;
+    font-weight: bolder;
+    opacity: 1;
 }
 
 .agent-transact-header img{

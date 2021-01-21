@@ -5,6 +5,9 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { FetchAudit} from "../../../Redux/requests/auditRequest";
 import Loader from "../../../Components/secondLoader"
+import Upload from "../../../Assets/img/upload.png";
+import Filter from "../../../Assets/img/filter.png";
+import Print from "../../../Assets/img/printer.png";
 import DashboardTemplate from "../../template/dashboardtemplate";
 import { connect } from 'react-redux';
 import './style.css';
@@ -76,25 +79,56 @@ console.log(audits)
           });
         
       return (
-          <DashboardTemplate>
-              <div className='transact-wrapper'>
-              {loading && <Loader type="TailSpin" type="Oval" height={60} width={60} color="#1E4A86" />}
+        <DashboardTemplate>
+          <div className="transact-wrapper">
+            {loading && (
+              <Loader
+                type="TailSpin"
+                type="Oval"
+                height={60}
+                width={60}
+                color="#1E4A86"
+              />
+            )}
+            <div className="header-title">
+              <h3>Audit</h3>
+            </div>
+            <div className="agent-transact-header">
+              <div>Overview of agent activities on mCashPoint</div>
+              <div className="manage-agent">
+                <span>
+                  <img src={Print} />
+                  Print
+                </span>
 
-                  <div className='agent-transact-header'>
-                      <div>
-                          <p>Audit</p>
-                          <p>Overview of agent activities on mCashPoint</p>
-                      </div>
-                     
-                  </div>
-                 <div className='table-wrapper'>
-                   <h4>All Agents</h4>
-                 <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} bordered={ false }  hover condensed />
+                <span >
+                  <img src={Filter} />
+                  Filter
+                </span>
 
-                 </div>
+                <span >
+                  <img src={Upload} />
+                  Export
+                </span>
               </div>
-          </DashboardTemplate>
-      )
+            </div>
+            <div className="table-wrapper">
+              <h4>All Agents</h4>
+              <BootstrapTable
+                bootstrap4
+                keyField="id"
+                data={products}
+                columns={columns}
+                defaultSorted={defaultSorted}
+                pagination={pagination}
+                bordered={false}
+                hover
+                condensed
+              />
+            </div>
+          </div>
+        </DashboardTemplate>
+      );
     }
 
 const mapStateToProps = state => (console.log(state),{

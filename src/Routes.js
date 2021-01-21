@@ -8,6 +8,7 @@ import Agents from './Views/pages/Agents'
 import AgentsManager from './Views/pages/AgentsManager'
 import Purse from './Views/pages/Purse'
 import Audit from './Views/pages/Audit'
+import AppVersion from './Views/pages/AppVersion'
 import Settings from './Views/pages/Settings'
 import Login from './Views/pages/Login'
 import { createHashHistory } from 'history'
@@ -31,6 +32,7 @@ class Routes extends Component {
               <PrivateRoute path= "/agentsmanager" component={AgentsManager } />
               <PrivateRoute path= "/purse" component={Purse } />
               <PrivateRoute path= "/audit" component={Audit } />
+              <PrivateRoute path= "/appversion" component={AppVersion } />
               <Route path= "/settings" component={Settings } />
               
             </Switch>
