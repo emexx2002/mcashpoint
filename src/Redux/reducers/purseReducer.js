@@ -15,7 +15,8 @@ const AgentPurse = (state = initialState, action) => {
 
       return {
         ...state,
-        agentPurse:action.payload,
+        agentPurse:action.payload.data,
+        agentPurseTotal:action.payload.recordsFiltered,
         success: true,
         loading:false,
         error: false,
@@ -34,7 +35,8 @@ const AgentPurse = (state = initialState, action) => {
   
         return {
           ...state,
-          centralPurse:action.payload,
+          centralPurse:action.payload.data,
+          centralPurseTotal:action.payload.recordsFiltered,
           success: true,
           loading:false,
           error: false,

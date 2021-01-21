@@ -148,11 +148,19 @@ export const CreateAgentManager = ({
       .catch(error => dispatch(asyncActions(CREATE_AGENTS_MANAGER).failure(true, error)));
   };
 
-  export const FetchSettlement = () => dispatch => {
+  export const FetchSettlement = (
+    page,
+    length,
+    {
+      username,
+      month,
+      year
+    }
+  ) => dispatch => {
     dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
     axios
-       .get(`${AgentConstant.AGENT_MANAGER_SETTLEMENT_URL}`, {
+       .get(`${AgentConstant.AGENT_MANAGER_SETTLEMENT_URL}start=${page}&length=${length}`, {
             headers: {
                 'Authorization': `bearer ${token.access_token}`,
                 'Content-Type': 'application/json'
@@ -162,7 +170,7 @@ export const CreateAgentManager = ({
         const response = res.data
         console.log(response.data.data)
         if (response.responseCode === "00") {
-          dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).success(response.data.data));
+          dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).success(response.data));
         }
         else if (response.status === 400) {
           dispatch(asyncActions(AGENT_MANAGER_SETTLEMENT).failure(true, response.data.error.message));

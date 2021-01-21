@@ -89,7 +89,7 @@ console.log(audits)
                   </div>
                  <div className='table-wrapper'>
                    <h4>All Agents</h4>
-                 <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} pagination={pagination} bordered={ false }  hover condensed />
+                 <BootstrapTable bootstrap4 keyField='id' data={products} columns={columns} defaultSorted={defaultSorted} bordered={ false }  hover condensed />
 
                  </div>
               </div>

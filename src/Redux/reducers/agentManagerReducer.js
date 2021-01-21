@@ -9,7 +9,8 @@ const initialState = {
   agentCreation:false,
   settlement:[],
   createAgentMansuccess:false,
-  agentManagerTotal:''
+  agentManagerTotal:'',
+  agentSettleTotal:''
 };
 
 const AgentManagerReducer = (state = initialState, action) => {
@@ -127,10 +128,11 @@ const AgentManagerReducer = (state = initialState, action) => {
     
           return {
             ...state,
-            settlement:action.payload,
+            settlement:action.payload.data,
             success: true,
             loading:false,
             error: false,
+            agentSettleTotal:action.payload.recordsFiltered
           };
         case asyncActionName(AGENT_MANAGER_SETTLEMENT).failure:
           return {
@@ -138,6 +140,7 @@ const AgentManagerReducer = (state = initialState, action) => {
             error: true,
             success: false,
             loading:false,
+            agentSettleTotal:''
             // failure
           };
     default:

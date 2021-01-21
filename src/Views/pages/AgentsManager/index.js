@@ -48,7 +48,7 @@ const AgentsManager = () => {
                       />
                       </Tab>
                       <Tab eventKey={"contact"} title="Settlement" >
-                      <Settlement ExportModalActive ={ExportModalActive } FilterModalActive={FilterModalActive} showExportModal={showExportModal} showFilterModal={showFilterModal}/>
+                      <Settlement />
                       </Tab>
             </Tabs>
         )

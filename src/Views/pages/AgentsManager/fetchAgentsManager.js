@@ -13,7 +13,6 @@ import ExportModal from "../../../Components/Exports/index";
 import FilterModal from "../../../Components/Filter/index";
 import Pagination from "react-js-pagination";
 
-
 import "./style.css";
 
 const FetchAgentsManager = (props) => {
@@ -25,7 +24,7 @@ const FetchAgentsManager = (props) => {
     FilterModalActive,
     showExportModal,
     ExportModalActive,
-    agentManagerTotal
+    agentManagerTotal,
   } = props;
   const [nextPage, setNextPage] = useState(1);
   const [length, setLength] = useState(10);
@@ -36,7 +35,6 @@ const FetchAgentsManager = (props) => {
     phone: "",
   };
   const [filterValues, setFilterValues] = useState(initialState);
-
 
   useEffect(() => {
     FetchAgentManagers(nextPage, length, filterValues);
@@ -179,7 +177,7 @@ const mapStateToProps = (state) => (
     agentmanager: state.agentmanager.agentmanager,
     loading: state.agentmanager.loading,
     error: state.agentmanager.error,
-    agentManagerTotal: state.agentmanager.agentManagerTotal
+    agentManagerTotal: state.agentmanager.agentManagerTotal,
   }
 );
 
