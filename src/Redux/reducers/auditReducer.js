@@ -3,6 +3,7 @@ import { FETCH_AUDIT } from "../actions/actionTypes";
 
 const initialState = {
   audit: [],
+  auditTotal:''
 };
 
 const AuditReducer = (state = initialState, action) => {
@@ -13,7 +14,8 @@ const AuditReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        audit:action.payload,
+        audit:action.payload.data,
+        auditTotal:action.payload.recordsFiltered,
         success: true,
         loading:false,
         error: false,

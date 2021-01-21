@@ -3,7 +3,9 @@ import { DASHBOARD_BREAKDOWN, DASHBOARD_TRANSACTION_DETAILS} from "../actions/ac
 
 const initialState = {
   dashboardBreakdown: [],
-  dashboardDetails:[]
+  dashboardDetails:[],
+  mostPerformingAgent:[],
+  transactionTypeBreakdown:[]
 };
 
 const DashboardReducer = (state = initialState, action) => {
@@ -14,7 +16,8 @@ const DashboardReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        dashboardBreakdown:action.payload,
+        dashboardBreakdown:action.payload.transactionSummary,
+        transactionTypeBreakdown:action.payload.transactionTypeBreakdown,
         success: true,
         loading:false,
         error: false,
@@ -33,7 +36,8 @@ const DashboardReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        dashboardDetails:action.payload,
+        dashboardDetails:action.payload.transactionDetails,
+        mostPerformingAgent:action.payload.dailyTopPerformingAgents,
         success: true,
         loading:false,
         error: false,

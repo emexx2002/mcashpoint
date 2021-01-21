@@ -19,7 +19,7 @@ export const DashboardBreakdown = () => dispatch => {
             // console.log(res)
             const response = res.data
             if (response.responseCode === '00') {
-                dispatch(asyncActions(DASHBOARD_BREAKDOWN).success(response.data?response.data.transactionSummary:''));
+                dispatch(asyncActions(DASHBOARD_BREAKDOWN).success(response.data?response.data:''));
             }
         })
         .catch(error => {
@@ -42,7 +42,7 @@ export const DashboardDetails= () => dispatch => {
             console.log(res)
             const response = res.data
             if (response.responseCode === '00') {
-                dispatch(asyncActions(DASHBOARD_TRANSACTION_DETAILS).success(response.data?response.data.transactionDetails:''));
+                dispatch(asyncActions(DASHBOARD_TRANSACTION_DETAILS).success(response.data?response.data:''));
             }
         })
         .catch(error => {

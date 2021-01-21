@@ -21,7 +21,7 @@ export const FetchAudit = () => dispatch => {
             console.log(res)
             const response = res.data
             if (response.responseCode === '00') {
-                dispatch(asyncActions(FETCH_AUDIT).success(response.data?response.data.data:''));
+                dispatch(asyncActions(FETCH_AUDIT).success(response.data?response.data:''));
             }
         })
         .catch(error => {
