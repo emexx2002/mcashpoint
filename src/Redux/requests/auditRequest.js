@@ -5,13 +5,16 @@ import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
 
-export const FetchAudit = () => dispatch => {
+export const FetchAudit = (
+    page,
+    length,
+) => dispatch => {
     dispatch(asyncActions(FETCH_AUDIT).loading(true));
     const token = JSON.parse(localStorage.getItem("data"))
     console.log(token)
     console.log(`bearer ${token.access_token}`, )
     axios
-        .get(`${AgentConstant.FETCH_AUDIT_URL}`, {
+        .get(`${AgentConstant.FETCH_AUDIT_URL}start=${page}&length=${length}`, {
             headers: {
                 'Authorization': `bearer ${token.access_token}`,
                 'Content-Type': 'application/json'

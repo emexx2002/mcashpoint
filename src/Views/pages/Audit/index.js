@@ -20,8 +20,8 @@ const Audit = (props) => {
   const [activePage, setActivePage] = useState(1);
   console.log(audits);
   useEffect(() => {
-    FetchAudits();
-  }, []);
+    FetchAudits(nextPage,length);
+  }, [nextPage,length]);
 
   const products = audits.map((aud, index) => {
     return {
