@@ -34,7 +34,6 @@ const DashBoard = (props) => {
     DashboardDetail();
   }, []);
 
-  console.log(transactionTypeBreakdown);
 
   return (
     <DashboardTemplate>
@@ -63,13 +62,13 @@ const DashBoard = (props) => {
                 <div>Agents </div>
               </div>
             </div>
-            <div className="flex-box">
+            {/* <div className="flex-box">
               <div className="mark-background"></div>
               <div>
                 <div>0</div>
                 <div>Unique Customers</div>
               </div>
-            </div>
+            </div> */}
             <div className="flex-box">
               <div className="underperform-background"> </div>
               <div>
@@ -121,16 +120,16 @@ const DashBoard = (props) => {
                 <Doughnut />
               </div>
               <div className="transaction-types">
-              {transactionTypeBreakdown.map((typeBreakdown, index) => (
-                 <div className="transaction-types-wrapper">
-                 <div>
-                   <div className="cashout-dot"></div>{typeBreakdown.type}
-                 </div>
-                 <div>20(78.5%)</div>
-               </div>
-               
-              ))}
-               
+                {transactionTypeBreakdown.map((typeBreakdown, index) => (
+                  <div className="transaction-types-wrapper">
+                    <div>
+                      <div className="cashout-dot"></div>
+                      {typeBreakdown.type}
+                    </div>
+                    <div>20(78.5%)</div>
+                  </div>
+                ))}
+
                 {/* <div className="transaction-types-wrapper">
                   <div>
                     <div className="fundtransfer-dot"></div>Funds Transfer
@@ -180,10 +179,9 @@ const DashBoard = (props) => {
 
               {mostPerformingAgent.slice(0, 5).map((PerformingAgent, index) => (
                 <div>
-                    <li>{PerformingAgent.businessName}</li>
+                  <li>{PerformingAgent.businessName}</li>
                 </div>
               ))}
-              
             </div>
           </div>
         </div>
@@ -200,7 +198,7 @@ const mapStateToProps = (state) => (
     dashboardBreakdown: state.dashboard.dashboardBreakdown,
     dashboardDetails: state.dashboard.dashboardDetails,
     mostPerformingAgent: state.dashboard.mostPerformingAgent,
-    transactionTypeBreakdown:state.dashboard.transactionTypeBreakdown,
+    transactionTypeBreakdown: state.dashboard.transactionTypeBreakdown,
     loading: state.dashboard.loading,
     error: state.dashboard.error,
   }
