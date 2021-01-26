@@ -66,7 +66,7 @@ const AgentsReducer = (state = initialState, action) => {
       case asyncActionName(FETCH_BANK_TERMINAL).failure:
         return {
           ...state,
-          loading:false,
+          // loading:false,
           error: true,
           successmodal: false
         };

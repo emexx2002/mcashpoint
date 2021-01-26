@@ -38,6 +38,8 @@ const Agents = (props) => {
     showExportModal,
     ExportModalActive,
   } = props;
+  const [businessName, setBusinessName] = useState("");
+
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
   const [terminalID, showTerminalID] = useState(false);
@@ -62,7 +64,7 @@ const Agents = (props) => {
   }, [nextPage, length, filterValues]);
 
   const reload = () => {
-    FetchAgents();
+    FetchAgents(nextPage, length, filterValues);
     FetchBankTerminals();
   };
   const closeExport = () => {
@@ -82,6 +84,7 @@ const Agents = (props) => {
   }
 
   useEffect(() => {
+    console.log(successActivation,activationCode)
     if (successActivation && activationCode != null) {
       setSmShow(true);
       setActivation(activationCode);
@@ -91,7 +94,7 @@ const Agents = (props) => {
 
   useEffect(() => {
     if (unassignSuccess) {
-      FetchAgents();
+      FetchAgents(nextPage, length, filterValues);
     }
   }, [unassignSuccess]);
 
@@ -99,16 +102,19 @@ const Agents = (props) => {
     // setActivation(null);
     ActivatateCodes(agentId);
   }
-  const AssignTerminals = (agentId) => {
+  const AssignTerminals = (agentId,businessName) => {
+    setBusinessName(businessName);
+
     showTerminalID(true);
     setAgentId(agentId);
     FetchBankTerminals(agentId);
   };
 
   const UnAssignTerminal = (agentId) => {
-    FetchAgents();
-
     UnAssignTerminals(agentId);
+
+    FetchAgents(nextPage, length, filterValues);
+
   };
 
   const closeAssignTerminal = () => {
@@ -171,7 +177,7 @@ const Agents = (props) => {
               <button
                 type="button"
                 className="assign-terminal"
-                onClick={() => AssignTerminals(row.AgentID)}
+                onClick={() => AssignTerminals(row.AgentID,row.BusinessName)}
               >
                 Assign Terminal
               </button>
@@ -255,6 +261,7 @@ const Agents = (props) => {
         show={terminalID}
         close={closeAssignTerminal}
         agentsId={agentID}
+        businessName={businessName}
       />
       <div className="pagination_wrap">
         <p>Showing 1 to 10 of {agentTotal}</p>

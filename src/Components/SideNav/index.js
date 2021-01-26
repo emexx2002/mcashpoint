@@ -1,28 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import "./style.css";
 import { NavLink } from "react-router-dom";
-import Logo from '../../Assets/img/mCP-logo 1.svg'
-import Dashboard from '../../Assets/img/dashboard.png'
-import Transaction from '../../Assets/img/transaction.png'
-import Audit from '../../Assets/img/audit.png'
-import Agentmanagaer from '../../Assets/img/agentmanager.png'
-import Purse from '../../Assets/img/purse.png'
-import Agent from '../../Assets/img/agents.png'
-import Settings from '../../Assets/img/settings.png'
-import Logout from '../../Assets/img/logout.png'
-import { removeToken } from '../../utils/localStorage';
+import Logo from "../../Assets/img/mCP-logo 1.svg";
+import Dashboard from "../../Assets/img/dashboard.png";
+import Transaction from "../../Assets/img/transaction.png";
+import Audit from "../../Assets/img/audit.png";
+import Agentmanagaer from "../../Assets/img/agentmanager.png";
+import Purse from "../../Assets/img/purse.png";
+import Agent from "../../Assets/img/agents.png";
+import Settings from "../../Assets/img/settings.png";
+import Logout from "../../Assets/img/logout.png";
+import { removeToken } from "../../utils/localStorage";
 import { logoutUser } from "../../Redux/requests/userRequest";
-import { connect } from 'react-redux';
-
+import { connect } from "react-redux";
 
 class SideNav extends Component {
-  constructor(props){
-        
+  constructor(props) {
     super(props);
   }
-  _handleSignOut(){
-    this.props.logoutUser()
-  }  
+  _handleSignOut() {
+    this.props.logoutUser();
+  }
 
   render() {
     return (
@@ -67,7 +65,8 @@ class SideNav extends Component {
                 </NavLink>
                 <NavLink to="/appversion" activeClassName="current">
                   <li className="list-group-item">
-                    <img src={""} alt="" /> AppVersion
+                    <img src={Audit} alt="" />
+                    AppVersion
                   </li>
                 </NavLink>
 
@@ -98,11 +97,6 @@ class SideNav extends Component {
   }
 }
 
-
-
-export default connect(
-null,
-{
-  logoutUser
-}
-)(SideNav);
+export default connect(null, {
+  logoutUser,
+})(SideNav);

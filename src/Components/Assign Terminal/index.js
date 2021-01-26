@@ -17,7 +17,7 @@ import {
 import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
-const Filter = ({ show, close,bankTerminals,load ,success,agentsId,assignTerminal, AssignTerminal:AssignTerminals,reload}) => {
+const Filter = ({ show, close,bankTerminals,load ,success,agentsId,assignTerminal, AssignTerminal:AssignTerminals,reload,businessName}) => {
   const [bankId, setbankId] = useState('');
 console.log(show,success)
 
@@ -30,8 +30,10 @@ const onSubmit = (event) => {
 }
 // const isDidMount = useRef(true)
 useEffect(() => { 
-  if(show && success){
+  console.log(show,success)
+  if(success){
     reload()
+    close()
   }
 }, [success]);
 
@@ -85,7 +87,7 @@ useEffect(() => {
                   <Form.Control
                     size="sm"
                     type="text"
-                    placeholder="Chinweoke Adolphus Williams"
+                    value={businessName}
                     // onChange={updateInput}
                     
                   />
@@ -111,7 +113,7 @@ useEffect(() => {
               </Col>
             </Row>
 
-            <Row>
+            {/* <Row>
               <Col>
                 <Form.Group controlId="">
                   <Form.Label>Terminal ID</Form.Label>
@@ -136,7 +138,7 @@ useEffect(() => {
                   ></Form.Control>
                 </Form.Group>
               </Col>
-            </Row>
+            </Row> */}
 
             <div className="filter-btns">
               <Button

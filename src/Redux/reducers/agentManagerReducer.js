@@ -57,7 +57,7 @@ const AgentManagerReducer = (state = initialState, action) => {
         ...state,
         error: true,
         success: false,
-        loading:false,
+        // loading:false,
         // failure
       };
       case asyncActionName(FETCH_LGA).loading:
@@ -70,7 +70,7 @@ const AgentManagerReducer = (state = initialState, action) => {
           ...state,
           agentLga:action.payload,
           success: true,
-          loading:false,
+          // loading:false,
           error: false,
         };
       case asyncActionName(FETCH_LGA).failure:
@@ -89,7 +89,7 @@ const AgentManagerReducer = (state = initialState, action) => {
         ...state,
         agentBanks:action.payload,
         success: true,
-        loading:false,
+        // loading:false,
         error: false,
       };
     case asyncActionName(FETCH_BANK).failure:
@@ -130,7 +130,7 @@ const AgentManagerReducer = (state = initialState, action) => {
             ...state,
             settlement:action.payload.data,
             success: true,
-            loading:false,
+            // loading:false,
             error: false,
             agentSettleTotal:action.payload.recordsFiltered
           };
