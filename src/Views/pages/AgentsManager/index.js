@@ -25,7 +25,10 @@ const AgentsManager = () => {
       const [active, showActive] = React.useState('home');
       const [ExportModalActive, showExportModal] = React.useState(false);
       const [FilterModalActive, showFilterModal] = React.useState(false);
-
+      const initialState = {
+        username: "",
+        phone: "",
+      };
       useEffect(() => {
         console.log(active)
         renderTab()
@@ -35,12 +38,16 @@ const AgentsManager = () => {
         showActive('home')
         showCreateModal(false) 
       }
-       
+      // const OpenFilter = () => {
+      //   showFilterModal(true);
+      //   setFilterValues(initialState)
+      // };
+      
         
         const renderTab = () =>(
             <Tabs defaultActiveKey={active} id="uncontrolled-tab-example" onSelect={(key) => {key=='profile'?showCreateModal(true):showActive('home')}}>
                       <Tab eventKey={"home"} title="View Agent Manager">
-                        <FetchAgentsManager ExportModalActive ={ExportModalActive } FilterModalActive={FilterModalActive} showExportModal={showExportModal} showFilterModal={showFilterModal}/>
+                        <FetchAgentsManager initialState={initialState} ExportModalActive ={ExportModalActive } FilterModalActive={FilterModalActive} showExportModal={showExportModal} showFilterModal={showFilterModal}/>
                       </Tab>
                       <Tab eventKey={"profile"} title="Create Agent Manager">
                       <CreateAgentModal

@@ -19,26 +19,30 @@ const AgentPurse = (props) => {
   const [agentID, setAgentId] = useState("");
   const [businessName, setBusinessName] = useState("");
 
-  const { FetchAgentPurse: FetchAgentPurses, agentPurse, loading,agentPurseTotal } = props;
-  const [nextPage, setNextPage] = useState(1);
+  const {
+    FetchAgentPurse: FetchAgentPurses,
+    agentPurse,
+    loading,
+    agentPurseTotal,
+  } = props;
+  const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
   useEffect(() => {
-    FetchAgentPurses(length,nextPage);
-  }, [length,nextPage]);
+    FetchAgentPurses(length, nextPage);
+  }, [length, nextPage]);
   const closeCredit = () => {
     showCredit(false);
   };
-console.log(agentPurseTotal)
+  console.log(agentPurseTotal);
   const handleCreditDebit = (agentId, businessName) => {
     setBusinessName(businessName);
     setAgentId(agentId);
     showCredit(true);
   };
   const _handlePageChange = (pageNumber) => {
-    console.log(pageNumber);
     setActivePage(pageNumber);
-    setNextPage((prev) => prev + 10);
+    setNextPage(pageNumber - 1);
   };
   const products = agentPurse.map((agent, index) => {
     return {
@@ -160,7 +164,6 @@ const mapStateToProps = (state) => (
     loading: state.purse.loading,
     error: state.purse.error,
     agentPurseTotal: state.purse.agentPurseTotal,
-
   }
 );
 

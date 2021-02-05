@@ -5,7 +5,8 @@ const initialState = {
   dashboardBreakdown: [],
   dashboardDetails:[],
   mostPerformingAgent:[],
-  transactionTypeBreakdown:[]
+  transactionTypeBreakdown:[],
+  numberOfAgents:''
 };
 
 const DashboardReducer = (state = initialState, action) => {
@@ -38,6 +39,7 @@ const DashboardReducer = (state = initialState, action) => {
         ...state,
         dashboardDetails:action.payload.transactionDetails,
         mostPerformingAgent:action.payload.dailyTopPerformingAgents,
+        numberOfAgents:action.payload.numberOfAgents,
         success: true,
         loading:false,
         error: false,

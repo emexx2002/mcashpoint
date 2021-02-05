@@ -17,7 +17,7 @@ const CentralPurse = (props) => {
     centralPurseTotal,
     loading,
   } = props;
-  const [nextPage, setNextPage] = useState(1);
+  const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
   useEffect(() => {
@@ -78,11 +78,9 @@ const CentralPurse = (props) => {
   ];
 
   const _handlePageChange = (pageNumber) => {
-    console.log(pageNumber);
     setActivePage(pageNumber);
-    setNextPage((prev) => prev + 10);
+    setNextPage(pageNumber - 1);
   };
-
   return (
     <div>
       {loading && (
@@ -131,7 +129,6 @@ const mapStateToProps = (state) => (
     loading: state.purse.loading,
     error: state.purse.error,
     centralPurseTotal: state.purse.centralPurseTotal,
-
   }
 );
 

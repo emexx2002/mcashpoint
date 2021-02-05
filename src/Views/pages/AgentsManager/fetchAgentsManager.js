@@ -25,19 +25,17 @@ const FetchAgentsManager = (props) => {
     showExportModal,
     ExportModalActive,
     agentManagerTotal,
+    initialState
   } = props;
-  const [nextPage, setNextPage] = useState(1);
+  const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
 
-  const initialState = {
-    username: "",
-    phone: "",
-  };
+
   const [filterValues, setFilterValues] = useState(initialState);
 
   useEffect(() => {
-    FetchAgentManagers(nextPage, length, filterValues);
+    FetchAgentManagers(nextPage, length, initialState);
   }, [nextPage, length, filterValues]);
 
   const closeExport = () => {
@@ -60,12 +58,11 @@ const FetchAgentsManager = (props) => {
     showExportModal(false);
   };
 
-  const _handlePageChange = (pageNumber) => {
-    console.log(pageNumber);
-    setActivePage(pageNumber);
-    setNextPage((prev) => prev + 10);
-  };
 
+  const _handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+    setNextPage(pageNumber-1);
+  };
   const products = agentmanager.map((agent, index) => {
     console.log(agent);
     return {

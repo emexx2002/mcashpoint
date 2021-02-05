@@ -14,7 +14,7 @@ import "./style.css";
 
 const Filter = ({ show, close, ...props }) => {
   const { nextPage, length, loadPage ,handleFilterValue,submitFilter} = props;
-console.log(props.name)
+console.log(props.transactionsType)
   return (
     <Modal
       size="xl"
@@ -94,6 +94,13 @@ console.log(props.name)
                    onChange={handleFilterValue}
                  >
                    <option>{props.typetext}</option>
+                    {props.transactionsType.map((transType, i) => {
+                      return (
+                        <option key={i} value={transType.id}>
+                          {transType.type}
+                        </option>
+                      );
+                    })}
                  </Form.Control>
                </Form.Group>
              </Col>
@@ -168,7 +175,7 @@ console.log(props.name)
                     size="sm"
                     type="text"
                     placeholder="Enter user Name"
-                    name="userName"
+                    name="username"
                     onChange={handleFilterValue}
                   />
                 </Form.Group>
@@ -239,7 +246,7 @@ console.log(props.name)
               <Button
                 variant="outline-primary"
                 className="filter-btn btn "
-                type="submit"
+                type="reset"
                 size="sm"
                 // onClick={resetFilter}
               >
@@ -251,6 +258,7 @@ console.log(props.name)
                 className="btn filter"
                 type="submit"
                 size="sm"
+                onClick={close}
               >
                 FILTER
               </Button>

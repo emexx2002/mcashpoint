@@ -19,6 +19,7 @@ const DashBoard = (props) => {
     dashboardBreakdown,
     mostPerformingAgent,
     transactionTypeBreakdown,
+    numberOfAgents,
     loading,
   } = props;
   const {
@@ -34,6 +35,29 @@ const DashBoard = (props) => {
     DashboardDetail();
   }, []);
 
+  let result = transactionTypeBreakdown.reduce(function (tot, arr) {
+    return tot + arr.volume;
+  }, 0);
+
+  let transactiondetails = transactionTypeBreakdown.map(
+    (typeBreakdown, index) => {
+      // console.log(typeBreakdown)
+      const { volume } = typeBreakdown;
+      let percentValues = (volume / result) * 100;
+      return (
+        <div className="transaction-types-wrapper">
+          <div>
+            <div className="cashout-dot"></div>
+            {typeBreakdown.type}
+          </div>
+          {console.log(typeBreakdown.volume)}
+          <div>
+            {volume}({percentValues.toFixed(2)})
+          </div>
+        </div>
+      );
+    }
+  );
 
   return (
     <DashboardTemplate>
@@ -58,7 +82,7 @@ const DashBoard = (props) => {
             <div className="flex-box ">
               <div className="person-background"></div>
               <div>
-                <div>120</div>
+                <div>{numberOfAgents ? numberOfAgents : "00"}</div>
                 <div>Agents </div>
               </div>
             </div>
@@ -111,7 +135,7 @@ const DashBoard = (props) => {
               </div>
               <div className="transaction-details b">
                 <p>Agent Registered</p>
-                <h6>15</h6>
+                <h6>{numberOfAgents ? numberOfAgents : "00"}</h6>
               </div>
             </div>
 
@@ -120,15 +144,7 @@ const DashBoard = (props) => {
                 <Doughnut />
               </div>
               <div className="transaction-types">
-                {transactionTypeBreakdown.map((typeBreakdown, index) => (
-                  <div className="transaction-types-wrapper">
-                    <div>
-                      <div className="cashout-dot"></div>
-                      {typeBreakdown.type}
-                    </div>
-                    <div>20(78.5%)</div>
-                  </div>
-                ))}
+                {transactiondetails}
 
                 {/* <div className="transaction-types-wrapper">
                   <div>
@@ -199,6 +215,7 @@ const mapStateToProps = (state) => (
     dashboardDetails: state.dashboard.dashboardDetails,
     mostPerformingAgent: state.dashboard.mostPerformingAgent,
     transactionTypeBreakdown: state.dashboard.transactionTypeBreakdown,
+    numberOfAgents: state.dashboard.numberOfAgents,
     loading: state.dashboard.loading,
     error: state.dashboard.error,
   }

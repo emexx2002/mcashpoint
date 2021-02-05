@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
@@ -22,6 +22,15 @@ const AgentsWrapper = () => {
   const [active, showActive] = React.useState("home");
   const [ExportModalActive, showExportModal] = React.useState(false);
   const [FilterModalActive, showFilterModal] = React.useState(false);
+  const initialState = {
+    startDate: "",
+    endDate: "",
+    username: "",
+    businessName: "",
+    phone: "",
+    agentId: "",
+  };
+  const [filterValues, setFilterValues] = useState(initialState);
 
   useEffect(() => {
     console.log(active);
@@ -31,6 +40,10 @@ const AgentsWrapper = () => {
   const onclose = () => {
     showActive("home");
     showCreateModal(false);
+  };
+  const OpenFilter = () => {
+    showFilterModal(true);
+    setFilterValues(initialState);
   };
 
   const renderTab = () => (
@@ -42,7 +55,15 @@ const AgentsWrapper = () => {
       }}
     >
       <Tab eventKey={"home"} title="View Agents">
-        <FetchAgents ExportModalActive ={ExportModalActive } FilterModalActive={FilterModalActive} showExportModal={showExportModal} showFilterModal={showFilterModal}/>
+        <FetchAgents
+          initialState={initialState}
+          filterValues={filterValues}
+          setFilterValues={setFilterValues}
+          ExportModalActive={ExportModalActive}
+          FilterModalActive={FilterModalActive}
+          showExportModal={showExportModal}
+          showFilterModal={showFilterModal}
+        />
       </Tab>
       <Tab eventKey={"profile"} title="Create Agent ">
         <CreateAgentModal show={createModalActive} close={onclose} />
@@ -70,7 +91,9 @@ const AgentsWrapper = () => {
               Print
             </span>
 
-            <span onClick={() => showFilterModal(true)}>
+            <span
+              onClick={() =>OpenFilter()}
+            >
               <img src={Filter} />
               Filter
             </span>
