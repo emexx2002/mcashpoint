@@ -15,7 +15,7 @@ import "./style.css";
 
 const Audit = (props) => {
   const { FetchAudit: FetchAudits, audits, loading, auditTotal } = props;
-  const [nextPage, setNextPage] = useState(1);
+  const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
   console.log(audits);
@@ -66,11 +66,9 @@ const Audit = (props) => {
   ];
 
   const _handlePageChange = (pageNumber) => {
-    console.log(pageNumber);
     setActivePage(pageNumber);
-    setNextPage((prev) => prev + 10);
+    setNextPage(pageNumber-1);
   };
-
   return (
     <DashboardTemplate>
       <div className="transact-wrapper">

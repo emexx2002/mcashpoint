@@ -37,6 +37,9 @@ const Agents = (props) => {
     FilterModalActive,
     showExportModal,
     ExportModalActive,
+    initialState,
+    filterValues,
+    setFilterValues
   } = props;
   const [businessName, setBusinessName] = useState("");
 
@@ -44,22 +47,15 @@ const Agents = (props) => {
   const [activation, setActivation] = useState(null);
   const [terminalID, showTerminalID] = useState(false);
   const [agentID, setAgentId] = useState("");
-  const [nextPage, setNextPage] = useState(1);
+  const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
 
-  const initialState = {
-    startDate: "",
-    endDate: "",
-    username: "",
-    businessName: "",
-    phone: "",
-    agentId: "",
-  };
-  const [filterValues, setFilterValues] = useState(initialState);
+  
 
   useEffect(() => {
-    FetchAgents(nextPage, length, filterValues);
+
+    FetchAgents(nextPage, length, initialState);
     FetchBankTerminals();
   }, [nextPage, length, filterValues]);
 
@@ -74,17 +70,18 @@ const Agents = (props) => {
     showFilterModal(false);
   };
 
+
   function _handleFilterValue(event) {
     console.log(event);
     setFilterValues({
       ...filterValues,
       [event.target.name]: event.target.value,
     });
-    showExportModal(false);
-  }
+    setNextPage(0)
+    showExportModal(false)  }
 
   useEffect(() => {
-    console.log(successActivation,activationCode)
+    console.log(successActivation, activationCode);
     if (successActivation && activationCode != null) {
       setSmShow(true);
       setActivation(activationCode);
@@ -102,7 +99,7 @@ const Agents = (props) => {
     // setActivation(null);
     ActivatateCodes(agentId);
   }
-  const AssignTerminals = (agentId,businessName) => {
+  const AssignTerminals = (agentId, businessName) => {
     setBusinessName(businessName);
 
     showTerminalID(true);
@@ -113,8 +110,7 @@ const Agents = (props) => {
   const UnAssignTerminal = (agentId) => {
     UnAssignTerminals(agentId);
 
-    FetchAgents(nextPage, length, filterValues);
-
+    FetchAgents(nextPage, length, initialState);
   };
 
   const closeAssignTerminal = () => {
@@ -122,15 +118,17 @@ const Agents = (props) => {
   };
 
   const _handlePageChange = (pageNumber) => {
-    console.log(pageNumber);
     setActivePage(pageNumber);
-    setNextPage((prev) => prev + 10);
+    setNextPage(pageNumber - 1);
   };
+
 
   const onFilterSubmit = (event) => {
     event.preventDefault();
     FetchAgents(nextPage, length, filterValues);
-    showExportModal(false);
+    closeFilter()
+    setNextPage(0)
+
   };
   const products = agents.map((agent, index) => {
     return {
@@ -177,7 +175,7 @@ const Agents = (props) => {
               <button
                 type="button"
                 className="assign-terminal"
-                onClick={() => AssignTerminals(row.AgentID,row.BusinessName)}
+                onClick={() => AssignTerminals(row.AgentID, row.BusinessName)}
               >
                 Assign Terminal
               </button>

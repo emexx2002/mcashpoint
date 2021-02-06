@@ -9,7 +9,7 @@ import Upload from "../../../Assets/img/upload.png";
 import Filter from "../../../Assets/img/filter.png";
 import Print from "../../../Assets/img/printer.png";
 import DashboardTemplate from "../../template/dashboardtemplate";
-import { FetchTransaction } from "../../../Redux/requests/transactionRequest";
+import { FetchTransaction,FetchTransactionTypes } from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader";
 import ExportModal from "../../../Components/Exports";
 import FilterModal from "../../../Components/Filter";
@@ -24,18 +24,20 @@ import "./style.css";
 const Transactions = (props) => {
   const {
     FetchTransaction: FetchTransactions,
+    FetchTransactionTypes:FetchTransactionType,
     transaction,
     loading,
     transactionTotal,
     successTransaction,
+    transactionsType
   } = props;
-  console.log(transactionTotal);
+  console.log(transactionsType);
   const [alltransactions, setTransactions] = useState([FetchTransactions]);
   const [totalSize, setTransactionsTotal] = useState(0);
   const [status, setStatus] = useState([FetchTransactions]);
   const [exportModalActive, showExportModal] = useState(false);
   const [FilterModalActive, showFilterModal] = useState(false);
-  const [nextPage, setNextPage] = useState(1);
+  const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
   const initialState = {
@@ -53,7 +55,7 @@ const Transactions = (props) => {
   }
   const [filterValues, setFilterValues] = useState(initialState);
 
-  function _handleFilterValue(event) {
+  const  _handleFilterValue = (event) => {
     console.log(event);
     setFilterValues({
       ...filterValues,
@@ -71,18 +73,20 @@ const Transactions = (props) => {
   const onFilterSubmit = (event) => {
     event.preventDefault();
     FetchTransactions(nextPage, length, filterValues);
-    showExportModal(false)
+    closeFilter()
     setNextPage(0)
 
   };
 
   useEffect(() => {
-    FetchTransactions(nextPage, length,filterValues);
+    FetchTransactions(nextPage, length,initialState);
+    FetchTransactionType()
   }, [nextPage, length,filterValues]);
 
 
 
   const products = transaction.map((transact) => {
+    console.log(transact)
     return {
       id: transact.agent.id === "undefined" ? "" : transact.id,
       Date:
@@ -175,7 +179,10 @@ const Transactions = (props) => {
     },
     { dataField: "AgentFee", text: "Agent Fee" },
     { dataField: "StampDuty", text: "Stamp Duty" },
-    { dataField: "RRN", text: "RRN" },
+    { dataField: "RRN", text: "RRN" , style: { width: "10em", whiteSpace: "normal", wordWrap: "break-word" },
+    headerStyle: (colum, colIndex) => {
+      return { width: "100px", textAlign: "center" };
+    },},
     // { dataField: 'CardDetails', text: 'Card Details'},
     { dataField: "PreBalance", text: "Pre-Balance" },
     { dataField: "PostBalance", text: "Post-Balance" },
@@ -189,10 +196,15 @@ const Transactions = (props) => {
     },
   ];
 
+  // const _handlePageChange = (pageNumber) => {
+  //   console.log(pageNumber);
+  //   setActivePage(pageNumber);
+  //   setNextPage((prev) => prev + 10);
+  // };
+
   const _handlePageChange = (pageNumber) => {
-    console.log(pageNumber);
     setActivePage(pageNumber);
-    setNextPage((prev) => prev + 10);
+    setNextPage(pageNumber-1);
   };
 
   const closeExport = () => {
@@ -200,6 +212,11 @@ const Transactions = (props) => {
   };
   const closeFilter = () => {
     showFilterModal(false);
+  };
+
+  const OpenFilter = () => {
+    showFilterModal(true);
+    setFilterValues(initialState)
   };
 
   return (
@@ -225,7 +242,7 @@ const Transactions = (props) => {
               Print
             </span>
 
-            <span onClick={() => showFilterModal(true)}>
+            <span onClick={() => OpenFilter()}>
               <img src={Filter} />
               Filter
             </span>
@@ -263,6 +280,7 @@ const Transactions = (props) => {
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
         name={"transaction"}
+        transactionsType={transactionsType}
       />
       <ExportModal show={exportModalActive} close={closeExport} />
       <div className="pagination_wrap">
@@ -284,6 +302,7 @@ const mapStateToProps = (state) => (
   console.log(state),
   {
     transaction: state.transactions.transactions,
+    transactionsType:state.transactions.transactionsType,
     loading: state.transactions.loading,
     error: state.transactions.error,
     transactionTotal: state.transactions.transactionTotal,
@@ -293,4 +312,5 @@ const mapStateToProps = (state) => (
 
 export default connect(mapStateToProps, {
   FetchTransaction,
+  FetchTransactionTypes
 })(Transactions);

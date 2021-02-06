@@ -25,23 +25,23 @@ const FetchAgentsSettlement = (props) => {
     showExportModals,
     ExportModalActives,
     settlement,
-    agentSettleTotal
+    agentSettleTotal,
   } = props;
 
-  const [nextPage, setNextPage] = useState(1);
+  const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
 
   const initialState = {
     username: "",
     month: "",
-    year:""
+    year: "",
   };
   const [filterValues, setFilterValues] = useState(initialState);
 
   useEffect(() => {
-    FetchSettlements(nextPage, length,filterValues);
-  }, [nextPage, length,filterValues]);
+    FetchSettlements(nextPage, length, initialState);
+  }, [nextPage, length, filterValues]);
   const closeExport = () => {
     showExportModals(false);
   };
@@ -63,9 +63,8 @@ const FetchAgentsSettlement = (props) => {
   };
 
   const _handlePageChange = (pageNumber) => {
-    console.log(pageNumber);
     setActivePage(pageNumber);
-    setNextPage((prev) => prev + 10);
+    setNextPage(pageNumber - 1);
   };
   const products = settlement.map((settle, index) => {
     console.log(settle.ambassador.accountName, settle.ambassador.accountNumber);
@@ -105,8 +104,6 @@ const FetchAgentsSettlement = (props) => {
     },
   ];
 
- 
-
   return (
     <div>
       {loading && (
@@ -118,7 +115,7 @@ const FetchAgentsSettlement = (props) => {
           color="#1E4A86"
         />
       )}
-      
+
       <div className="table-wrapper">
         <h4>All Agents</h4>
         <BootstrapTable
@@ -167,7 +164,7 @@ const mapStateToProps = (state) => (
     settlement: state.agentmanager.settlement,
     loading: state.agentmanager.loading,
     error: state.agentmanager.error,
-    agentSettleTotal:state.agentmanager.agentSettleTotal
+    agentSettleTotal: state.agentmanager.agentSettleTotal,
   }
 );
 

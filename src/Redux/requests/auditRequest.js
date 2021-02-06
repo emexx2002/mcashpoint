@@ -14,7 +14,7 @@ export const FetchAudit = (
     console.log(token)
     console.log(`bearer ${token.access_token}`, )
     axios
-        .get(`${AgentConstant.FETCH_AUDIT_URL}start=${page}&length=${length}`, {
+        .get(`${AgentConstant.FETCH_AUDIT_URL}startPage=${page}&length=${length}`, {
             headers: {
                 'Authorization': `bearer ${token.access_token}`,
                 'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ export const FetchAudit = (
             console.log(res)
             const response = res.data
             if (response.responseCode === '00') {
-                dispatch(asyncActions(FETCH_AUDIT).success(response.data?response.data:''));
+                dispatch(asyncActions(FETCH_AUDIT).success(response.data ? response.data : ''));
             }
         })
         .catch(error => {

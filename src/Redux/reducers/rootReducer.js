@@ -7,6 +7,7 @@ import dashboard from "./dashboardReducer";
 import audit from "./auditReducer";
 import purse from "./purseReducer"
 import settings from './settingsReducer'
+import apiversions from './apiVersionReducer'
 
 
 export default combineReducers({
@@ -17,5 +18,6 @@ export default combineReducers({
     dashboard,
     audit,
     purse,
-    settings
+    settings,
+    apiversions
 });

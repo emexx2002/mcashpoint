@@ -105,7 +105,6 @@ console.log(data)
               <Form.Label>Select Role Permission</Form.Label>
               {
                 roleGroups .map((role, index) => {
-                    console.log(role.description)
                     return(
                       <div  className="mb-3">
                            <Form.Check type="checkbox" name="roleIds" ref={register} value={role.id} label={role.description} />
