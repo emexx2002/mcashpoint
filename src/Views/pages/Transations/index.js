@@ -90,9 +90,9 @@ const Transactions = (props) => {
     return {
       id: transact.agent.id === "undefined" ? "" : transact.id,
       Date:
-        transact.agent.createdAt === "undefined"
+        transact.systemTime === "undefined"
           ? ""
-          : transact.agent.createdAt,
+          : transact.systemTime,
       Agent:
         transact.agent.businessName === "undefined"
           ? ""
@@ -254,7 +254,7 @@ const Transactions = (props) => {
           </div>
         </div>
         <div className="table-wrapper">
-          <h4>All Merchant</h4>
+          <h4>All Transactions</h4>
           <BootstrapTable
             bootstrap4
             keyField="id"

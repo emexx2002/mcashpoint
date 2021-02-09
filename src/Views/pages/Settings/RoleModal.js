@@ -6,22 +6,17 @@ import Cancel from "../../../Assets/img/x.png";
 import Loader from "../../../Components/secondLoader"
 
 import { connect } from "react-redux";
-import { FetchRoleGroup ,CreateRoleGroup} from "../../../Redux/requests/settingsRequest";
+import { FetchRole ,CreateRoleGroup} from "../../../Redux/requests/settingsRequest";
 
-const CreateRole = ({ show, close, FetchRoleGroup:FetchRoleGroups,CreateRoleGroup:CreateRoleGroups,roleGroups,success,error,loading,erroMessage }) => {
+const CreateRole = ({ show, close, FetchRole:FetchRoles,CreateRoleGroup:CreateRoleGroups,roles,success,error,loading,erroMessage }) => {
   const [errors, setErrors] = useState([]);
   const [successMessage, SetSuccessMessage] = useState([]);
   useEffect(() => {
-    FetchRoleGroups();
+    FetchRoles();
 
   }, []);
 console.log(erroMessage)
-//   useEffect(() => { 
-//     if (erroMessage !=null){
-//       return setErrors(erroMessage.error);
 
-//     }
-// }, [erroMessage ]);
 
 useEffect(() => { 
   console.log(error,erroMessage)
@@ -104,7 +99,7 @@ console.log(data)
 
               <Form.Label>Select Role Permission</Form.Label>
               {
-                roleGroups .map((role, index) => {
+                roles.map((role, index) => {
                     return(
                       <div  className="mb-3">
                            <Form.Check type="checkbox" name="roleIds" ref={register} value={role.id} label={role.description} />
@@ -127,7 +122,7 @@ console.log(data)
 
 }
  const mapStateToProps = state => (console.log(state),{
-  roleGroups:state.settings.roleGroups,
+  roles:state.settings.roles,
   loading:state.settings.loading,
   error:state.settings.error,
   success:state.settings.successRole,
@@ -138,6 +133,6 @@ console.log(data)
 export default connect(
   mapStateToProps,
   {
-    FetchRoleGroup,CreateRoleGroup
+    FetchRole,CreateRoleGroup
   }
 )(CreateRole);

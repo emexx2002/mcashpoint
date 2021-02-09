@@ -22,6 +22,7 @@ const AgentsWrapper = () => {
   const [active, showActive] = React.useState("home");
   const [ExportModalActive, showExportModal] = React.useState(false);
   const [FilterModalActive, showFilterModal] = React.useState(false);
+  
   const initialState = {
     startDate: "",
     endDate: "",
@@ -32,10 +33,10 @@ const AgentsWrapper = () => {
   };
   const [filterValues, setFilterValues] = useState(initialState);
 
-  useEffect(() => {
-    console.log(active);
-    renderTab();
-  }, [active]);
+  // useEffect(() => {
+  //   console.log(active);
+  //   renderTab();
+  // }, [active]);
 
   const onclose = () => {
     showActive("home");

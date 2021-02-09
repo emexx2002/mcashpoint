@@ -11,7 +11,8 @@ const initialState = {
   unassignSuccess:false,
   successActivation:false,
   createAgentsuccess:false,
-  agentTotal:0
+  agentTotal:0,
+  assignTerminal:null
 };
 
 const AgentsReducer = (state = initialState, action) => {
@@ -28,6 +29,8 @@ const AgentsReducer = (state = initialState, action) => {
         success: true,
         loading:false,
         error: false,
+        assignTerminal: null,
+        assignSuccess:false
       };
     case asyncActionName(FETCH_AGENTS).failure:
       return {
@@ -36,6 +39,8 @@ const AgentsReducer = (state = initialState, action) => {
         agentTotal:'',
         success: false,
         loading:false,
+        assignTerminal: null,
+        assignSuccess:false
         // failure
       };
       case asyncActionName(ACTIVATION_CODE).loading:

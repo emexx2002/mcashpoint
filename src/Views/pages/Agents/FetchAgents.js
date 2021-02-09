@@ -39,7 +39,7 @@ const Agents = (props) => {
     ExportModalActive,
     initialState,
     filterValues,
-    setFilterValues
+    setFilterValues,
   } = props;
   const [businessName, setBusinessName] = useState("");
 
@@ -50,14 +50,6 @@ const Agents = (props) => {
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
-
-  
-
-  useEffect(() => {
-
-    FetchAgents(nextPage, length, initialState);
-    FetchBankTerminals();
-  }, [nextPage, length, filterValues]);
 
   const reload = () => {
     FetchAgents(nextPage, length, filterValues);
@@ -70,15 +62,21 @@ const Agents = (props) => {
     showFilterModal(false);
   };
 
+  useEffect(() => {
+    setSmShow(false);
+    FetchAgents(nextPage, length, filterValues);
+    FetchBankTerminals();
+  }, [nextPage, length, filterValues]);
 
   function _handleFilterValue(event) {
-    console.log(event);
-    setFilterValues({
+    event.preventDefault();
+        setFilterValues({
       ...filterValues,
       [event.target.name]: event.target.value,
     });
-    setNextPage(0)
-    showExportModal(false)  }
+    setNextPage(0);
+    showExportModal(false);
+  }
 
   useEffect(() => {
     console.log(successActivation, activationCode);
@@ -90,10 +88,11 @@ const Agents = (props) => {
   }, [successActivation, activationCode]);
 
   useEffect(() => {
-    if (unassignSuccess) {
-      FetchAgents(nextPage, length, filterValues);
+    if (unassignSuccess ) {
+      // FetchAgents(nextPage, length, filterValues);
+      reload()
     }
-  }, [unassignSuccess]);
+  }, [unassignSuccess,success]);
 
   function ActivatateCode(agentId) {
     // setActivation(null);
@@ -122,13 +121,11 @@ const Agents = (props) => {
     setNextPage(pageNumber - 1);
   };
 
-
   const onFilterSubmit = (event) => {
     event.preventDefault();
     FetchAgents(nextPage, length, filterValues);
-    closeFilter()
-    setNextPage(0)
-
+    closeFilter();
+    setNextPage(0);
   };
   const products = agents.map((agent, index) => {
     return {

@@ -14,7 +14,6 @@ import "./style.css";
 
 const Filter = ({ show, close, ...props }) => {
   const { nextPage, length, loadPage ,handleFilterValue,submitFilter} = props;
-console.log(props.transactionsType)
   return (
     <Modal
       size="xl"
@@ -166,7 +165,7 @@ console.log(props.transactionsType)
             
 
             {
-              props.name=="agent" || props.name == "agentmanager"?
+              props.name=="agent" || props.name == "agentmanager" || props.name == "agentpurse"?
               <Row>
                 <Col md={4} sm={12}>
                 <Form.Group controlId="">

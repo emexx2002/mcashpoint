@@ -11,30 +11,83 @@ import Loader from "../../../Components/secondLoader";
 import { connect } from "react-redux";
 import CreditDebit from "../../../Components/credit";
 import Pagination from "react-js-pagination";
-
+import ExportModal from "../../../Components/Exports";
+import FilterModal from "../../../Components/Filter";
 import "./style.css";
 
 const AgentPurse = (props) => {
   const [credit, showCredit] = useState(false);
   const [agentID, setAgentId] = useState("");
   const [businessName, setBusinessName] = useState("");
+  // const [exportModalActive, showExportModal] = useState(false);
+  // const [FilterModalActive, showFilterModal] = useState(false);
 
   const {
     FetchAgentPurse: FetchAgentPurses,
     agentPurse,
     loading,
     agentPurseTotal,
+    showFilterModal,
+    FilterModalActive,
+    showExportModal,
+    ExportModalActive,
+    handleInitialValue,
+    intialValueFilter,
+    
   } = props;
+
+  const initialState = {
+    businessName: "",
+  };
+
+  const [filterValues, setFilterValues] = useState(initialState);
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
+
   useEffect(() => {
-    FetchAgentPurses(length, nextPage);
+    handleInitialValue(initialState);
+  }, [filterValues]);
+
+  useEffect(() => {
+    FetchAgentPurses(length, nextPage, initialState);
   }, [length, nextPage]);
   const closeCredit = () => {
     showCredit(false);
   };
-  console.log(agentPurseTotal);
+
+  const onFilterSubmit = (event) => {
+    event.preventDefault();
+    setFilterValues(initialState)
+    FetchAgentPurses(nextPage, length, filterValues);
+    closeFilter();
+    setNextPage(0);
+  };
+
+  const _handleFilterValue = (event) => {
+    console.log(event);
+    // FetchAgentPurses(length, nextPage, initialState);
+
+    setFilterValues({
+      ...filterValues,
+      [event.target.name]: event.target.value,
+    });
+
+    setNextPage(0);
+    showExportModal(false);
+  };
+  const closeExport = () => {
+    showExportModal(false);
+  };
+  const closeFilter = () => {
+    showFilterModal(false);
+  };
+
+  const OpenFilter = () => {
+    showFilterModal(true);
+    setFilterValues(initialState);
+  };
+
   const handleCreditDebit = (agentId, businessName) => {
     setBusinessName(businessName);
     setAgentId(agentId);
@@ -152,6 +205,19 @@ const AgentPurse = (props) => {
           idAgent={agentID}
           businessName={businessName}
         />
+        <FilterModal
+          type={""}
+          typetext={""}
+          idtext={""}
+          show={FilterModalActive}
+          name="agentpurse"
+          close={closeFilter}
+          nextPage={nextPage}
+          length={length}
+          handleFilterValue={_handleFilterValue}
+          submitFilter={onFilterSubmit}
+        />
+        <ExportModal show={ExportModalActive} close={closeExport} />
       </div>
     </div>
   );
