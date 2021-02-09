@@ -1,11 +1,12 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { CHANGE_PASSWORD, FETCH_ROLE_GROUP ,CREATE_ROLE_GROUP} from "../actions/actionTypes";
+import { CHANGE_PASSWORD, FETCH_ROLE ,FETCH_ROLE_GROUP,CREATE_ROLE_GROUP} from "../actions/actionTypes";
 
 const initialState = {
   passwordSuccess:false,
   loading:false,
   error:false,
   roleGroups:[],
+  roles:[],
   rolesuccess:false,
   successRole:false,
   createRole:[],
@@ -41,19 +42,19 @@ const SettingsReducer = (state = initialState, action) => {
         errorMessage:action.payload
         // failure
       };
-      case asyncActionName(FETCH_ROLE_GROUP).loading:
+      case asyncActionName(FETCH_ROLE).loading:
         return { ...state, loading:true };
-      case asyncActionName(FETCH_ROLE_GROUP).success:
+      case asyncActionName(FETCH_ROLE).success:
         // window.location.replace('/')
   
         return {
           ...state,
-          roleGroups:action.payload,
+          roles:action.payload,
           rolesuccess: true,
           loading:false,
           error: false,
         };
-      case asyncActionName(FETCH_ROLE_GROUP).failure:
+      case asyncActionName(FETCH_ROLE).failure:
         return {
           ...state,
           error: true,
@@ -61,6 +62,26 @@ const SettingsReducer = (state = initialState, action) => {
           loading:false,
           // failure
         };
+        case asyncActionName(FETCH_ROLE_GROUP).loading:
+          return { ...state, loading:true };
+        case asyncActionName(FETCH_ROLE_GROUP).success:
+          // window.location.replace('/')
+    
+          return {
+            ...state,
+            roleGroups:action.payload,
+            successRoleGroup: true,
+            loading:false,
+            error: false,
+          };
+        case asyncActionName(FETCH_ROLE_GROUP).failure:
+          return {
+            ...state,
+            error: true,
+            successRoleGroup: false,
+            loading:false,
+            // failure
+          };
         case asyncActionName(CREATE_ROLE_GROUP).loading:
           return { ...state, loading:true };
         case asyncActionName(CREATE_ROLE_GROUP).success:

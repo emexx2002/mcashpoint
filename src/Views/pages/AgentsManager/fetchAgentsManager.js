@@ -25,17 +25,20 @@ const FetchAgentsManager = (props) => {
     showExportModal,
     ExportModalActive,
     agentManagerTotal,
-    initialState
+    initialState,
+    filterValues,
+    setFilterValues
   } = props;
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
+  
 
 
-  const [filterValues, setFilterValues] = useState(initialState);
+  // const [filterValues, setFilterValues] = useState(initialState);
 
   useEffect(() => {
-    FetchAgentManagers(nextPage, length, initialState);
+    FetchAgentManagers(nextPage, length, filterValues);
   }, [nextPage, length, filterValues]);
 
   const closeExport = () => {
