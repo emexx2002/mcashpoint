@@ -23,7 +23,7 @@ class Routes extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <Router history={history} forceRefresh>
+          <Router history={history} >
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard}/>
               <Route  path="/" component={Login} exact />
