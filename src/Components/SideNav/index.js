@@ -17,11 +17,16 @@ import { connect } from "react-redux";
 class SideNav extends Component {
   constructor(props) {
     super(props);
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
+
   }
   _handleSignOut() {
     this.props.logoutUser();
   }
-
+  forceUpdateHandler(){
+    this.forceUpdate();
+    console.log("hhheh ")
+  };
   render() {
     return (
       <div className="sidenav-wrap">
@@ -32,7 +37,7 @@ class SideNav extends Component {
             </div>
             <div className="sidenavlist">
               <ul className="list-group">
-                <NavLink to="/dashboard" activeClassName="current" exact={true}>
+                <NavLink to="/dashboard" activeClassName="current"  onClick= {this.forceUpdateHandler}>
                   <li className="list-group-item ">
                     <img src={Dashboard} alt="" />
                     Dashboard

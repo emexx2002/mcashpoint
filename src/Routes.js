@@ -15,7 +15,6 @@ import { createHashHistory } from 'history'
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 import PrivateRoute from './utils/privateRoute'
-
 import {history} from './utils/history'
 
 class Routes extends Component {
