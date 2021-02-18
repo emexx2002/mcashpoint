@@ -16,7 +16,7 @@ export default function Notification() {
           />
           <br />
           <div>
-            When mCashPoing is closed (but yout browser is opened) notifications
+            When mCashPoint is closed (but your browser is opened) notifications
             will appear at the corner of your screen.
           </div>
         </Form>
