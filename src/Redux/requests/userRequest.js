@@ -19,6 +19,9 @@ export const loginUser = ({ username, password }) => dispatch => {
           dispatch(asyncActions(LOGIN_USER).success(response.data));
           console.log(history)
           // history.push('/dashboard');
+        }else{
+          dispatch(asyncActions(LOGIN_USER).failure(true));
+
         }
       })
       .catch(error => {

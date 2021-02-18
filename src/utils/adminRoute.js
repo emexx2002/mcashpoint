@@ -4,6 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 import {  } from "./someTokenMenthods";
 
 const data = JSON.parse(localStorage.getItem("data"))
+console.log(data)
 
 const isEntrepreneur = () => {
   return (

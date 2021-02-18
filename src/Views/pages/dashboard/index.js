@@ -21,6 +21,7 @@ const DashBoard = (props) => {
     transactionTypeBreakdown,
     numberOfAgents,
     loading,
+    role
   } = props;
   const {
     successful_value,
@@ -58,7 +59,9 @@ const DashBoard = (props) => {
       );
     }
   );
-
+  const token = JSON.parse(localStorage.getItem("data"));
+const {name} = token.user.roleGroup
+console.log(name)
   return (
     <DashboardTemplate>
       <div className="dashboard-wrapper">
@@ -79,6 +82,7 @@ const DashBoard = (props) => {
 
         <div className="graphs-wrapper">
           <div className="Dashboard-overview-wrapper">
+          {name =="ADMIN"?
             <div className="flex-box ">
               <div className="person-background"></div>
               <div>
@@ -86,6 +90,7 @@ const DashBoard = (props) => {
                 <div>Agents </div>
               </div>
             </div>
+            :''}
             {/* <div className="flex-box">
               <div className="mark-background"></div>
               <div>
@@ -190,15 +195,17 @@ const DashBoard = (props) => {
             <div className="barchart-bg">
               <Barchart />
             </div>
+            {name =="ADMIN"?
             <div className="daily-per-agent">
-              <div id="daily-header">Daily Top Performing Agents</div>
+            <div id="daily-header">Daily Top Performing Agents</div>
 
-              {mostPerformingAgent.slice(0, 5).map((PerformingAgent, index) => (
-                <div>
-                  <li>{PerformingAgent.businessName}</li>
-                </div>
-              ))}
-            </div>
+            {mostPerformingAgent.slice(0, 5).map((PerformingAgent, index) => (
+              <div>
+                <li>{PerformingAgent.businessName}</li>
+              </div>
+            ))}
+          </div>:''}
+            
           </div>
         </div>
 
@@ -218,6 +225,7 @@ const mapStateToProps = (state) => (
     numberOfAgents: state.dashboard.numberOfAgents,
     loading: state.dashboard.loading,
     error: state.dashboard.error,
+    role: state.users.role
   }
 );
 

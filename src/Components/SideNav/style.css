@@ -79,7 +79,8 @@ a{
     margin-right: 25px;
 }
 .footer{
-  position: fixed;
-  bottom: 0;
-  background: #FFFFFF;
+    position: absolute;
+    bottom: 0;
+    background: #FFFFFF;
+    width: 100%;;
 }

@@ -8,8 +8,7 @@ import Notification from '../../Assets/img/new.png'
 
 export default function  Header (props){
   const token = JSON.parse(localStorage.getItem("data"));
-console.log(token)
-const {name} = token.user.roleGroup
+// const {name} = 
       return(
         <div className='header'>
             <div></div>
@@ -17,7 +16,7 @@ const {name} = token.user.roleGroup
                 {/* <img src={Search} alt="" />
                 // <img src={Notification} alt="" />*/}
                 <span className='divider'>|</span> 
-                <span >{name}</span>
+                <span >{token?token.user.roleGroup.name:''}</span>
                 <img src={Photo} alt="" />
             </div>
         </div>

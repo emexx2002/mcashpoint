@@ -38,10 +38,11 @@ const Login = ({
         "There was an error sending your request, please try again later.",
       ]);
     }
-    removeToken();
+    // removeToken();
   }, [error]);
 
   useEffect(() => {
+    console.log(success)
     if (success) {
       history.push("/dashboard");
     } else {

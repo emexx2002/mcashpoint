@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch, withRouter } from "react-router-dom";
 import "./App.css";
 import Dashboard from './Views/pages/dashboard'
+import Admin from './Views/pages/Admin'
 import Transactions from './Views/pages/Transations'
 import Agents from './Views/pages/Agents'
 import AgentsManager from './Views/pages/AgentsManager'
@@ -16,6 +17,7 @@ import { Provider } from "react-redux";
 import store from "./Redux/store";
 import PrivateRoute from './utils/privateRoute'
 import {history} from './utils/history'
+import  AuthRequired from "./Components/authRequired"
 
 class Routes extends Component {
   render() {
@@ -24,15 +26,16 @@ class Routes extends Component {
         <Provider store={store}>
           <Router history={history} >
             <Switch>
-              <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+              <AuthRequired exact path="/dashboard" component={Dashboard}/>
+              <AuthRequired exact path="/admin" component={Admin}/>
               <Route  path="/" component={Login} exact />
               <PrivateRoute path= "/transactions" component={Transactions } />
-              <PrivateRoute path= "/agents" component={Agents } />
-              <PrivateRoute path= "/agentsmanager" component={AgentsManager } />
-              <PrivateRoute path= "/purse" component={Purse } />
-              <PrivateRoute path= "/audit" component={Audit } />
-              <PrivateRoute path= "/appversion" component={AppVersion } />
-              <Route path= "/settings" component={Settings } />
+              <AuthRequired path= "/agents" component={Agents } adminRequred/>
+              <AuthRequired path= "/agentsmanager" component={AgentsManager } adminRequred/>
+              <AuthRequired path= "/purse" component={Purse } adminRequred/>
+              <AuthRequired path= "/audit" component={Audit } AuthRequired/>
+              <AuthRequired path= "/appversion" component={AppVersion } adminRequred/>
+              <PrivateRoute path= "/settings" component={Settings } />
               
             </Switch>
           </Router>

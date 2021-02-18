@@ -3,11 +3,12 @@ import { LOGIN_USER,LOGOUT_USER } from "../actions/actionTypes";
 import { saveToken, removeToken } from '../../utils/localStorage';
 
 const initialState = {
-  user: {},
+  user: null,
   isAuthenticated: null,
   loading:false,
   error:null,
-  success:false
+  success:false,
+  role:null
   // failure:'user cant be logged in'
 };
 
@@ -18,7 +19,7 @@ const UsersReducer = (state = initialState, action) => {
       return { ...state, loading:true };
     case asyncActionName(LOGIN_USER).success:
       saveToken( JSON.stringify(action.payload));
-      console.log(action.payload)
+      console.log(action.payload.user.roleGroup.name)
       // window.location.replace('/dashboard')
 
       // localStorage.token = JSON.stringify(action.payload)
@@ -28,6 +29,7 @@ const UsersReducer = (state = initialState, action) => {
         isAuthenticated: true,
         success: true,
         loading:false,
+        role:action.payload.user.roleGroup.name,
         error: null,
       };
     case asyncActionName(LOGIN_USER).failure:
@@ -37,13 +39,14 @@ const UsersReducer = (state = initialState, action) => {
         error: action.payload,
         success: false,
         loading:false,
+        role:null
         // failure
       };
       case asyncActionName(LOGOUT_USER).success:
         removeToken()
         return { 
         ...state, 
-        user: {},
+        user: null,
         isAuthenticated: null,
         loading:false,
         error:null,

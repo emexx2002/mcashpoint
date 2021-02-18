@@ -1,20 +1,16 @@
-
 export const isLoggedIn = () => {
-  const data = JSON.parse(localStorage.getItem("data"))
-console.log(data)
-  if(data){
-    // const exp = data.expires_in
- 
-    // let currentTime = Date.now().valueOf() / 1000;
-    // console.log(currentTime, exp)
-    // if (currentTime > exp) {
-    //   // // window.localStorage.clear();
-    //   // const lastPageVisited = window.location.pathname + window.location.search;
-    //   // localStorage.clear();
-    //   // localStorage.setItem("lastPageVisited", lastPageVisited);
-    //   return false;
+  const data = JSON.parse(localStorage.getItem("data"));
+  const exp = data.expires_in;
+  console.log(data)
+  if (data) {
+    // console.log("hi");
+    // console.log(exp < Date.now() / 1000);
+    // if (exp < Date.now() / 1000) {
+    //   localStorage.clear();
+    //   window.location.replace("/");
+      // return;
     // }
+
     return true;
   }
- 
 };

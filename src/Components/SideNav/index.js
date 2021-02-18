@@ -17,17 +17,26 @@ import { connect } from "react-redux";
 class SideNav extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      role: "",
+    }
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
-
   }
   _handleSignOut() {
-    this.props.logoutUser();
+    // this.props.logoutUser();
+    console.log('logout')
+    removeToken()
+          window.location.replace('/')
+
   }
-  forceUpdateHandler(){
+  forceUpdateHandler() {
     this.forceUpdate();
-    console.log("hhheh ")
-  };
+    console.log("hhheh ");
+  }
+
   render() {
+    const token = JSON.parse(localStorage.getItem("data"));
+    const { name } = token.user.roleGroup;
     return (
       <div className="sidenav-wrap">
         <div className="navbarwrapper">
@@ -37,46 +46,73 @@ class SideNav extends Component {
             </div>
             <div className="sidenavlist">
               <ul className="list-group">
-                <NavLink to="/dashboard" activeClassName="current"  onClick= {this.forceUpdateHandler}>
+                <NavLink
+                  to="/dashboard"
+                  activeClassName="current"
+                  onClick={this.forceUpdateHandler}
+                >
                   <li className="list-group-item ">
                     <img src={Dashboard} alt="" />
                     Dashboard
                   </li>
                 </NavLink>
+                {name =="ADMIN"?
+                <NavLink to="/admin" activeClassName="current">
+                  <li className="list-group-item">
+                    <img src={Agent} alt="" /> Admin
+                  </li>
+                </NavLink>
+                :''}
                 <NavLink to="/transactions" activeClassName="current">
                   <li className="list-group-item ">
                     <img src={Transaction} alt="" /> Transactions
                   </li>
                 </NavLink>
+                {name =="ADMIN"?
                 <NavLink to="/agents" activeClassName="current">
                   <li className="list-group-item">
                     <img src={Agent} alt="" /> Agents
                   </li>
                 </NavLink>
-                <NavLink to="/agentsmanager" activeClassName="current">
-                  <li className="list-group-item">
-                    <img src={Agentmanagaer} alt="" /> Agent Manager
-                  </li>
-                </NavLink>
+                :''}
+                {name =="ADMIN"?
+                 <NavLink to="/agentsmanager" activeClassName="current">
+                 <li className="list-group-item">
+                   <img src={Agentmanagaer} alt="" /> Agent Manager
+                 </li>
+               </NavLink>
+               :
+               ''}
+               {name =="ADMIN"?
                 <NavLink to="/purse" activeClassName="current">
                   <li className="list-group-item">
                     <img src={Purse} alt="" /> Purse
                   </li>
                 </NavLink>
+                :""}
+
+                {name =="ADMIN"?
                 <NavLink to="/audit" activeClassName="current">
-                  <li className="list-group-item">
-                    <img src={Audit} alt="" /> Audit
-                  </li>
-                </NavLink>
+                <li className="list-group-item">
+                  <img src={Audit} alt="" /> Audit
+                </li>
+              </NavLink>
+              :''}
+                
+                {name =="ADMIN"?
                 <NavLink to="/appversion" activeClassName="current">
-                  <li className="list-group-item">
-                    <img src={Audit} alt="" />
-                    AppVersion
-                  </li>
-                </NavLink>
+                <li className="list-group-item">
+                  <img src={Audit} alt="" />
+                  AppVersion
+                </li>
+              </NavLink>
+              :''}
+                
+               
+               
 
                 <div className="list-group footer">
-                  <NavLink to="/settings" activeClassName="current">
+                <NavLink to="/settings" activeClassName="current">
                     <li className="list-group-item ">
                       <img src={Settings} alt="" />
                       Settings
@@ -102,6 +138,10 @@ class SideNav extends Component {
   }
 }
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  role: state.users.role,
+});
+
+export default connect(mapStateToProps, {
   logoutUser,
 })(SideNav);

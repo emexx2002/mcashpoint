@@ -8,6 +8,7 @@ import audit from "./auditReducer";
 import purse from "./purseReducer"
 import settings from './settingsReducer'
 import apiversions from './apiVersionReducer'
+import admins from './adminReducer'
 
 
 export default combineReducers({
@@ -19,5 +20,6 @@ export default combineReducers({
     audit,
     purse,
     settings,
-    apiversions
+    apiversions,
+    admins
 });

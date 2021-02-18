@@ -1,5 +1,5 @@
-const BASE_URL = "https://api.mcashpoint.com";
-
+// const BASE_URL = "https://api.mcashpoint.com";
+const BASE_URL = "http://thor.paypad.com.ng:9006"
 export const AgentConstant = {
   LOGIN_AGENT_URL: `${BASE_URL}/api/v1/login`,
   FETCH_TRANSACTIONS_URL: `${BASE_URL}/api/v1/transaction?`,
@@ -28,4 +28,5 @@ export const AgentConstant = {
   API_VERSION_URL: `${BASE_URL}/api/v1/app/version`,
   API_VERSION_URL: `${BASE_URL}/api/v1/app/version`,
   FETCH_TRANSACTIONS_TYPES_URL: `${BASE_URL}/api/v1/transaction/types`,
+  ADMIN_USERS_URL:`${BASE_URL}/api/v1/admin?`,
 };
