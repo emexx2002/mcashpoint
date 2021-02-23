@@ -112,7 +112,7 @@ const Filter = ({ show, close, ...props }) => {
                     size="sm"
                     type="text"
                     name={`${props.name}Id`}
-                    placeholder="Enter RRN"
+                    placeholder="Enter Transaction ID"
                     onChange={handleFilterValue}
                   />
                 </Form.Group>
@@ -225,7 +225,7 @@ const Filter = ({ show, close, ...props }) => {
                   />
                 </Form.Group>
               </Col>
-              <Col md={4} sm={12}>
+              {/* <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>Period</Form.Label>
                   <Form.Control
@@ -237,7 +237,7 @@ const Filter = ({ show, close, ...props }) => {
                     <option>Select Period</option>
                   </Form.Control>
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Row>
             :''
             }
