@@ -40,6 +40,8 @@ const CreateAdminModal = ({
 
   useEffect(() => {
     FetchRoleGroups();
+    SetSuccessMessage([])
+
   }, []);
 
 console.log(roleGroups)

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { FETCH_ADMIN_USERS,CREATE_ADMIN } from "../actions/actionTypes";
+import { FETCH_ADMIN_USERS,CREATE_ADMIN,UPDATE_ADMIN } from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
@@ -66,6 +66,49 @@ export const CreateAdmin = ({
         })
         .catch((error) =>
             dispatch(asyncActions(CREATE_ADMIN).failure(true, error))
+        );
+};
+
+export const UpdateAdmin = ({
+    id,
+    firstname,
+    lastname,
+    email,
+    username,
+    roleGroupName,
+}) => (dispatch) => {
+    console.log(parseInt(id),id)
+    dispatch(asyncActions(UPDATE_ADMIN).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"));
+    axios
+        .put(
+            `${AgentConstant.ADMIN_USERS_URL}`, {
+                id:parseInt(id),
+                firstname,
+                lastname,
+                email,
+                username,
+                roleGroupName,
+            }, {
+                headers: {
+                    Authorization: `bearer ${token.access_token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        )
+        .then((res) => {
+            const response = res.data;
+            console.log(response);
+            if (response.responseCode === "00") {
+                dispatch(asyncActions(UPDATE_ADMIN).success(response.data));
+            } else if (response.responseCode === "XX") {
+                dispatch(
+                    asyncActions(UPDATE_ADMIN).failure(true, response.responseMessage)
+                );
+            }
+        })
+        .catch((error) =>
+            dispatch(asyncActions(UPDATE_ADMIN).failure(true, error))
         );
 };
 

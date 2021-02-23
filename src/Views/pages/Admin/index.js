@@ -14,7 +14,8 @@ import FilterModal from "../../../Components/Filter/index";
 
 import "./style.css";
 
-const AdminUsers = () => {
+const AdminUsers = (props) => {
+    console.log(props)
   const [createModalActive, showCreateModal] = React.useState(false);
   const [active, showActive] = React.useState("home");
   const [ExportModalActive, showExportModal] = React.useState(false);

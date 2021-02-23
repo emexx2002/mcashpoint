@@ -3,6 +3,8 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { Button } from "react-bootstrap";
 import RoleModal from "./RoleModal";
+import UpdateModal from "./updateRole";
+
 import "./style.css";
 import { connect } from "react-redux";
 
@@ -10,6 +12,8 @@ import { FetchRoleGroup } from "../../../Redux/requests/settingsRequest";
 
 const RoleGroups = ({ FetchRoleGroup: FetchRoleGroups, roleGroups }) => {
   const [createModalActive, showCreateModal] = React.useState(false);
+  const [EditModal, showEditModal] = React.useState(false);
+  const [udatedetails, Setudatedetails] = React.useState([]);
 
   const [active, showActive] = React.useState("home");
 
@@ -24,6 +28,15 @@ const RoleGroups = ({ FetchRoleGroup: FetchRoleGroups, roleGroups }) => {
   const onclose = () => {
     showCreateModal(false);
   };
+  const oncloses = () => {
+    showEditModal(false);
+  };
+
+  const onOpenUdateRoles = (details) => {
+    console.log(details);
+    showEditModal(true);
+    Setudatedetails(details);
+  };
 
   return (
     <div>
@@ -32,11 +45,18 @@ const RoleGroups = ({ FetchRoleGroup: FetchRoleGroups, roleGroups }) => {
       </Button>
 
       <RoleModal show={createModalActive} close={onclose} />
+      <UpdateModal
+        show={EditModal}
+        close={oncloses}
+        udatedetails={udatedetails}
+      />
 
       <div className="Role-overview-wrapper">
         {roleGroups.map((role, index) => {
           return (
-            <div className="role-box ">
+            <div className="role-box "
+            //  onClick={() => onOpenUdateRoles(role)}
+             >
               <div>
                 <div>
                   <h5>{role.id}</h5>

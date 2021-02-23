@@ -8,10 +8,14 @@ import { connect } from "react-redux";
 import ExportModal from "../../../Components/Exports/index";
 import FilterModal from "../../../Components/Filter/index";
 import Pagination from "react-js-pagination";
+import EditUser from "./editAdmin";
+// import {history} from '../../../utils/history'
+import { Link } from "react-router-dom";
 
 import "./style.css";
 
 const AdminFetch = (props) => {
+  console.log(props);
   const {
     FetchAdmin: FetchAdmins,
     allAdmin,
@@ -25,12 +29,16 @@ const AdminFetch = (props) => {
     initialState,
     filterValues,
     setFilterValues,
+    history,
   } = props;
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
+  const [adminDetails, setAdminDetails] = useState([]);
 
-  console.log(allAdminTotal);
+  const [editadmin, showEditAdminModal] = useState(false);
+
+  console.log(adminDetails);
   // const [filterValues, setFilterValues] = useState(initialState);
 
   useEffect(() => {
@@ -61,40 +69,69 @@ const AdminFetch = (props) => {
     setActivePage(pageNumber);
     setNextPage(pageNumber - 1);
   };
+
+  const EditAdmin = (details) => {
+    showEditAdminModal(true);
+    setAdminDetails(details)
+  };
+  const closeAdminModal = () => {
+    showEditAdminModal(false);
+    window.location.reload();
+
+  };
+
   const products = allAdmin.map((admin, index) => {
     console.log(admin);
     return {
       //   id: index,
-      ID: admin.user.memberId === null ? "" : admin.user.memberId,
-      FirstName: admin.user.firstname === null ? "" : admin.user.firstname,
-      LastName: admin.user.lastname === null ? "" : admin.user.lastname,
-      UserName: admin.user.username === null ? "" : admin.user.username,
+      memberid: admin.user.memberId === null ? "" : admin.user.memberId,
+      id: admin.id === null ? "" : admin.id,
+      firstname: admin.user.firstname === null ? "" : admin.user.firstname,
+      lastname: admin.user.lastname === null ? "" : admin.user.lastname,
+      username: admin.user.username === null ? "" : admin.user.username,
       DateCreated: admin.user.createdAt === null ? "" : admin.user.createdAt,
-      RoleGroup: admin.user === null ? "" : admin.user.roleGroup.name,
+      roleGroupName: admin.user === null ? "" : admin.user.roleGroup.name,
       Active: admin.user.enabled === null ? "" : admin.user.enabled,
+      email: admin.user.email === null ? "" : admin.user.email,
+
     };
   });
 
   const columns = [
     // { dataField: 'id', text: 'Id'},
-    { dataField: "ID", text: "ID" },
     {
-      dataField: "FirstName",
+      dataField: "memberid",
+      text: "ID",
+      formatter: (cellContent, row) => {
+        console.log(row);
+        return (
+          <button
+            type="button"
+            onClick={() => EditAdmin(row)}
+            className=" editadmin"
+          >
+            {row.memberid}
+          </button>
+        );
+      },
+    },
+    {
+      dataField: "firstname",
       text: "First Name",
       headerStyle: (colum, colIndex) => {
         return { width: "150px", textAlign: "center", padding: "10px" };
       },
     },
     {
-      dataField: "LastName",
+      dataField: "lastname",
       text: "Last Name",
       headerStyle: (colum, colIndex) => {
         return { width: "150px", textAlign: "center", padding: "10px" };
       },
     },
     {
-      dataField: "UserName",
-      text: "UserName",
+      dataField: "username",
+      text: "User Name",
       headerStyle: (colum, colIndex) => {
         return { width: "150px", textAlign: "center", padding: "10px" };
       },
@@ -107,7 +144,7 @@ const AdminFetch = (props) => {
       },
     },
     {
-      dataField: "RoleGroup",
+      dataField: "roleGroupName",
       text: "Role Group",
       headerStyle: (colum, colIndex) => {
         return { width: "150px", textAlign: "center", padding: "10px" };
@@ -177,6 +214,12 @@ const AdminFetch = (props) => {
         loadPage={FetchAdmin}
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
+      />
+      <EditUser
+        load={loading}
+        show={editadmin}
+        close={closeAdminModal}
+        adminDetails={adminDetails}
       />
       <ExportModal show={ExportModalActive} close={closeExport} />
     </div>

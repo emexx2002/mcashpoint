@@ -104,7 +104,7 @@ const Transactions = (props) => {
           ? ""
           : transact.transactionType.type,
       TerminalID:
-        transact.agent.bankTerminal.terminalId === "undefined"
+        transact.agent.bankTerminal === null
           ? ""
           : transact.agent.bankTerminal.terminalId,
       Amount: transact.amount === "undefined" ? "" : transact.amount,

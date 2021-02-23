@@ -33,7 +33,7 @@ class Routes extends Component {
               <AuthRequired path= "/agents" component={Agents } adminRequred/>
               <AuthRequired path= "/agentsmanager" component={AgentsManager } adminRequred/>
               <AuthRequired path= "/purse" component={Purse } adminRequred/>
-              <AuthRequired path= "/audit" component={Audit } AuthRequired/>
+              <AuthRequired path= "/audit" component={Audit } adminRequred/>
               <AuthRequired path= "/appversion" component={AppVersion } adminRequred/>
               <PrivateRoute path= "/settings" component={Settings } />
               

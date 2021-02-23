@@ -1,11 +1,12 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { FETCH_ADMIN_USERS, CREATE_ADMIN } from "../actions/actionTypes";
+import { FETCH_ADMIN_USERS, CREATE_ADMIN,UPDATE_ADMIN } from "../actions/actionTypes";
 
 const initialState = {
   allAdmin: [],
   allAdminTotal: "",
   createAdmin: "",
   createAdminsuccess: false,
+  successUpdate:false
 };
 
 const AdminReducer = (state = initialState, action) => {
@@ -47,6 +48,22 @@ const AdminReducer = (state = initialState, action) => {
         error: true,
         createAdminsuccess: false,
       };
+      case asyncActionName(UPDATE_ADMIN).loading:
+        return { ...state, loading: true };
+      case asyncActionName(UPDATE_ADMIN).success:
+        return {
+          ...state,
+          loading:false,
+          successUpdate: true
+        };
+      case asyncActionName(UPDATE_ADMIN).failure:
+        return {
+          ...state,
+          loading:false,
+          errorMessage: action.payload,
+          error: true,
+          successUpdate: false
+        };
     default:
       return state;
   }
