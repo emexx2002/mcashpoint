@@ -17,14 +17,14 @@ import Loader from "../../../Components/secondLoader";
 import { connect } from "react-redux";
 import {
   FetchRole,
-  CreateRoleGroup,
+  UpdateRoleGroup,
 } from "../../../Redux/requests/settingsRequest";
 
 const EditRole = ({
   show,
   close,
   FetchRole: FetchRoles,
-  CreateRoleGroup: CreateRoleGroups,
+  UpdateRoleGroup: UpdateRoleGroups,
   roles,
   success,
   error,
@@ -47,7 +47,7 @@ const EditRole = ({
   useEffect(() => {
     console.log(error, erroMessage);
     if (erroMessage) {
-      if (error && erroMessage.error != "Rolegroup already registered") {
+      if (error && erroMessage.error != "RoleGroup does not exist.") {
         return setErrors([
           "There was an error sending your request, please try again later.",
         ]);
@@ -63,11 +63,9 @@ const EditRole = ({
     }
   }, [success]);
 
-  let details =udatedetails.name 
   const { register, handleSubmit } = useForm()
   const onSubmit = (data) => {
-    // CreateRoleGroups(data)
-    console.log(udatedetails);
+    UpdateRoleGroups(data)
   };
 
   return (
@@ -158,12 +156,12 @@ const mapStateToProps = (state) => (
     roles: state.settings.roles,
     loading: state.settings.loading,
     error: state.settings.error,
-    success: state.settings.successRole,
+    success: state.settings.successUpdateRole,
     erroMessage: state.settings.errorMessage,
   }
 );
 
 export default connect(mapStateToProps, {
   FetchRole,
-  CreateRoleGroup,
+  UpdateRoleGroup,
 })(EditRole);

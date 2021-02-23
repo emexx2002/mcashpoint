@@ -1,5 +1,5 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { CHANGE_PASSWORD, FETCH_ROLE ,FETCH_ROLE_GROUP,CREATE_ROLE_GROUP} from "../actions/actionTypes";
+import { CHANGE_PASSWORD, FETCH_ROLE ,FETCH_ROLE_GROUP,CREATE_ROLE_GROUP,UPDATE_ROLE_GROUP} from "../actions/actionTypes";
 
 const initialState = {
   passwordSuccess:false,
@@ -11,7 +11,8 @@ const initialState = {
   successRole:false,
   createRole:[],
   errorMessage:null,
-  passworderror:false
+  passworderror:false,
+  successUpdateRole:false
   // failure:'user cant be logged in'
 };
 
@@ -103,6 +104,22 @@ const SettingsReducer = (state = initialState, action) => {
             loading:false,
             // failure
           };
+          case asyncActionName(UPDATE_ROLE_GROUP).loading:
+            return { ...state, loading: true };
+          case asyncActionName(UPDATE_ROLE_GROUP).success:
+            return {
+              ...state,
+              loading:false,
+              successUpdateRole: true
+            };
+          case asyncActionName(UPDATE_ROLE_GROUP).failure:
+            return {
+              ...state,
+              loading:false,
+              errorMessage: action.payload,
+              error: true,
+              successUpdateRole: false
+            };
     default:
       return state;
   }

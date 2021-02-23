@@ -1,6 +1,6 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { CHANGE_PASSWORD,FETCH_ROLE ,CREATE_ROLE_GROUP, FETCH_ROLE_GROUP} from "../actions/actionTypes";
+import { CHANGE_PASSWORD,FETCH_ROLE ,CREATE_ROLE_GROUP, FETCH_ROLE_GROUP,UPDATE_ROLE_GROUP} from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import {history} from '../../utils/history'
 
@@ -101,4 +101,33 @@ export const CreateRoleGroup = (details) => dispatch => {
       }
     })
     .catch(error => dispatch(asyncActions(CREATE_ROLE_GROUP).failure(true, error)));
+};
+
+export const UpdateRoleGroup = (details) => dispatch => {
+  console.log(details)
+  let name = details.name
+  let roleIds = details.roleIds
+  dispatch(asyncActions(UPDATE_ROLE_GROUP).loading(true));
+  const token = JSON.parse(localStorage.getItem("data"));
+  axios
+    .put(`${AgentConstant.CREATE_ROLE_GROUP_URL}`, {
+      name,
+      roleIds,
+    }, {
+      headers: {
+          'Authorization': `bearer ${token.access_token}`,
+          'Content-Type': 'application/json'
+      },
+  })
+    .then(res => {
+      const response = res.data
+      console.log(response)
+      if (response.responseCode === "00") {
+        dispatch(asyncActions(UPDATE_ROLE_GROUP).success(response.data));
+      }
+      else if (response.responseCode === "XX") {
+        dispatch(asyncActions(UPDATE_ROLE_GROUP).failure(true, response.responseMessage));
+      }
+    })
+    .catch(error => dispatch(asyncActions(UPDATE_ROLE_GROUP).failure(true, error)));
 };

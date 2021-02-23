@@ -30,6 +30,8 @@ const RoleGroups = ({ FetchRoleGroup: FetchRoleGroups, roleGroups }) => {
   };
   const oncloses = () => {
     showEditModal(false);
+    window.location.reload();
+
   };
 
   const onOpenUdateRoles = (details) => {
@@ -55,7 +57,7 @@ const RoleGroups = ({ FetchRoleGroup: FetchRoleGroups, roleGroups }) => {
         {roleGroups.map((role, index) => {
           return (
             <div className="role-box "
-            //  onClick={() => onOpenUdateRoles(role)}
+             onClick={() => onOpenUdateRoles(role)}
              >
               <div>
                 <div>
