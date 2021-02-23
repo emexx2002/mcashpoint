@@ -15,7 +15,7 @@ import AgentPurse from "./agentpurse";
 import "./style.css";
 
 const AgentsManager = () => {
-  const [key, showActive] = React.useState("centralPurse");
+  const [key, showActive] = React.useState("AgentPurse");
   // const initialState = {
   //   businessName: "",
   // };
@@ -86,9 +86,9 @@ const AgentsManager = () => {
         </div>
 
         <Tabs defaultActiveKey={key} id="uncontrolled-tab-example">
-          <Tab eventKey={"centralPurse"} title="Central Purse">
+          {/* <Tab eventKey={"centralPurse"} title="Central Purse">
             <CentralPurse />
-          </Tab>
+          </Tab> */}
 
           <Tab eventKey={"AgentPurse"} title="Agent Purse">
             <AgentPurse
