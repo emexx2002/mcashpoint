@@ -8,7 +8,7 @@ import {
 import { AgentConstant } from "../../constants/constants";
 import { history } from "../../utils/history";
 
-export const FetchAgentPurse = ( page,length, { businessName }) => (
+export const FetchAgentPurse = ( length,page, { businessName }) => (
   dispatch
 ) => {
   dispatch(asyncActions(AGENT_PURSE).loading(true));
