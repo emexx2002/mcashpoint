@@ -32,7 +32,6 @@ const AgentPurse = (state = initialState, action) => {
       case asyncActionName(CENTRAL_PURSE).loading:
         return { ...state, loading:true };
       case asyncActionName(CENTRAL_PURSE).success:
-  
         return {
           ...state,
           centralPurse:action.payload.data,

@@ -15,6 +15,10 @@ import {
   FetchBankTerminal,
   UnAssignTerminal,
 } from "../../../Redux/requests/agentRequest";
+
+import {
+  FetchTransactionSingle
+} from "../../../Redux/requests/transactionRequest";
 import { connect } from "react-redux";
 import "./style.css";
 import Pagination from "react-js-pagination";
@@ -25,6 +29,7 @@ const Agents = (props) => {
     FetchAgent: FetchAgents,
     UnAssignTerminal: UnAssignTerminals,
     ActivatateCode: ActivatateCodes,
+    FetchTransactionSingle:FetchTransactionSingles,
     bankTerminal,
     agents,
     loading,
@@ -40,6 +45,7 @@ const Agents = (props) => {
     initialState,
     filterValues,
     setFilterValues,
+    history
   } = props;
   const [businessName, setBusinessName] = useState("");
 
@@ -98,6 +104,12 @@ const Agents = (props) => {
     // setActivation(null);
     ActivatateCodes(agentId);
   }
+
+  function ViewTransaction(agentId) {
+    // setActivation(null);
+    localStorage.setItem('agentId', agentId);
+    window.location ="/agenttransactions"
+  }
   const AssignTerminals = (agentId, businessName) => {
     setBusinessName(businessName);
 
@@ -127,15 +139,37 @@ const Agents = (props) => {
     closeFilter();
     setNextPage(0);
   };
+
+  const title = "Agents page";
+  const headers = [
+    [
+      "Agent ID",
+      "Business Name",
+      "User Name",
+      "Phone Number",
+      "Terminal ID",
+      "Date Created",
+    ],
+  ];
+
+  const item = agents.map((agent) => [
+    agent.id,
+    agent.businessName,
+    agent.user.username,
+    agent.businessPhone,
+    agent.bankTerminal === null ? "" : agent.bankTerminal.terminalId,
+    agent.createdAt,
+  ]);
+
   const products = agents.map((agent, index) => {
     return {
-      agent: agent,
+      agent: agent ? agent :'',
       id: index,
       AgentID: agent.id === null ? "" : agent.id,
       BusinessName: agent.businessName === null ? "" : agent.businessName,
       UserName: agent.user.username === null ? "" : agent.user.username,
       PhoneNumber: agent.businessPhone === null ? "" : agent.businessPhone,
-      Action: agent.user === null ? "" : agent.user.memberId,
+      Action: '',
       TerminalID:
         agent.bankTerminal === null ? "" : agent.bankTerminal.terminalId,
       DateCreated: agent.createdAt === null ? "" : agent.createdAt,
@@ -190,6 +224,23 @@ const Agents = (props) => {
       },
     },
     { dataField: "TerminalID", text: "Terminal ID" },
+    {
+      dataField: "transactionHistory",
+      text: "Transaction History",
+      formatter: (cellContent, row) => {
+        return (
+          <h5>
+            <button
+              type="button"
+              onClick={() => ViewTransaction(row.AgentID)}
+              className="viewTransac"
+            >
+              Transaction
+            </button>
+          </h5>
+        );
+      },
+    },
     {
       dataField: "ActivationCode",
       text: "Activation Code",
@@ -283,7 +334,7 @@ const Agents = (props) => {
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
       />
-      <ExportModal show={ExportModalActive} close={closeExport} />
+      <ExportModal show={ExportModalActive} close={closeExport} filename='Agent file' title={title} headers={headers} item={item} products={products} columns={columns}/>
     </div>
   );
 };
@@ -307,4 +358,5 @@ export default connect(mapStateToProps, {
   ActivatateCode,
   FetchBankTerminal,
   UnAssignTerminal,
+  FetchTransactionSingle
 })(Agents);

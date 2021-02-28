@@ -1,5 +1,5 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { FETCH_TRANSACTIONS, FETCH_TRANSACTIONS_TYPES } from "../actions/actionTypes";
+import { FETCH_TRANSACTIONS, FETCH_TRANSACTIONS_TYPES,FETCH_TRANSACTIONS_SINGLE } from "../actions/actionTypes";
 
 const initialState = {
   transactions: [],
@@ -26,7 +26,21 @@ const TransactionsReducer = (state = initialState, action) => {
         loading: false,
         error: false,
       };
-    case asyncActionName(FETCH_TRANSACTIONS).failure:
+      case asyncActionName(FETCH_TRANSACTIONS_SINGLE).loading:
+      // console.log('1')
+      return { ...state, loading: true };
+    case asyncActionName(FETCH_TRANSACTIONS_SINGLE).success:
+      console.log(action.payload.recordsFiltered);
+
+      return {
+        ...state,
+        transactions: action.payload.data,
+        transactionTotal: action.payload.recordsFiltered,
+        successTransaction: true,
+        loading: false,
+        error: false,
+      };
+    case asyncActionName(FETCH_TRANSACTIONS_SINGLE).failure:
       return {
         ...state,
         error: true,

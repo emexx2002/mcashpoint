@@ -66,12 +66,37 @@ const FetchAgentsManager = (props) => {
     setActivePage(pageNumber);
     setNextPage(pageNumber-1);
   };
+
+  const title = "AgentManager page";
+  const headers = [
+    [
+      "Agent ID",
+      "Business Name",
+      "User Name",
+      "Phone Number",
+      "State",
+      "LGA",
+      "Date Created"
+    ],
+  ];
+
+  const item = agentmanager.map((agent) => [
+    agent.id,
+    agent.businessName,
+    agent.user.username,
+    agent.phone,
+    agent.state.stateName,
+    agent.lga.lga,
+    agent.createdAt,
+
+  ]);
+
   const products = agentmanager.map((agent, index) => {
     console.log(agent);
     return {
       id: index,
       AgentID: agent.user.memberId === null ? "" : agent.user.memberId,
-      BusinessName: agent.businessName === null ? "" : agent.businessName,
+      BusinessName: agent.user.businessName === null ? "" : agent.user.businessName,
       UserName: agent.user.username === null ? "" : agent.user.username,
       PhoneNumber: agent.phone === null ? "" : agent.phone,
       State: agent.state.stateName === null ? "" : agent.state.stateName,
@@ -167,7 +192,7 @@ const FetchAgentsManager = (props) => {
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
       />
-      <ExportModal show={ExportModalActive} close={closeExport} />
+      <ExportModal show={ExportModalActive} close={closeExport} filename='AgentManager file' title={title} headers={headers} item={item} products={products} columns={columns}/>
     </div>
   );
 };

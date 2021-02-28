@@ -3,3 +3,9 @@ body{
     height: 100%;
     font-size: small;
 }
+
+.table {
+    overflow: auto;
+    display: block;
+    table-layout: auto;
+    }

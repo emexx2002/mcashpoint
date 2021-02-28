@@ -37,7 +37,7 @@ export const FetchAgentPurse = ( length,page, { businessName }) => (
     });
 };
 
-export const FetchCentralPurse = (page, length) => (dispatch) => {
+export const FetchCentralPurse = (length, page) => (dispatch) => {
   dispatch(asyncActions(CENTRAL_PURSE).loading(true));
   const token = JSON.parse(localStorage.getItem("data"));
   console.log(token);
@@ -53,12 +53,9 @@ export const FetchCentralPurse = (page, length) => (dispatch) => {
       }
     )
     .then((res) => {
+      console.log(res.data)
       const response = res.data;
-
-      console.log(response);
       if (res.status == 200) {
-        console.log(response.data);
-
         dispatch(
           asyncActions(CENTRAL_PURSE).success(response.data ? response : "")
         );

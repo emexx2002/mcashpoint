@@ -15,7 +15,7 @@ import AgentPurse from "./agentpurse";
 import "./style.css";
 
 const AgentsManager = () => {
-  const [key, showActive] = React.useState("AgentPurse");
+  const [key, showActive] = React.useState("centralPurse");
   // const initialState = {
   //   businessName: "",
   // };
@@ -67,7 +67,7 @@ const AgentsManager = () => {
               <div>Manage all agents on mCashPoint</div>
             </div>
           </div>
-          <div className="manage-agent">
+          {/* <div className="manage-agent">
             <span>
               <img src={Print} />
               Print
@@ -82,13 +82,13 @@ const AgentsManager = () => {
               <img src={Upload} />
               Export
             </span>
-          </div>
+          </div> */}
         </div>
 
         <Tabs defaultActiveKey={key} id="uncontrolled-tab-example">
-          {/* <Tab eventKey={"centralPurse"} title="Central Purse">
+          <Tab eventKey={"centralPurse"} title="Central Purse">
             <CentralPurse />
-          </Tab> */}
+          </Tab>
 
           <Tab eventKey={"AgentPurse"} title="Agent Purse">
             <AgentPurse

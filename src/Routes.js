@@ -5,6 +5,7 @@ import "./App.css";
 import Dashboard from './Views/pages/dashboard'
 import Admin from './Views/pages/Admin'
 import Transactions from './Views/pages/Transations'
+import TransactionsSingle from './Views/pages/TransactionSingle'
 import Agents from './Views/pages/Agents'
 import AgentsManager from './Views/pages/AgentsManager'
 import Purse from './Views/pages/Purse'
@@ -30,6 +31,7 @@ class Routes extends Component {
               <AuthRequired exact path="/admin" component={Admin}/>
               <Route  path="/" component={Login} exact />
               <PrivateRoute path= "/transactions" component={Transactions } />
+              <PrivateRoute path= "/agenttransactions" component={TransactionsSingle } />
               <AuthRequired path= "/agents" component={Agents } adminRequred/>
               <AuthRequired path= "/agentsmanager" component={AgentsManager } adminRequred/>
               <AuthRequired path= "/purse" component={Purse } adminRequred/>

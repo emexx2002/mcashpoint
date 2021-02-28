@@ -1,6 +1,6 @@
 import axios from "axios";
 import { asyncActions } from "../../utils/asyncUtil";
-import { FETCH_TRANSACTIONS, FETCH_TRANSACTIONS_TYPES } from "../actions/actionTypes";
+import { FETCH_TRANSACTIONS, FETCH_TRANSACTIONS_TYPES, FETCH_TRANSACTIONS_SINGLE } from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from "../../utils/history";
 
@@ -21,23 +21,14 @@ export const FetchTransaction = (
     draw,
   }
 ) => (dispatch) => {
-  console.log( startDate,
-    endDate,
-    terminalId,
-    status,
-    transactionType,
-    transactionId,
-    rrn,
-    pan,
-    stan,
-    agentId,);
+  ;
   dispatch(asyncActions(FETCH_TRANSACTIONS).loading(true));
   const token = JSON.parse(localStorage.getItem("data"));
   console.log(token);
   console.log(`bearer ${token.access_token}`);
   axios
     .get(
-      `${AgentConstant.FETCH_TRANSACTIONS_URL}startPage=${page}&length=${length}&startDate=${startDate}&endDate=${endDate}&terminalId=${terminalId}&status=${status}&transactionTypeId=${transactionType}&transactionId=${transactionId}&rrn=${rrn}&pan=${pan}&stan=${stan}`,
+      `${AgentConstant.FETCH_TRANSACTIONS_URL}startPage=${page}&length=${length}&agentId=${agentId}&endDate=${endDate}&terminalId=${terminalId}&status=${status}&transactionTypeId=${transactionType}&transactionId=${transactionId}&rrn=${rrn}&pan=${pan}&stan=${stan}`,
       {
         headers: {
           Authorization: `bearer ${token.access_token}`,
@@ -46,7 +37,6 @@ export const FetchTransaction = (
       }
     )
     .then((res) => {
-      console.log(res.status == 200);
       if (res.status == 200) {
         dispatch(asyncActions(FETCH_TRANSACTIONS).success(res.data));
       }
@@ -88,5 +78,49 @@ export const FetchTransactionTypes = () => (dispatch) => {
     .catch((error) => {
       console.log(error);
       dispatch(asyncActions(FETCH_TRANSACTIONS_TYPES).failure(true, error));
+    });
+};
+
+export const FetchTransactionSingle = (
+  page,
+  length,
+  {
+    startDate,
+    endDate,
+    terminalId,
+    status,
+    transactionType,
+    transactionId,
+    rrn,
+    pan,
+    stan,
+    agentId,
+    draw,
+  }
+) => (dispatch) => {
+  ;
+  dispatch(asyncActions(FETCH_TRANSACTIONS_SINGLE).loading(true));
+  const token = JSON.parse(localStorage.getItem("data"));
+  const agentIde = localStorage.getItem('agentId');
+  console.log(agentIde)
+  console.log(`bearer ${token.access_token}`);
+  axios
+    .get(
+      `${AgentConstant.FETCH_TRANSACTIONS_URL}startPage=${page}&length=${length}&agentId=${agentIde}&startDate=${startDate ? startDate :''}&endDate=${endDate}&terminalId=${terminalId}&status=${status}&transactionTypeId=${transactionType}&transactionId=${transactionId}&rrn=${rrn}&pan=${pan}&stan=${stan}`,
+      {
+        headers: {
+          Authorization: `bearer ${token.access_token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((res) => {
+      if (res.status == 200) {
+        dispatch(asyncActions(FETCH_TRANSACTIONS_SINGLE).success(res.data));
+      }
+    })
+    .catch((error) => {
+      // console.log(error)
+      dispatch(asyncActions(FETCH_TRANSACTIONS_SINGLE).failure(true, error));
     });
 };

@@ -66,6 +66,26 @@ const FetchAgentsSettlement = (props) => {
     setActivePage(pageNumber);
     setNextPage(pageNumber - 1);
   };
+
+  const title = "Settlement page";
+  const headers = [
+    [
+      "Agent Manager Name",
+      "Account Details",
+      "Amount Accured",
+      "Month",
+      "Year",
+    ],
+  ];
+
+  const item = settlement.map((settle) => [
+    settle.ambassador.user.fullName,
+    settle.ambassador.accountName +" | " + settle.ambassador.accountNumber +" | " +settle.ambassador.bank.name,
+    settle.amountAccrued,
+    settle.month,
+    settle.year,
+  ]);
+
   const products = settlement.map((settle, index) => {
     console.log(settle.ambassador.accountName, settle.ambassador.accountNumber);
     return {
@@ -154,7 +174,7 @@ const FetchAgentsSettlement = (props) => {
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
       />
-      <ExportModal show={ExportModalActives} close={closeExport} />
+      <ExportModal show={ExportModalActives} close={closeExport} filename='Settlement file' title={title} headers={headers} item={item} products={products} columns={columns}/>
     </div>
   );
 };

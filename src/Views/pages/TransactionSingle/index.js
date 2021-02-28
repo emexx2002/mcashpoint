@@ -10,7 +10,7 @@ import Filter from "../../../Assets/img/filter.png";
 import Print from "../../../Assets/img/printer.png";
 import DashboardTemplate from "../../template/dashboardtemplate";
 import {
-  FetchTransaction,
+    FetchTransactionSingle,
   FetchTransactionTypes,
 } from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader";
@@ -26,7 +26,7 @@ import "./style.css";
 
 const Transactions = (props) => {
   const {
-    FetchTransaction: FetchTransactions,
+    FetchTransactionSingle: FetchTransactionSingles,
     FetchTransactionTypes: FetchTransactionType,
     transaction,
     loading,
@@ -35,9 +35,7 @@ const Transactions = (props) => {
     transactionsType,
   } = props;
   console.log(transactionsType);
-  const [alltransactions, setTransactions] = useState([FetchTransactions]);
   const [totalSize, setTransactionsTotal] = useState(0);
-  const [status, setStatus] = useState([FetchTransactions]);
   const [exportModalActive, showExportModal] = useState(false);
   const [FilterModalActive, showFilterModal] = useState(false);
   const [nextPage, setNextPage] = useState(0);
@@ -75,13 +73,13 @@ const Transactions = (props) => {
   // };
   const onFilterSubmit = (event) => {
     event.preventDefault();
-    FetchTransactions(nextPage, length, filterValues);
+    FetchTransactionSingles(nextPage, length, filterValues);
     closeFilter();
     setNextPage(0);
   };
 
   useEffect(() => {
-    FetchTransactions(nextPage, length, initialState);
+    FetchTransactionSingles(nextPage, length, initialState);
     FetchTransactionType();
   }, [nextPage, length, filterValues]);
 
@@ -335,7 +333,7 @@ const Transactions = (props) => {
         close={closeFilter}
         nextPage={nextPage}
         length={length}
-        loadPage={FetchTransaction}
+        loadPage={FetchTransactionSingle}
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
         name={"transaction"}
@@ -370,6 +368,6 @@ const mapStateToProps = (state) => (
 );
 
 export default connect(mapStateToProps, {
-  FetchTransaction,
-  FetchTransactionTypes,
+    FetchTransactionSingle,
+    FetchTransactionTypes,
 })(Transactions);

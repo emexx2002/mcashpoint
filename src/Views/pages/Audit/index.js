@@ -86,7 +86,7 @@ const Audit = (props) => {
         </div>
         <div className="agent-transact-header">
           <div>Overview of agent activities on mCashPoint</div>
-          <div className="manage-agent">
+          {/* <div className="manage-agent">
             <span>
               <img src={Print} />
               Print
@@ -101,7 +101,7 @@ const Audit = (props) => {
               <img src={Upload} />
               Export
             </span>
-          </div>
+          </div> */}
         </div>
         <div className="table-wrapper">
           <h4>All Agents</h4>
