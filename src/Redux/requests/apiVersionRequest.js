@@ -64,16 +64,14 @@ export const DeleteApiVersions  = (version) => dispatch => {
   dispatch(asyncActions(DELETE_API_VERSION).loading(true));
   const token = JSON.parse(localStorage.getItem("data"))
   console.log(token.access_token)
-  axios
-    .delete(`${AgentConstant.API_VERSION_URL}`,
-     {
-      versions,
-    }, 
-    {
-      headers: {
-          'Authorization': `bearer ${token.access_token}`,
-          'Content-Type': 'application/json'
-      },
+  axios.delete(`${AgentConstant.API_VERSION_URL}`, {
+    headers: {
+      'Authorization': `bearer ${token.access_token}`,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      versions
+    }
   })
     .then(res => {
       console.log(res)

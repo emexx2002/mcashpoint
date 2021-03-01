@@ -79,10 +79,10 @@ const Filter = ({ show, close, ...props }) => {
                 </Form.Group>
               </Col>
             </Row>
-
+            { props.name == "transaction" ?
             <Row>
-             {
-               props.name == "transaction" ?
+            
+               
                <Col md={4} sm={12}>
                <Form.Group controlId="">
                  <Form.Label>{props.type} Type</Form.Label>
@@ -103,8 +103,7 @@ const Filter = ({ show, close, ...props }) => {
                  </Form.Control>
                </Form.Group>
              </Col>
-             :''
-             }
+             
               <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>{props.type} ID</Form.Label>
@@ -118,7 +117,8 @@ const Filter = ({ show, close, ...props }) => {
                 </Form.Group>
               </Col>
             </Row>
-
+:''
+}
             {
                 props.name=="transaction"?
                 <Row>

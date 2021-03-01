@@ -18,6 +18,7 @@ const AppVersion = ({
   apiVersions,
   loading,
   success,
+  deleteApiSuccess
 }) => {
   const [errors, setErrors] = useState([]);
   const [successMessage, SetSuccessMessage] = useState([]);
@@ -28,6 +29,14 @@ const AppVersion = ({
   useEffect(() => {
     FetchAllApiVersion();
   }, []);
+
+  useEffect(() => {
+console.log(success,deleteApiSuccess)
+    if(success || deleteApiSuccess){
+      window.location.reload();
+    }
+  }, [success,deleteApiSuccess]);
+
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -111,6 +120,7 @@ const mapStateToProps = (state) => (
     apiVersions: state.apiversions.apiVersions,
     loading: state.apiversions.loading,
     success: state.apiversions.createApiSuccess,
+    deleteApiSuccess: state.apiversions.deleteApiSuccess
   }
 );
 

@@ -28,7 +28,7 @@ export const FetchTransaction = (
   console.log(`bearer ${token.access_token}`);
   axios
     .get(
-      `${AgentConstant.FETCH_TRANSACTIONS_URL}startPage=${page}&length=${length}&agentId=${agentId}&endDate=${endDate}&terminalId=${terminalId}&status=${status}&transactionTypeId=${transactionType}&transactionId=${transactionId}&rrn=${rrn}&pan=${pan}&stan=${stan}`,
+      `${AgentConstant.FETCH_TRANSACTIONS_URL}startPage=${page}&length=${length}&agentId=${agentId}&startDate=${startDate ? startDate :''}&endDate=${endDate}&terminalId=${terminalId}&status=${status}&transactionTypeId=${transactionType}&transactionId=${transactionId}&rrn=${rrn}&pan=${pan}&stan=${stan}`,
       {
         headers: {
           Authorization: `bearer ${token.access_token}`,

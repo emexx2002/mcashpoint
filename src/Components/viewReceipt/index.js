@@ -1,15 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   Modal,
-  Form,
   Container,
   Button,
-  Alert,
-  Row,
-  Col,
 } from "react-bootstrap";
-import Loader from "../secondLoader";
-import { connect } from "react-redux";
 import ReactToPdf from "react-to-pdf";
 
 import Cancel from "../../Assets/img/x.png";
@@ -77,11 +71,11 @@ const ViewReceipt = ({ show, close, details }) => {
             </div>
             <div className="receipt-body">
               <div>STAN</div>
-              <div></div>
+              <div>{details.STAN}</div>
             </div>
             <div className="receipt-body">
               <div>PAN</div>
-              <div>{details.STAN}</div>
+              <div>{details.transact ? details.transact.pan : ""}</div>
             </div>
             <div className="receipt-body">
               <div>Card Holder</div>

@@ -79,7 +79,7 @@ const Transactions = (props) => {
   };
 
   useEffect(() => {
-    FetchTransactionSingles(nextPage, length, initialState);
+    FetchTransactionSingles(nextPage, length, filterValues);
     FetchTransactionType();
   }, [nextPage, length, filterValues]);
 
