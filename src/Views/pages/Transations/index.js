@@ -18,6 +18,7 @@ import ExportModal from "../../../Components/Exports";
 import FilterModal from "../../../Components/Filter";
 import { Nav, NavItem, NavLink } from "react-bootstrap";
 import Pagination from "react-js-pagination";
+import ViewReceipts from "../../../Components/viewReceipt";
 
 import { connect } from "react-redux";
 
@@ -43,6 +44,9 @@ const Transactions = (props) => {
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
+  const [viewReceipt, setViewReceipt] = useState('');
+  const [receiptview, showReceiptView] = useState(false);
+
   const initialState = {
     startDate: "",
     endDate: "",
@@ -79,6 +83,15 @@ const Transactions = (props) => {
     closeFilter();
     setNextPage(0);
   };
+  const ViewReceipt = (details) => {
+    console.log(details)
+    showReceiptView(true);
+    setViewReceipt(details);
+  };
+
+  const closeViewReceipt= () => {
+    showReceiptView(false);
+  };
 
   useEffect(() => {
     FetchTransactions(nextPage, length, initialState);
@@ -99,7 +112,7 @@ const Transactions = (props) => {
       "Stamp Duty",
       "RRN",
       "Pre Balance",
-      "Post Balance"
+      "Post Balance",
     ],
   ];
 
@@ -119,8 +132,9 @@ const Transactions = (props) => {
   ]);
 
   const products = transaction.map((transact) => {
+    console.log(transact.agent.agentManager);
     return {
-      transact:transact,
+      transact: transact,
       id: transact.agent.id === "undefined" ? "" : transact.id,
       Date: transact.systemTime === "undefined" ? "" : transact.systemTime,
       Agent:
@@ -153,11 +167,10 @@ const Transactions = (props) => {
         transact.postPurseBalance.toFixed(2) === "undefined"
           ? ""
           : transact.prePurseBalance.toFixed(2),
-          AppVersion: transact.appVersion === "undefined" ? "" : transact.appVersion,
+      AppVersion:
+        transact.appVersion === "undefined" ? "" : transact.appVersion,
     };
-    
   });
-  
 
   const columns = [
     { dataField: "Date", text: "Date" },
@@ -190,14 +203,14 @@ const Transactions = (props) => {
         return { width: "550px", textAlign: "center" };
       },
       bodyStyle: (colum, colIndex) => {
-        return { width: "550px", textAlign: "center",  wordWrap: "normal" };
+        return { width: "550px", textAlign: "center", wordWrap: "normal" };
       },
       formatter: (cellContent, row) => {
         let statusMessage = "";
         let statusColor = "";
         switch (row.Status) {
           case "00":
-            console.log(row)
+            console.log(row);
             statusMessage = row.transact.statusMessage;
             statusColor = "successful";
             break;
@@ -242,6 +255,23 @@ const Transactions = (props) => {
     { dataField: "PreBalance", text: "Pre-Balance" },
     { dataField: "PostBalance", text: "Post-Balance" },
     { dataField: "App Version", text: "App Version" },
+    {
+      dataField: "ViewReceipt",
+      text: "View Receipt",
+      formatter: (cellContent, row) => {
+        return (
+          <h5>
+            <button
+              type="button"
+              onClick={() => ViewReceipt(row)}
+              className="viewTransac"
+            >
+              View Receipt
+            </button>
+          </h5>
+        );
+      },
+    },
 
     // { dataField: 'BeneficiaryDetails', text: 'Beneficiary Details'},
   ];
@@ -293,10 +323,10 @@ const Transactions = (props) => {
         </div>
         <div className="agent-transact-header">
           <div>An overview of all transactions on mCashPoint</div>
-          <div> 
-            <span 
+          <div>
+            <span
             // onclick={()=> window.print()}
-             >
+            >
               <img src={Print} />
               Print
             </span>
@@ -327,6 +357,11 @@ const Transactions = (props) => {
           />
         </div>
       </div>
+      <ViewReceipts
+        details={viewReceipt}
+        show={receiptview}
+        close={closeViewReceipt}
+      />
       <FilterModal
         type={"Transaction"}
         typetext={"Enter Transaction Type"}
@@ -341,7 +376,16 @@ const Transactions = (props) => {
         name={"transaction"}
         transactionsType={transactionsType}
       />
-      <ExportModal show={exportModalActive} close={closeExport} filename='transaction file' title={title} headers={headers} item={item} products={products} columns={columns}/>
+      <ExportModal
+        show={exportModalActive}
+        close={closeExport}
+        filename="transaction file"
+        title={title}
+        headers={headers}
+        item={item}
+        products={products}
+        columns={columns}
+      />
       <div className="pagination_wrap">
         <p>Showing 1 to 10 of {transactionTotal}</p>
         <div className="pagination">
