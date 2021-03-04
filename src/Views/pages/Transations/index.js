@@ -12,6 +12,7 @@ import DashboardTemplate from "../../template/dashboardtemplate";
 import {
   FetchTransaction,
   FetchTransactionTypes,
+  FetchTransactionStatus,
 } from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader";
 import ExportModal from "../../../Components/Exports";
@@ -29,13 +30,14 @@ const Transactions = (props) => {
   const {
     FetchTransaction: FetchTransactions,
     FetchTransactionTypes: FetchTransactionType,
+    FetchTransactionStatus:FetchTransactionStatuses,
     transaction,
     loading,
     transactionTotal,
     successTransaction,
     transactionsType,
+    transactionStatus
   } = props;
-  console.log(transactionsType);
   const [alltransactions, setTransactions] = useState([FetchTransactions]);
   const [totalSize, setTransactionsTotal] = useState(0);
   const [status, setStatus] = useState([FetchTransactions]);
@@ -96,6 +98,7 @@ const Transactions = (props) => {
   useEffect(() => {
     FetchTransactions(nextPage, length, filterValues);
     FetchTransactionType();
+    FetchTransactionStatuses()
   }, [nextPage, length, filterValues]);
 
   const title = "Transactions page";
@@ -121,7 +124,7 @@ const Transactions = (props) => {
     transact.agent.businessName,
     transact.transactionId,
     transact.transactionType.type,
-    transact.agent.bankTerminal.terminalId,
+    transact.agent.bankTerminal  === null ? '' : transact.agent.bankTerminal.terminalId,
     transact.amount,
     transact.statusCode,
     transact.agentFee,
@@ -375,6 +378,7 @@ const Transactions = (props) => {
         submitFilter={onFilterSubmit}
         name={"transaction"}
         transactionsType={transactionsType}
+        transactionStatus={transactionStatus}
       />
       <ExportModal
         show={exportModalActive}
@@ -406,6 +410,7 @@ const mapStateToProps = (state) => (
   {
     transaction: state.transactions.transactions,
     transactionsType: state.transactions.transactionsType,
+    transactionStatus:state.transactions.transactionStatus,
     loading: state.transactions.loading,
     error: state.transactions.error,
     transactionTotal: state.transactions.transactionTotal,
@@ -416,4 +421,5 @@ const mapStateToProps = (state) => (
 export default connect(mapStateToProps, {
   FetchTransaction,
   FetchTransactionTypes,
+  FetchTransactionStatus
 })(Transactions);

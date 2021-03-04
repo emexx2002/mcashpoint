@@ -28,5 +28,7 @@ export const AgentConstant = {
   API_VERSION_URL: `${BASE_URL}/api/v1/app/version`,
   API_VERSION_URL: `${BASE_URL}/api/v1/app/version`,
   FETCH_TRANSACTIONS_TYPES_URL: `${BASE_URL}/api/v1/transaction/types`,
+  FETCH_TRANSACTIONS_STATUS_URL: `${BASE_URL}/api/v1/transaction/status`,
   ADMIN_USERS_URL:`${BASE_URL}/api/v1/admin?`,
+  PURSE_BALANCE_SUMMARY_URL:`${BASE_URL}/api/v1/purse/balance/general`,
 };

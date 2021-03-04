@@ -7,6 +7,7 @@ import Admin from './Views/pages/Admin'
 import Transactions from './Views/pages/Transations'
 import TransactionsSingle from './Views/pages/TransactionSingle'
 import Agents from './Views/pages/Agents'
+import GetSingleAgents from './Views/pages/AmbassadorAgents'
 import AgentsManager from './Views/pages/AgentsManager'
 import Purse from './Views/pages/Purse'
 import Audit from './Views/pages/Audit'
@@ -36,7 +37,9 @@ class Routes extends Component {
               <AuthRequired path= "/agentsmanager" component={AgentsManager } adminRequred/>
               <AuthRequired path= "/purse" component={Purse } adminRequred/>
               <AuthRequired path= "/audit" component={Audit } adminRequred/>
-              <AuthRequired path= "/appversion" component={AppVersion } adminRequred/>
+              <AuthRequired path= "/getagents" component={GetSingleAgents } adminRequred/>
+
+              
               <PrivateRoute path= "/settings" component={Settings } />
               
             </Switch>

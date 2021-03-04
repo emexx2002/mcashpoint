@@ -127,15 +127,15 @@ console.log(name)
               <div className="transaction-details a">
                 <p>Successful</p>
                 <h6 className="success-text">
-                  {successful_value ? successful_value : "#0000"}(
-                  {successful_volume ? successful_volume : "0"})
+                  {successful_value ? successful_value.toLocaleString() : "#0000"}(
+                  {successful_volume ? successful_volume.toLocaleString() : "0"})
                 </h6>
               </div>
               <div className="transaction-details">
                 <p>Failed</p>
                 <h6 className="failure-text ">
-                  {failed_value ? failed_value : "#000"}(
-                  {failed_volume ? failed_volume : "0"})
+                  {failed_value ? failed_value.toLocaleString() : "#000"}(
+                  {failed_volume ? failed_volume.toLocaleString() : "0"})
                 </h6>
               </div>
               <div className="transaction-details b">

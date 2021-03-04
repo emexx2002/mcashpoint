@@ -13,7 +13,8 @@ import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
 const Filter = ({ show, close, ...props }) => {
-  const { nextPage, length, loadPage ,handleFilterValue,submitFilter} = props;
+  const { nextPage, length, loadPage ,handleFilterValue,submitFilter,transactionStatus} = props;
+  console.log(transactionStatus)
   return (
     <Modal
       size="xl"
@@ -65,6 +66,7 @@ const Filter = ({ show, close, ...props }) => {
                   />
                 </Form.Group>
               </Col>
+              { props.name == "transaction" ?
               <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>Select Status</Form.Label>
@@ -75,9 +77,17 @@ const Filter = ({ show, close, ...props }) => {
                     onChange={handleFilterValue}
                   >
                     <option>Select Status</option>
+                    {transactionStatus.map((tranStatus, i) => {
+                      return (
+                        <option key={i} value={tranStatus.statusCode}>
+                          {tranStatus.statusMessage}
+                        </option>
+                      );
+                    })}
                   </Form.Control>
                 </Form.Group>
               </Col>
+              :''}
             </Row>
             { props.name == "transaction" ?
             <Row>

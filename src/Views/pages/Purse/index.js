@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
+import { connect } from "react-redux";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
@@ -11,30 +12,33 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import CentralPurse from "./centralPurse";
 import AgentPurse from "./agentpurse";
+import { FetchPurseBalance } from "../../../Redux/requests/agentPurseRequest";
 
 import "./style.css";
 
-const AgentsManager = () => {
+const AgentsPurses = (props) => {
   const [key, showActive] = React.useState("centralPurse");
-  // const initialState = {
-  //   businessName: "",
-  // };
+
+  const { FetchPurseBalance: FetchPurseBalances,centralPurseBalance } = props;
   const [ExportModalActive, showExportModal] = React.useState(false);
   const [intialValueFilter, setInitialValue] = React.useState({});
   const [FilterModalActive, showFilterModal] = React.useState(false);
 
-  const handleInitialValue = (value) =>{
-    console.log(value)
-    setInitialValue(value)
-  }
+  const handleInitialValue = (value) => {
+    console.log(value);
+    setInitialValue(value);
+  };
 
-  // React.useEffect(() => {
-    
-  // }, []);
-        const OpenFilter = () => {
-        showFilterModal(true);
-        setInitialValue(intialValueFilter)
-      };
+  useEffect(() => {
+   FetchPurseBalances()
+  }, []);
+
+console.log(centralPurseBalance)
+  const OpenFilter = () => {
+    showFilterModal(true);
+    setInitialValue(intialValueFilter);
+  };
+  const {totalAgentBalance,walletBalance} = centralPurseBalance
 
   return (
     <DashboardTemplate>
@@ -49,14 +53,14 @@ const AgentsManager = () => {
           <div className="flex-box p-1">
             <div className="person-background"></div>
             <div>
-              <div>120</div>
+              <div>{totalAgentBalance && totalAgentBalance.toLocaleString()}</div>
               <div>Total Agent Balance </div>
             </div>
           </div>
           <div className="flex-box">
             <div className="mark-background"></div>
             <div>
-              <div>0</div>
+              <div>{walletBalance && walletBalance.toLocaleString()}</div>
               <div>Wallet Balance</div>
             </div>
           </div>
@@ -104,5 +108,13 @@ const AgentsManager = () => {
       </div>
     </DashboardTemplate>
   );
-};
-export default AgentsManager;
+};const mapStateToProps = (state) => (
+  console.log(state),
+  {
+    loading: state.purse.loading,
+    error: state.purse.error,
+    centralPurseBalance: state.purse.centralPurseBalance,
+  }
+);
+
+export default connect(mapStateToProps, { FetchPurseBalance })(AgentsPurses);

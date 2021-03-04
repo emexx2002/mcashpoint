@@ -1,11 +1,17 @@
 import { asyncActionName } from "../../utils/asyncUtil";
-import { FETCH_TRANSACTIONS, FETCH_TRANSACTIONS_TYPES,FETCH_TRANSACTIONS_SINGLE } from "../actions/actionTypes";
+import {
+  FETCH_TRANSACTIONS,
+  FETCH_TRANSACTIONS_TYPES,
+  FETCH_TRANSACTIONS_SINGLE,
+  FETCH_TRANSACTIONS_STATUS
+} from "../actions/actionTypes";
 
 const initialState = {
   transactions: [],
   transactionsType: [],
   transactionTotal: 0,
   successTransaction: false,
+  transactionStatus:[]
   // failure:'user cant be logged in'
 };
 
@@ -26,7 +32,7 @@ const TransactionsReducer = (state = initialState, action) => {
         loading: false,
         error: false,
       };
-      case asyncActionName(FETCH_TRANSACTIONS_SINGLE).loading:
+    case asyncActionName(FETCH_TRANSACTIONS_SINGLE).loading:
       // console.log('1')
       return { ...state, loading: true };
     case asyncActionName(FETCH_TRANSACTIONS_SINGLE).success:
@@ -51,7 +57,7 @@ const TransactionsReducer = (state = initialState, action) => {
       };
     case asyncActionName(FETCH_TRANSACTIONS_TYPES).loading:
       // console.log('1')
-      return { ...state, };
+      return { ...state };
     case asyncActionName(FETCH_TRANSACTIONS_TYPES).success:
       return {
         ...state,
@@ -60,6 +66,23 @@ const TransactionsReducer = (state = initialState, action) => {
         error: false,
       };
     case asyncActionName(FETCH_TRANSACTIONS_TYPES).failure:
+      return {
+        ...state,
+        error: true,
+        success: false,
+        // failure
+      };
+    case asyncActionName(FETCH_TRANSACTIONS_STATUS).loading:
+      // console.log('1')
+      return { ...state };
+    case asyncActionName(FETCH_TRANSACTIONS_STATUS).success:
+      return {
+        ...state,
+        transactionStatus: action.payload.data,
+        success: true,
+        error: false,
+      };
+    case asyncActionName(FETCH_TRANSACTIONS_STATUS).failure:
       return {
         ...state,
         error: true,

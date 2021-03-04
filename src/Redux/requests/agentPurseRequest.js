@@ -4,6 +4,7 @@ import {
   AGENT_PURSE,
   CENTRAL_PURSE,
   CREDIT_DEBIT_PURSE,
+  PURSE_BALANCE_SUMMARY
 } from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from "../../utils/history";
@@ -108,4 +109,35 @@ export const CreditDebitPurse = (
     .catch((error) =>
       dispatch(asyncActions(CREDIT_DEBIT_PURSE).failure(true, error))
     );
+};
+
+export const FetchPurseBalance = () => (dispatch) => {
+  dispatch(asyncActions(PURSE_BALANCE_SUMMARY).loading(true));
+  const token = JSON.parse(localStorage.getItem("data"));
+  console.log(token);
+  console.log(`bearer ${token.access_token}`);
+  axios
+    .get(
+      `${AgentConstant.PURSE_BALANCE_SUMMARY_URL}`,
+      {
+        headers: {
+          Authorization: `bearer ${token.access_token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((res) => {
+      const response = res.data;
+
+      console.log(response);
+      if (response.responseCode === "00") {
+        dispatch(
+          asyncActions(PURSE_BALANCE_SUMMARY).success(response.data ? response : "")
+        );
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(asyncActions(PURSE_BALANCE_SUMMARY).failure(true, error));
+    });
 };

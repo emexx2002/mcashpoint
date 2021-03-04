@@ -7,6 +7,7 @@ import {
     ACTIVATE_ASSIGN_TERMINAL,
     UNACTIVATE_ASSIGN_TERMINAL,
     CREATE_AGENTS,
+    FETCH_AMBASSADOR_AGENTS
 } from "../actions/actionTypes";
 import { AgentConstant } from "../../constants/constants";
 import { history } from "../../utils/history";
@@ -42,6 +43,50 @@ export const FetchAgent = (
         })
         .catch((error) => {
             dispatch(asyncActions(FETCH_AGENTS).failure(true, error));
+        });
+};
+
+export const FetchambassadorAgent = (
+    page,
+    length,
+    {
+      startDate,
+      endDate,
+      username,
+      businessName,
+      phone,
+      agentId,
+    }
+) => (dispatch) => {
+    console.log( page,
+        length,
+          startDate,
+          endDate,
+          username,
+          businessName,
+          phone,
+          agentId,
+        )
+    dispatch(asyncActions(FETCH_AMBASSADOR_AGENTS).loading(true));
+    const agentIde = localStorage.getItem("viewagentId");
+    const token = JSON.parse(localStorage.getItem("data"));
+    console.log(`bearer ${token.access_token}`);
+    axios
+        .get(`${AgentConstant.FETCH_AGENT_URL}startPage=${page}&length=${length}&startDate=${startDate}&endDate=${endDate}&username=${username}&businessName=${businessName}&phone=${phone}&agentId=${agentIde}
+        `, {
+            headers: {
+                Authorization: `bearer ${token.access_token}`,
+                "Content-Type": "application/json",
+            },
+        })
+        .then((res) => {
+            console.log(res.status == 200);
+            if (res.status == 200) {
+                dispatch(asyncActions(FETCH_AMBASSADOR_AGENTS).success(res.data));
+            }
+        })
+        .catch((error) => {
+            dispatch(asyncActions(FETCH_AMBASSADOR_AGENTS).failure(true, error));
         });
 };
 

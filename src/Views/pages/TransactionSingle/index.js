@@ -10,8 +10,9 @@ import Filter from "../../../Assets/img/filter.png";
 import Print from "../../../Assets/img/printer.png";
 import DashboardTemplate from "../../template/dashboardtemplate";
 import {
-    FetchTransactionSingle,
+  FetchTransactionSingle,
   FetchTransactionTypes,
+  FetchTransactionStatus,
 } from "../../../Redux/requests/transactionRequest";
 import Loader from "../../../Components/secondLoader";
 import ExportModal from "../../../Components/Exports";
@@ -28,6 +29,8 @@ const Transactions = (props) => {
   const {
     FetchTransactionSingle: FetchTransactionSingles,
     FetchTransactionTypes: FetchTransactionType,
+    FetchTransactionStatus: FetchTransactionStatuses,
+    transactionStatus,
     transaction,
     loading,
     transactionTotal,
@@ -81,6 +84,8 @@ const Transactions = (props) => {
   useEffect(() => {
     FetchTransactionSingles(nextPage, length, filterValues);
     FetchTransactionType();
+    FetchTransactionStatuses()
+
   }, [nextPage, length, filterValues]);
 
   const title = "Transactions page";
@@ -97,7 +102,7 @@ const Transactions = (props) => {
       "Stamp Duty",
       "RRN",
       "Pre Balance",
-      "Post Balance"
+      "Post Balance",
     ],
   ];
 
@@ -118,7 +123,7 @@ const Transactions = (props) => {
 
   const products = transaction.map((transact) => {
     return {
-      transact:transact,
+      transact: transact,
       id: transact.agent.id === "undefined" ? "" : transact.id,
       Date: transact.systemTime === "undefined" ? "" : transact.systemTime,
       Agent:
@@ -151,11 +156,10 @@ const Transactions = (props) => {
         transact.postPurseBalance.toFixed(2) === "undefined"
           ? ""
           : transact.prePurseBalance.toFixed(2),
-          AppVersion: transact.appVersion === "undefined" ? "" : transact.appVersion,
+      AppVersion:
+        transact.appVersion === "undefined" ? "" : transact.appVersion,
     };
-    
   });
-  
 
   const columns = [
     { dataField: "Date", text: "Date" },
@@ -188,14 +192,14 @@ const Transactions = (props) => {
         return { width: "550px", textAlign: "center" };
       },
       bodyStyle: (colum, colIndex) => {
-        return { width: "550px", textAlign: "center",  wordWrap: "normal" };
+        return { width: "550px", textAlign: "center", wordWrap: "normal" };
       },
       formatter: (cellContent, row) => {
         let statusMessage = "";
         let statusColor = "";
         switch (row.Status) {
           case "00":
-            console.log(row)
+            console.log(row);
             statusMessage = row.transact.statusMessage;
             statusColor = "successful";
             break;
@@ -291,10 +295,10 @@ const Transactions = (props) => {
         </div>
         <div className="agent-transact-header">
           <div>An overview of all transactions on mCashPoint</div>
-          <div> 
-            <span 
+          <div>
+            <span
             // onclick={()=> window.print()}
-             >
+            >
               <img src={Print} />
               Print
             </span>
@@ -338,8 +342,18 @@ const Transactions = (props) => {
         submitFilter={onFilterSubmit}
         name={"transaction"}
         transactionsType={transactionsType}
+        transactionStatus={transactionStatus}
       />
-      <ExportModal show={exportModalActive} close={closeExport} filename='transaction file' title={title} headers={headers} item={item} products={products} columns={columns}/>
+      <ExportModal
+        show={exportModalActive}
+        close={closeExport}
+        filename="transaction file"
+        title={title}
+        headers={headers}
+        item={item}
+        products={products}
+        columns={columns}
+      />
       <div className="pagination_wrap">
         <p>Showing 1 to 10 of {transactionTotal}</p>
         <div className="pagination">
@@ -360,6 +374,7 @@ const mapStateToProps = (state) => (
   {
     transaction: state.transactions.transactions,
     transactionsType: state.transactions.transactionsType,
+    transactionStatus: state.transactions.transactionStatus,
     loading: state.transactions.loading,
     error: state.transactions.error,
     transactionTotal: state.transactions.transactionTotal,
@@ -368,6 +383,8 @@ const mapStateToProps = (state) => (
 );
 
 export default connect(mapStateToProps, {
-    FetchTransactionSingle,
-    FetchTransactionTypes,
+  FetchTransactionSingle,
+  FetchTransactionTypes,
+  FetchTransactionStatus,
+
 })(Transactions);

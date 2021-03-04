@@ -17,7 +17,7 @@ import {
 import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
-const Filter = ({ show, close,bankTerminals,load ,success,agentsId,assignTerminal, AssignTerminal:AssignTerminals,reload,businessName}) => {
+const Filter = ({ show, close,bankTerminals,load ,success,agentsId,assignTerminal, AssignTerminal:AssignTerminals,reload,businessName,unassignSuccess}) => {
   const [bankId, setbankId] = useState('');
 console.log(show,success)
 
@@ -31,11 +31,11 @@ const onSubmit = (event) => {
 // const isDidMount = useRef(true)
 useEffect(() => { 
   console.log(show,success)
-  if(success){
+  if(success || unassignSuccess){
     reload()
     close()
   }
-}, [success]);
+}, [success,unassignSuccess]);
 
   return (
     <Modal
@@ -171,6 +171,7 @@ const mapStateToProps = (state) => (
     loading: state.agents.loading,
     error: state.agents.error,
     success: state.agents.assignSuccess,
+    unassignSuccess: state.agentsunassignSuccess
   }
 );
 

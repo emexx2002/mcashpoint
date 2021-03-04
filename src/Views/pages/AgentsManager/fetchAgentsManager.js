@@ -67,11 +67,17 @@ const FetchAgentsManager = (props) => {
     setNextPage(pageNumber-1);
   };
 
+  function ViewAgent(agentId) {
+    // setActivation(null);
+    localStorage.setItem('viewagentId', agentId);
+    window.location ="/getagents"
+  }
+
   const title = "AgentManager page";
   const headers = [
     [
       "Agent ID",
-      "Business Name",
+      "Name",
       "User Name",
       "Phone Number",
       "State",
@@ -82,7 +88,7 @@ const FetchAgentsManager = (props) => {
 
   const item = agentmanager.map((agent) => [
     agent.id,
-    agent.businessName,
+    agent.name,
     agent.user.username,
     agent.phone,
     agent.state.stateName,
@@ -95,8 +101,8 @@ const FetchAgentsManager = (props) => {
     console.log(agent);
     return {
       id: index,
-      AgentID: agent.user.memberId === null ? "" : agent.user.memberId,
-      BusinessName: agent.user.businessName === null ? "" : agent.user.businessName,
+      AgentID: agent.id === null ? "" : agent.id,
+      Name: agent.user.fullName === null ? "" : agent.user.fullName,
       UserName: agent.user.username === null ? "" : agent.user.username,
       PhoneNumber: agent.phone === null ? "" : agent.phone,
       State: agent.state.stateName === null ? "" : agent.state.stateName,
@@ -109,8 +115,8 @@ const FetchAgentsManager = (props) => {
     // { dataField: 'id', text: 'Id'},
     { dataField: "AgentID", text: "Agent ID" },
     {
-      dataField: "BusinessName",
-      text: "Business Name",
+      dataField: "Name",
+      text: " Name",
       headerStyle: (colum, colIndex) => {
         return { width: "150px", textAlign: "center", padding: "10px" };
       },
@@ -124,7 +130,7 @@ const FetchAgentsManager = (props) => {
         wordWrap: "break-word",
         padding: "10px",
       },
-      headerStyle: (colum, colIndex) => {
+      headerStyle: (colum, colIndex) => { 
         return { width: "200px", textAlign: "center" };
       },
     },
@@ -134,6 +140,23 @@ const FetchAgentsManager = (props) => {
 
     { dataField: "LGA", text: "LGA" },
     { dataField: "DateCreated", text: "Date Created" },
+    {
+      dataField: "transactionHistory",
+      text: "View Agent",
+      formatter: (cellContent, row) => {
+        return (
+          <h5>
+            <button
+              type="button"
+              onClick={() => ViewAgent(row.AgentID)}
+              className="viewTransac"
+            >
+              Agents
+            </button>
+          </h5>
+        );
+      },
+    },
   ];
 
   const defaultSorted = [
