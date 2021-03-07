@@ -111,7 +111,7 @@ const Transactions = (props) => {
     transact.agent.businessName,
     transact.transactionId,
     transact.transactionType.type,
-    transact.agent.bankTerminal.terminalId,
+    transact.agent.bankTerminal==null?'':transact.agent.bankTerminal.terminalId,
     transact.amount,
     transact.statusCode,
     transact.agentFee,

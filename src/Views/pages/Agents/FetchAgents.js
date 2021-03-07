@@ -182,11 +182,12 @@ const Agents = (props) => {
     {
       dataField: "AgentID", text: "Agent ID",
       formatter: (cellContent, row) => {
-        console.log(row);
         return (
           <NavLink
-            to="/agentprofile"
-            // onClick={() => EditAdmin(row)}
+          to={{
+            pathname: `/agentprofile`,
+            state: {row}
+       }}
             className=" editadmin"
           >
             {row.agent.id}
