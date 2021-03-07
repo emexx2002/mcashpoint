@@ -19,7 +19,8 @@ import { Provider } from "react-redux";
 import store from "./Redux/store";
 import PrivateRoute from './utils/privateRoute'
 import {history} from './utils/history'
-import  AuthRequired from "./Components/authRequired"
+import AuthRequired from "./Components/authRequired"
+import AgentProfile from "./Components/AgentProfile"
 
 class Routes extends Component {
   render() {
@@ -38,6 +39,7 @@ class Routes extends Component {
               <AuthRequired path= "/purse" component={Purse } adminRequred/>
               <AuthRequired path= "/audit" component={Audit } adminRequred/>
               <AuthRequired path= "/getagents" component={GetSingleAgents } adminRequred/>
+              <AuthRequired path= "/agentprofile" component={AgentProfile } />
 
               
               <PrivateRoute path= "/settings" component={Settings } />

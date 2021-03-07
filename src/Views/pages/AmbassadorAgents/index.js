@@ -206,70 +206,9 @@ const Agents = (props) => {
       },
     },
     { dataField: "PhoneNumber", text: "Phone Number" },
-    {
-      dataField: "Action",
-      text: "Action",
-      formatter: (cellContent, row) => {
-        console.log(row.agent.bankTerminal);
-        return (
-          <h5>
-            {row.agent.bankTerminal === null ? (
-              <button
-                type="button"
-                className="assign-terminal"
-                onClick={() => AssignTerminals(row.AgentID, row.BusinessName)}
-              >
-                Assign Terminal
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="unassign-terminal"
-                onClick={() => UnAssignTerminal(row.AgentID)}
-              >
-                Unassign Terminal
-              </button>
-            )}
-          </h5>
-        );
-      },
-    },
-    { dataField: "TerminalID", text: "Terminal ID" },
-    {
-      dataField: "transactionHistory",
-      text: "Transaction History",
-      formatter: (cellContent, row) => {
-        return (
-          <h5>
-            <button
-              type="button"
-              onClick={() => ViewTransaction(row.AgentID)}
-              className="viewTransac"
-            >
-              Transaction
-            </button>
-          </h5>
-        );
-      },
-    },
-    {
-      dataField: "ActivationCode",
-      text: "Activation Code",
-      formatter: (cellContent, row) => {
-        return (
-          <h5>
-            <button
-              type="button"
-              onClick={() => ActivatateCode(row.AgentID)}
-              className=" generate-code"
-            >
-              Generate
-            </button>
-          </h5>
-        );
-      },
-    },
-    // { dataField: 'AgentManager', text: 'Agent Manager'},
+    
+   
+    
     { dataField: "DateCreated", text: "Date Created" },
   ];
   const defaultSorted = [

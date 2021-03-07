@@ -42,7 +42,7 @@ const EditRole = ({
   console.log(udatedetails);
   useEffect(() => {
     setinputform(udatedetails.name);
- }, [udatedetails])
+  }, [udatedetails])
 
   useEffect(() => {
     console.log(error, erroMessage);
@@ -112,7 +112,7 @@ const EditRole = ({
                     placeholder="Enter Role group name"
                     name="name"
                     defaultValue={udatedetails.name}
-                    ref={register({ required: true })}         
+                    ref={register({ required: true })}
                     required
                   />
                 </Form.Group>
@@ -125,11 +125,11 @@ const EditRole = ({
             {roles.map((role, index) => {
               return (
                 <div className="mb-3">
-                              {console.log(role)}
+                  {console.log(role)}
 
                   <Form.Check
                     type="checkbox"
-                    defaultChecked={ udatedetails.role ? udatedetails?.role.find( r => r.roleCode === role.roleCode) : false}
+                    defaultChecked={udatedetails.role ? udatedetails?.role.find(r => r.roleCode === role.roleCode) : false}
                     name="roleIds"
                     ref={register}
                     value={role.id}

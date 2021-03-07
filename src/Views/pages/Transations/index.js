@@ -17,7 +17,7 @@ import {
 import Loader from "../../../Components/secondLoader";
 import ExportModal from "../../../Components/Exports";
 import FilterModal from "../../../Components/Filter";
-import { Nav, NavItem, NavLink } from "react-bootstrap";
+import { Nav, NavItem, NavLink, DropdownButton, Dropdown } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import ViewReceipts from "../../../Components/viewReceipt";
 
@@ -30,7 +30,7 @@ const Transactions = (props) => {
   const {
     FetchTransaction: FetchTransactions,
     FetchTransactionTypes: FetchTransactionType,
-    FetchTransactionStatus:FetchTransactionStatuses,
+    FetchTransactionStatus: FetchTransactionStatuses,
     transaction,
     loading,
     transactionTotal,
@@ -91,7 +91,7 @@ const Transactions = (props) => {
     setViewReceipt(details);
   };
 
-  const closeViewReceipt= () => {
+  const closeViewReceipt = () => {
     showReceiptView(false);
   };
 
@@ -100,6 +100,10 @@ const Transactions = (props) => {
     FetchTransactionType();
     FetchTransactionStatuses()
   }, [nextPage, length, filterValues]);
+
+  const handleSelect=(e)=>{
+    console.log(e)
+    setLength(e)  }
 
   const title = "Transactions page";
   const headers = [
@@ -124,7 +128,7 @@ const Transactions = (props) => {
     transact.agent.businessName,
     transact.transactionId,
     transact.transactionType.type,
-    transact.agent.bankTerminal  === null ? '' : transact.agent.bankTerminal.terminalId,
+    transact.agent.bankTerminal === null ? '' : transact.agent.bankTerminal.terminalId,
     transact.amount,
     transact.statusCode,
     transact.agentFee,
@@ -391,11 +395,23 @@ const Transactions = (props) => {
         columns={columns}
       />
       <div className="pagination_wrap">
-        <p>Showing 1 to 10 of {transactionTotal}</p>
+        <DropdownButton
+          menuAlign="right"
+          title={length}
+          id="dropdown-menu-align-right"
+          onSelect={handleSelect}
+        >
+          <Dropdown.Item eventKey="10">10</Dropdown.Item>
+          <Dropdown.Item eventKey="20">20</Dropdown.Item>
+          <Dropdown.Item eventKey="30">30</Dropdown.Item>
+          <Dropdown.Item eventKey="50">50</Dropdown.Item>
+          <Dropdown.Item eventKey="100">100</Dropdown.Item>
+        </DropdownButton>
+        <p>Showing 1 to {length} of {transactionTotal}</p>
         <div className="pagination">
           <Pagination
             activePage={activePage}
-            itemsCountPerPage={10}
+            itemsCountPerPage={length}
             totalItemsCount={transactionTotal}
             pageRangeDisplayed={5}
             onChange={_handlePageChange}
@@ -410,7 +426,7 @@ const mapStateToProps = (state) => (
   {
     transaction: state.transactions.transactions,
     transactionsType: state.transactions.transactionsType,
-    transactionStatus:state.transactions.transactionStatus,
+    transactionStatus: state.transactions.transactionStatus,
     loading: state.transactions.loading,
     error: state.transactions.error,
     transactionTotal: state.transactions.transactionTotal,

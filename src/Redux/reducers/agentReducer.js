@@ -7,6 +7,9 @@ import {
   ACTIVATE_ASSIGN_TERMINAL,
   UNACTIVATE_ASSIGN_TERMINAL,
   CREATE_AGENTS,
+  ACTIVATE_DEACTIVATE_USER,
+  RESET_AGENT_PASSWORD,
+  UPDATE_AGENT
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -17,10 +20,11 @@ const initialState = {
   success: false,
   assignSuccess: false,
   unassignSuccess: false,
-  successActivation: false,
+  successActivation: null,
   createAgentsuccess: false,
   agentTotal: 0,
   assignTerminal: null,
+  resetPassword: null
 };
 
 const AgentsReducer = (state = initialState, action) => {
@@ -50,7 +54,7 @@ const AgentsReducer = (state = initialState, action) => {
         assignSuccess: false,
         // failure
       };
-      case asyncActionName(FETCH_AMBASSADOR_AGENTS).loading:
+    case asyncActionName(FETCH_AMBASSADOR_AGENTS).loading:
       return { ...state, loading: true };
     case asyncActionName(FETCH_AMBASSADOR_AGENTS).success:
       return {
@@ -154,6 +158,53 @@ const AgentsReducer = (state = initialState, action) => {
         errorMessage: action.payload,
         error: true,
         createAgentsuccess: false,
+      };
+    case asyncActionName(UPDATE_AGENT).loading:
+      return { ...state, loading: true };
+    case asyncActionName(UPDATE_AGENT).success:
+      return {
+        ...state,
+        loading: false,
+        updateAgent: action.payload,
+        updateAgentsuccess: true,
+      };
+    case asyncActionName(UPDATE_AGENT).failure:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.payload,
+        error: true,
+        updateAgentsuccess: false,
+      };
+    case asyncActionName(ACTIVATE_DEACTIVATE_USER).loading:
+      return { ...state, loading: true };
+    case asyncActionName(ACTIVATE_DEACTIVATE_USER).success:
+      return {
+        ...state,
+        loading: false,
+        activateDeacivate: true,
+      };
+    case asyncActionName(ACTIVATE_DEACTIVATE_USER).failure:
+      return {
+        ...state,
+        loading: false,
+        activateDeacivate: false
+
+      };
+    case asyncActionName(RESET_AGENT_PASSWORD).loading:
+      return { ...state, loading: true };
+    case asyncActionName(RESET_AGENT_PASSWORD).success:
+      return {
+        ...state,
+        loading: false,
+        resetSuccess: true,
+      };
+    case asyncActionName(RESET_AGENT_PASSWORD).failure:
+      return {
+        ...state,
+        loading: false,
+        resetSuccess: false
+
       };
     default:
       return state;

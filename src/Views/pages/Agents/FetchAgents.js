@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
@@ -178,7 +179,21 @@ const Agents = (props) => {
 
   const columns = [
     // { dataField: 'id', text: 'Id'},
-    { dataField: "AgentID", text: "Agent ID" },
+    {
+      dataField: "AgentID", text: "Agent ID",
+      formatter: (cellContent, row) => {
+        return (
+          <NavLink
+          to={{
+            pathname: `/agentprofile`,
+            state: {row}
+       }}
+            className=" editadmin"
+          >
+            {row.agent.id}
+          </NavLink>)
+      }
+    },
     {
       dataField: "BusinessName",
       text: "Business Name",
@@ -202,6 +217,7 @@ const Agents = (props) => {
         console.log(row.agent.bankTerminal);
         return (
           <h5>
+            
             {row.agent.bankTerminal === null ? (
               <button
                 type="button"
