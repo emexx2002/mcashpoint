@@ -83,6 +83,14 @@ class SideNav extends Component {
                </NavLink>
                :
                ''}
+                {/* {name =="ADMIN"? */
+                 <NavLink to="/agentfees" activeClassName="current">
+                 <li className="list-group-item">
+                   <img src={Agentmanagaer} alt="" /> Agent Fees
+                 </li>
+               </NavLink>
+               /* :"" */
+               }
                {name =="ADMIN"?
                 <NavLink to="/purse" activeClassName="current">
                   <li className="list-group-item">
