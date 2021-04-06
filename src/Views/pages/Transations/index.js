@@ -403,7 +403,7 @@ const Transactions = (props) => {
           <Dropdown.Item eventKey="30">30</Dropdown.Item>
           <Dropdown.Item eventKey="50">50</Dropdown.Item>
           <Dropdown.Item eventKey="100">100</Dropdown.Item>
-          <Dropdown.Item eventKey={transactionTotal ? String(transactionTotal):'0' }>{transactionTotal}</Dropdown.Item>
+          <Dropdown.Item eventKey={transactionTotal ? String(transactionTotal):'0' }>All</Dropdown.Item>
 
         </DropdownButton>
 {        console.log(typeof(String(transactionTotal)))
