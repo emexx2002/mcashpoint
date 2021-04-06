@@ -13,8 +13,8 @@ import Cancel from "../../Assets/img/x.png";
 import "./style.css";
 
 const Filter = ({ show, close, ...props }) => {
-  const { nextPage, length, loadPage ,handleFilterValue,submitFilter,transactionStatus} = props;
-  console.log(transactionStatus)
+  const { nextPage, length, loadPage, handleFilterValue, submitFilter, transactionStatus } = props;
+  console.log(props.name)
   return (
     <Modal
       size="xl"
@@ -66,176 +66,190 @@ const Filter = ({ show, close, ...props }) => {
                   />
                 </Form.Group>
               </Col>
-              { props.name == "transaction" ?
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>Select Status</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    as="select"
-                    name="status"
-                    onChange={handleFilterValue}
-                  >
-                    <option>Select Status</option>
-                    {transactionStatus.map((tranStatus, i) => {
-                      return (
-                        <option key={i} value={tranStatus.statusCode}>
-                          {tranStatus.statusMessage}
-                        </option>
-                      );
-                    })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              :''}
-            </Row>
-            { props.name == "transaction" ?
-            <Row>
-            
-               
-               <Col md={4} sm={12}>
-               <Form.Group controlId="">
-                 <Form.Label>{props.type} Type</Form.Label>
-                 <Form.Control
-                   size="sm"
-                   as="select"
-                   name={`${props.name}Type`}
-                   onChange={handleFilterValue}
-                 >
-                   <option>{props.typetext}</option>
-                    {props.transactionsType.map((transType, i) => {
-                      return (
-                        <option key={i} value={transType.id}>
-                          {transType.type}
-                        </option>
-                      );
-                    })}
-                 </Form.Control>
-               </Form.Group>
-             </Col>
-             
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>{props.type} ID</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    name={`${props.name}Id`}
-                    placeholder="Enter Transaction ID"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-:''
-}
-            {
-                props.name=="transaction"?
-                <Row>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>RRN</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    name="rrn"
-                    placeholder="Enter RRN"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>PAN</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    placeholder="Enter PAN"
-                    name="pan"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>STAN</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    name="stan"
-                    placeholder="STAN"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>:''
-
-            }
-
-            
-
-            {
-              props.name=="agent" || props.name == "agentmanager" || props.name == "agentpurse"?
-              <Row>
+              {props.name == "transaction" ?
                 <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>User Name</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    placeholder="Enter user Name"
-                    name="username"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>Business Name</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    name="businessName"
-                    placeholder="Enter business Name"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-              
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>Phone Number</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    name="phone"
-                    placeholder="phone number"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>:
-            ""
+                  <Form.Group controlId="">
+                    <Form.Label>Select Status</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      as="select"
+                      name="status"
+                      onChange={handleFilterValue}
+                    >
+                      <option>Select Status</option>
+                      {transactionStatus.map((tranStatus, i) => {
+                        return (
+                          <option key={i} value={tranStatus.statusCode}>
+                            {tranStatus.statusMessage}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                : ''}
+            </Row>
+            {props.name == "transaction" || props.name == "centralpurse" ?
+              <Row>
+
+
+                <Col md={4} sm={12}>
+                  <Form.Group controlId="">
+                    <Form.Label>{props.type} Type</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      as="select"
+                      name='transactionType'
+                      onChange={handleFilterValue}
+                    >
+                      <option>{props.typetext}</option>
+                      {props.transactionsType.map((transType, i) => {
+                        return (
+                          <option key={i} value={transType.id}>
+                            {transType.type}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+
+                <Col md={4} sm={12}>
+                  <Form.Group controlId="">
+                    <Form.Label>{props.type} ID</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      type="text"
+                      name='transactionId'
+                      placeholder="Enter Transaction ID"
+                      onChange={handleFilterValue}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              : ''
+            }
+            {
+              props.name == "transaction" ?
+                <Row>
+                  <Col md={4} sm={12}>
+                    <Form.Group controlId="">
+                      <Form.Label>RRN</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        name="rrn"
+                        placeholder="Enter RRN"
+                        onChange={handleFilterValue}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={4} sm={12}>
+                    <Form.Group controlId="">
+                      <Form.Label>PAN</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        placeholder="Enter PAN"
+                        name="pan"
+                        onChange={handleFilterValue}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={4} sm={12}>
+                    <Form.Group controlId="">
+                      <Form.Label>STAN</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        name="stan"
+                        placeholder="STAN"
+                        onChange={handleFilterValue}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row> : ''
+
             }
 
-          
+
+
             {
-              props.name=="transaction"?
-              <Row>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>Enter Terminal ID</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="text"
-                    // variant="light"
-                    name="terminalId"
-                    placeholder="Enter Terminal ID"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-              {/* <Col md={4} sm={12}>
+              props.name == "agent" || props.name == "agentmanager" || props.name == "centralpurse" ?
+                <Row>
+                  <Col md={4} sm={12}>
+                    <Form.Group controlId="">
+                      <Form.Label>User Name</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        placeholder="Enter user Name"
+                        name="username"
+                        onChange={handleFilterValue}
+                      />
+                    </Form.Group>
+                  </Col>
+                  {props.name == "centralpurse" ?
+                    <Col md={4} sm={12}>
+                      <Form.Group controlId="">
+                        <Form.Label>Business Name</Form.Label>
+                        <Form.Control
+                          size="sm"
+                          type="text"
+                          name="businessName"
+                          placeholder="Enter business Name"
+                          onChange={handleFilterValue}
+                        />
+                      </Form.Group>
+                    </Col>
+                      :( <Col md={4} sm={12}>
+                        <Form.Group controlId="">
+                          <Form.Label>Business Name</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            type="text"
+                            name="businessName"
+                            placeholder="Enter business Name"
+                            onChange={handleFilterValue}
+                          />
+                        </Form.Group>
+                      </Col>)
+}
+
+                  <Col md={4} sm={12}>
+                    <Form.Group controlId="">
+                      <Form.Label>Phone Number</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        name="phone"
+                        placeholder="phone number"
+                        onChange={handleFilterValue}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row> :
+                ""
+            }
+
+
+            {
+              props.name == "transaction" ?
+                <Row>
+                  <Col md={4} sm={12}>
+                    <Form.Group controlId="">
+                      <Form.Label>Enter Terminal ID</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        // variant="light"
+                        name="terminalId"
+                        placeholder="Enter Terminal ID"
+                        onChange={handleFilterValue}
+                      />
+                    </Form.Group>
+                  </Col>
+                  {/* <Col md={4} sm={12}>
                 <Form.Group controlId="">
                   <Form.Label>Period</Form.Label>
                   <Form.Control
@@ -248,8 +262,8 @@ const Filter = ({ show, close, ...props }) => {
                   </Form.Control>
                 </Form.Group>
               </Col> */}
-            </Row>
-            :''
+                </Row>
+                : ''
             }
             <div className="filter-btns">
               <Button
@@ -257,7 +271,7 @@ const Filter = ({ show, close, ...props }) => {
                 className="filter-btn btn "
                 type="reset"
                 size="sm"
-                // onClick={resetFilter}
+              // onClick={resetFilter}
               >
                 CLEAR FILTER
               </Button>

@@ -27,12 +27,11 @@ const AgentPurse = (props) => {
     agentPurse,
     loading,
     agentPurseTotal,
-    showFilterModal,
-    FilterModalActive,
-    showExportModal,
-    ExportModalActive,
-    handleInitialValue,
-    intialValueFilter,
+    showFilterModals,
+    FilterModalActives,
+    showExportModals,
+    ExportModalActives,
+    settlement,
     
   } = props;
 
@@ -45,49 +44,35 @@ const AgentPurse = (props) => {
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
 
-  useEffect(() => {
-    handleInitialValue(initialState);
-  }, [filterValues]);
+
 
   useEffect(() => {
-    FetchAgentPurses(length, nextPage, initialState);
-  }, [length, nextPage]);
-  const closeCredit = () => {
-    showCredit(false);
+    FetchAgentPurses(nextPage, length, initialState);
+  }, [nextPage, length, filterValues]);
+  const closeExport = () => {
+    showExportModals(false);
   };
-
-  const onFilterSubmit = (event) => {
-    event.preventDefault();
-    setFilterValues(initialState)
-    FetchAgentPurses(nextPage, length, filterValues);
-    closeFilter();
-    setNextPage(0);
+  const closeFilter = () => {
+    showFilterModals(false);
   };
-
-  const _handleFilterValue = (event) => {
+  function _handleFilterValue(event) {
     console.log(event);
-    // FetchAgentPurses(length, nextPage, initialState);
-
     setFilterValues({
       ...filterValues,
       [event.target.name]: event.target.value,
     });
-
-    setNextPage(0);
-    showExportModal(false);
-  };
-  const closeExport = () => {
-    showExportModal(false);
-  };
-  const closeFilter = () => {
-    showFilterModal(false);
+    showExportModals(false);
+  }
+  const onFilterSubmit = (event) => {
+    console.log('h')
+    event.preventDefault();
+    FetchAgentPurses(nextPage, length, filterValues);
+    showExportModals(false);
   };
 
-  const OpenFilter = () => {
-    showFilterModal(true);
-    setFilterValues(initialState);
+  const closeCredit = () => {
+    showCredit(false);
   };
-
   const handleCreditDebit = (agentId, businessName) => {
     setBusinessName(businessName);
     setAgentId(agentId);
@@ -206,18 +191,20 @@ const AgentPurse = (props) => {
           businessName={businessName}
         />
         <FilterModal
-          type={""}
-          typetext={""}
-          idtext={""}
-          show={FilterModalActive}
-          name="agentpurse"
-          close={closeFilter}
-          nextPage={nextPage}
-          length={length}
-          handleFilterValue={_handleFilterValue}
-          submitFilter={onFilterSubmit}
-        />
-        <ExportModal show={ExportModalActive} close={closeExport} />
+        type={"Agent Manager "}
+        typetext={"Enter Agent Manager Type"}
+        idtext={"Enter Agent Manager ID"}
+        show={FilterModalActives}
+        name={"agent"}
+        close={closeFilter}
+        nextPage={nextPage}
+        length={length}
+        loadPage={FetchAgentPurses}
+        handleFilterValue={_handleFilterValue}
+        submitFilter={onFilterSubmit}
+      />
+      <ExportModal show={ExportModalActives} close={closeExport} filename='AgentPurse file'  products={products} columns={columns}/>
+
       </div>
     </div>
   );

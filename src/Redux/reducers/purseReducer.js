@@ -51,6 +51,7 @@ const AgentPurse = (state = initialState, action) => {
         error: true,
         success: false,
         loading: false,
+        centralPurse:[]
         // failure
       };
     case asyncActionName(CREDIT_DEBIT_PURSE).loading:

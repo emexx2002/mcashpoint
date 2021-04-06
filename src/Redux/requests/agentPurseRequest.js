@@ -9,7 +9,7 @@ import {
 import { AgentConstant } from "../../constants/constants";
 import { history } from "../../utils/history";
 
-export const FetchAgentPurse = ( length,page, { businessName }) => (
+export const FetchAgentPurse = (page, length, {businessName} ) => (
   dispatch
 ) => {
   dispatch(asyncActions(AGENT_PURSE).loading(true));
@@ -38,35 +38,45 @@ export const FetchAgentPurse = ( length,page, { businessName }) => (
     });
 };
 
-export const FetchCentralPurse = (length, page) => (dispatch) => {
-  dispatch(asyncActions(CENTRAL_PURSE).loading(true));
-  const token = JSON.parse(localStorage.getItem("data"));
-  console.log(token);
-  console.log(`bearer ${token.access_token}`);
-  axios
-    .get(
-      `${AgentConstant.FETCH_CENTRAL_PURSE_URL}startPage=${page}&length=${length}`,
-      {
-        headers: {
-          Authorization: `bearer ${token.access_token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    .then((res) => {
-      console.log(res.data)
-      const response = res.data;
-      if (res.status == 200) {
-        dispatch(
-          asyncActions(CENTRAL_PURSE).success(response.data ? response : "")
-        );
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      dispatch(asyncActions(CENTRAL_PURSE).failure(true, error));
-    });
-};
+export const FetchCentralPurse = (length, page,
+  {
+    startDate,
+    endDate,
+    transactionId,
+    transactionType
+  }) => (dispatch) => {
+    console.log(startDate,
+      endDate,
+      transactionId,
+      transactionType)
+    dispatch(asyncActions(CENTRAL_PURSE).loading(true));
+    const token = JSON.parse(localStorage.getItem("data"));
+    console.log(token);
+    console.log(`bearer ${token.access_token}`);
+    axios
+      .get(
+        `${AgentConstant.FETCH_CENTRAL_PURSE_URL}startPage=${page}&length=${length}&startDate=${startDate}&endDate=${endDate}&transactionId=${transactionId}&transactionType=${transactionType}`,
+        {
+          headers: {
+            Authorization: `bearer ${token.access_token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data)
+        const response = res.data;
+        if (res.status == 200) {
+          dispatch(
+            asyncActions(CENTRAL_PURSE).success(response.data ? response : "")
+          );
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(asyncActions(CENTRAL_PURSE).failure(true, error));
+      });
+  };
 
 export const CreditDebitPurse = (
   { amount, action, reason, transactionId },

@@ -3,26 +3,69 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import { FetchCentralPurse } from "../../../Redux/requests/agentPurseRequest";
+import { FetchCentralPurse, FetchPurseBalance } from "../../../Redux/requests/agentPurseRequest";
 import Loader from "../../../Components/secondLoader";
 import { connect } from "react-redux";
 import Pagination from "react-js-pagination";
+import ExportModal from "../../../Components/Exports/index";
+import FilterModal from "../../../Components/Filter/index";
+import {
+  FetchTransactionTypes,
+} from "../../../Redux/requests/transactionRequest";
 
 import "./style.css";
 
 const CentralPurse = (props) => {
   const {
     FetchCentralPurse: FetchCentralPurses,
+    FetchTransactionTypes: FetchTransactionType,
     centralPurse,
     centralPurseTotal,
     loading,
+    showFilterModal,
+    FilterModalActive,
+    showExportModal,
+    ExportModalActive,
+    agentManagerTotal,
+    initialState,
+    filterValues,
+    setFilterValues,
+    transactionsType
   } = props;
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
+
+console.log(transactionsType)
+
   useEffect(() => {
-    FetchCentralPurses(length, nextPage);
-  }, [length, nextPage]);
+    FetchTransactionType()
+    FetchCentralPurses(length, nextPage, filterValues);
+  }, [length, nextPage,filterValues]);
+
+
+
+  const closeExport = () => {
+    showExportModal(false);
+  };
+  const closeFilter = () => {
+    showFilterModal(false);
+  };
+  function _handleFilterValue(event) {
+    console.log(event);
+    setFilterValues({
+      ...filterValues,
+      [event.target.name]: event.target.value,
+    });
+    showExportModal(false);
+  }
+
+  const onFilterSubmit = (event) => {
+    event.preventDefault();
+    FetchCentralPurses(length, nextPage, filterValues);
+    showExportModal(false);
+  };
+
 
   const title = "Central Purse page";
   const headers = [
@@ -52,9 +95,9 @@ const CentralPurse = (props) => {
           ? ""
           : agent.transaction.transactionType,
       TransactionID:
-        agent.transaction.transactionID === "undefined"
+        agent.transaction.transactionId === "undefined"
           ? ""
-          : agent.transaction.transactionID,
+          : agent.transaction.transactionId,
       Amount:
         agent.transaction.amount === "undefined"
           ? ""
@@ -138,6 +181,22 @@ const CentralPurse = (props) => {
             />
           </div>
         </div>
+        <FilterModal
+        type={"Transaction"}
+        typetext={"Enter Agent Manager Type"}
+        idtext={"Enter Agent Manager ID"}
+        show={FilterModalActive}
+        name={"centralpurse"}
+        close={closeFilter}
+        nextPage={nextPage}
+        length={length}
+        loadPage={FetchCentralPurses}
+        handleFilterValue={_handleFilterValue}
+        submitFilter={onFilterSubmit}
+        transactionsType={transactionsType}
+
+      />
+      <ExportModal show={ExportModalActive} close={closeExport} filename='centralPurse file' title={title} headers={headers} item={item} products={products} columns={columns}/>
       </div>
     </div>
   );
@@ -150,9 +209,13 @@ const mapStateToProps = (state) => (
     loading: state.purse.loading,
     error: state.purse.error,
     centralPurseTotal: state.purse.centralPurseTotal,
+    transactionsType: state.transactions.transactionsType,
+
   }
 );
 
 export default connect(mapStateToProps, {
   FetchCentralPurse,
+  FetchTransactionTypes,
+
 })(CentralPurse);
