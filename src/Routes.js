@@ -22,6 +22,8 @@ import PrivateRoute from './utils/privateRoute'
 import {history} from './utils/history'
 import AuthRequired from "./Components/authRequired"
 import AgentProfile from "./Components/AgentProfile"
+import AgentManagerProfile from "./Components/AgentManagerProfile"
+
 
 class Routes extends Component {
   render() {
@@ -42,6 +44,7 @@ class Routes extends Component {
               <AuthRequired path= "/audit" component={Audit } adminRequred/>
               <AuthRequired path= "/getagents" component={GetSingleAgents } adminRequred/>
               <AuthRequired path= "/agentprofile" component={AgentProfile } />
+              <AuthRequired path= "/agentmanagerprofile" component={AgentManagerProfile } />
               <AuthRequired path= "/appversion" component={AppVersion } adminRequred/>
 
 

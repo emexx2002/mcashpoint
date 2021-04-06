@@ -33,6 +33,7 @@ export const AgentConstant = {
   PURSE_BALANCE_SUMMARY_URL:`${BASE_URL}/api/v1/purse/balance/general`,
   ACTIVATE_DEACTIVATE_USER_URL:`${BASE_URL}/api/v1/user/activate-deactivate`,
   RESET_AGENT_PASSWORD_URL:`${BASE_URL}/api/v1/user/password/reset?userId`,
-
+  MAXIMUM_RANGE_URL:`${BASE_URL}/api/v1/convenience/maximum/range?`,
+  CONVIENIENCE_FEE_URL:`${BASE_URL}/api/v1/convenience`
   
 };

@@ -5,6 +5,7 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import Upload from "../../../Assets/img/upload.png";
 import Filter from "../../../Assets/img/filter.png";
+import { NavLink } from "react-router-dom";
 import { FetchAgentManager } from "../../../Redux/requests/agentManagerRequest";
 import Loader from "../../../Components/secondLoader";
 import DashboardTemplate from "../../template/dashboardtemplate";
@@ -101,7 +102,8 @@ const FetchAgentsManager = (props) => {
     console.log(agent);
     return {
       id: index,
-      AgentID: agent.id === null ? "" : agent.id,
+      Agent:agent,
+      AgentID: agent.user.id === null ? "" : agent.user.id,
       Name: agent.user.fullName === null ? "" : agent.user.fullName,
       UserName: agent.user.username === null ? "" : agent.user.username,
       PhoneNumber: agent.phone === null ? "" : agent.phone,
@@ -113,7 +115,20 @@ const FetchAgentsManager = (props) => {
 
   const columns = [
     // { dataField: 'id', text: 'Id'},
-    { dataField: "AgentID", text: "Agent ID" },
+    { dataField: "AgentID", text: "Agent ID" ,
+    formatter: (cellContent, row) => {
+      return (
+        <NavLink
+        to={{
+          pathname: `/agentmanagerprofile`,
+          state: {row}
+     }}
+          className=" editadmin"
+        >
+          {row.AgentID}
+        </NavLink>)
+    }
+  },
     {
       dataField: "Name",
       text: " Name",

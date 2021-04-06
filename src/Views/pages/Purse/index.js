@@ -19,26 +19,32 @@ import "./style.css";
 const AgentsPurses = (props) => {
   const [key, showActive] = React.useState("centralPurse");
 
-  const { FetchPurseBalance: FetchPurseBalances,centralPurseBalance } = props;
+  const { FetchPurseBalance: FetchPurseBalances, centralPurseBalance } = props;
+  const [createModalActive, showCreateModal] = React.useState(false);
   const [ExportModalActive, showExportModal] = React.useState(false);
-  const [intialValueFilter, setInitialValue] = React.useState({});
   const [FilterModalActive, showFilterModal] = React.useState(false);
 
-  const handleInitialValue = (value) => {
-    console.log(value);
-    setInitialValue(value);
+  const initialState = {
+    startDate: "",
+    endDate: "",
+    transactionId: "",
+    transactionType: "",
   };
+  const [filterValues, setFilterValues] = React.useState(initialState);
 
   useEffect(() => {
-   FetchPurseBalances()
+    FetchPurseBalances()
   }, []);
 
-console.log(centralPurseBalance)
+  const onclose = () => {
+    showActive("centralPurse");
+    showCreateModal(false);
+  };
   const OpenFilter = () => {
     showFilterModal(true);
-    setInitialValue(intialValueFilter);
+    setFilterValues(initialState);
   };
-  const {totalAgentBalance,walletBalance} = centralPurseBalance
+  const { totalAgentBalance, walletBalance } = centralPurseBalance
 
   return (
     <DashboardTemplate>
@@ -71,7 +77,7 @@ console.log(centralPurseBalance)
               <div>Manage all agents on mCashPoint</div>
             </div>
           </div>
-          {/* <div className="manage-agent">
+          <div className="manage-agent">
             <span>
               <img src={Print} />
               Print
@@ -86,29 +92,31 @@ console.log(centralPurseBalance)
               <img src={Upload} />
               Export
             </span>
-          </div> */}
+          </div>
         </div>
 
         <Tabs defaultActiveKey={key} id="uncontrolled-tab-example">
           <Tab eventKey={"centralPurse"} title="Central Purse">
-            <CentralPurse />
-          </Tab>
-
-          <Tab eventKey={"AgentPurse"} title="Agent Purse">
-            <AgentPurse
+            <CentralPurse
+              initialState={initialState}
               ExportModalActive={ExportModalActive}
               FilterModalActive={FilterModalActive}
               showExportModal={showExportModal}
               showFilterModal={showFilterModal}
-              handleInitialValue={handleInitialValue}
-              intialValueFilter={intialValueFilter}
+              filterValues={filterValues}
+              setFilterValues={setFilterValues} />
+          </Tab>
+
+          <Tab eventKey={"AgentPurse"} title="Agent Purse">
+            <AgentPurse
+             
             />
           </Tab>
         </Tabs>
       </div>
     </DashboardTemplate>
   );
-};const mapStateToProps = (state) => (
+}; const mapStateToProps = (state) => (
   console.log(state),
   {
     loading: state.purse.loading,

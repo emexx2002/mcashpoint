@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-// import ToolkitProvider, {  CSVExport } from 'react-bootstrap-table2-toolkit';
-
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import Upload from "../../../Assets/img/upload.png";
@@ -406,8 +403,11 @@ const Transactions = (props) => {
           <Dropdown.Item eventKey="30">30</Dropdown.Item>
           <Dropdown.Item eventKey="50">50</Dropdown.Item>
           <Dropdown.Item eventKey="100">100</Dropdown.Item>
+          <Dropdown.Item eventKey={transactionTotal ? String(transactionTotal):'0' }>{transactionTotal}</Dropdown.Item>
+
         </DropdownButton>
-        <p>Showing 1 to {length} of {transactionTotal}</p>
+{        console.log(typeof(String(transactionTotal)))
+}        <p>Showing 1 to {length} of {transactionTotal}</p>
         <div className="pagination">
           <Pagination
             activePage={activePage}
