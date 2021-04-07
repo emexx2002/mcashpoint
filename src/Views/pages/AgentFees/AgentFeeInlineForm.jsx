@@ -53,7 +53,7 @@ function AgentFeeInlineForm({
         <input
           ref={register}
           type="text"
-          
+          disabled
           name={`${fieldName}.min`}
           onChange={(e) =>
             handleInputRangeType(e.target.value, index.id, "min")
