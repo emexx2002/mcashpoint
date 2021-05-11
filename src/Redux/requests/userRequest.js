@@ -51,34 +51,3 @@ export const UserChangePassword = ({ oldPassword, password, confirmPassword }) =
   }
 };
 
-
-// export const UserChangePassword = ({ oldPassword, password, confirmPassword }) => dispatch => {
-//   console.log(oldPassword, password, confirmPassword)
-//   dispatch(asyncActions(USER_CHANGE_PASSWORD).loading(true));
-//   const token = JSON.parse(localStorage.getItem("data"))
-//   console.log(`bearer ${token.access_token}`,)
-//   axios
-//     .patch(`${AgentConstant.CHANGE_PASSWORD_URL}`, {
-//       oldPassword,
-//       password,
-//       confirmPassword
-//     }, {
-//       headers: {
-//         Authorization: `bearer ${token.access_token}`,
-//         "Content-Type": "application/json",
-//       },
-//     })
-//     .then(res => {
-//       const response = res.data
-//       if (response.responseCode === '00') {
-//         dispatch(asyncActions(USER_CHANGE_PASSWORD).success(response.data));
-//       } else if (response.responseCode === "XX") {
-//         dispatch(
-//           asyncActions(USER_CHANGE_PASSWORD).failure(true, response.responseMessage)
-//         );
-//       }
-//     })
-//     .catch(error => {
-//       dispatch(asyncActions(USER_CHANGE_PASSWORD).failure(true, error))
-//     });
-// };
