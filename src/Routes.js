@@ -23,6 +23,7 @@ import {history} from './utils/history'
 import AuthRequired from "./Components/authRequired"
 import AgentProfile from "./Components/AgentProfile"
 import AgentManagerProfile from "./Components/AgentManagerProfile"
+import changePassword from "./Views/pages/userChangePassword";
 
 
 class Routes extends Component {
@@ -46,11 +47,8 @@ class Routes extends Component {
               <AuthRequired path= "/agentprofile" component={AgentProfile } />
               <AuthRequired path= "/agentmanagerprofile" component={AgentManagerProfile } />
               <AuthRequired path= "/appversion" component={AppVersion } adminRequred/>
-
-
-              
               <PrivateRoute path= "/settings" component={Settings } />
-              
+              <PrivateRoute path= "/changepassword" component={changePassword } />
             </Switch>
           </Router>
         </Provider>
