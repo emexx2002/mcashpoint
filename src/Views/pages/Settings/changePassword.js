@@ -1,17 +1,21 @@
 import React, { useState ,useEffect} from 'react';
+import { useHistory } from "react-router-dom";
+
 import { Container, Row, Col,Nav,Form,Button,Alert} from "react-bootstrap";
 import { ChangePassword } from "../../../Redux/requests/settingsRequest";
 import Loader from "../../../Components/secondLoader"
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {history} from '../../../utils/history'
+// import {history} from '../../../utils/history'
 import ErrorAlert from '../../../Components/alerts';
-
-
 import './style.css';
 
 
-const PasswordChange = ({ history, ChangePassword: handlePassword, loading ,error,success,erroMessage,passworderror}) => {
+
+
+const PasswordChange = ({  ChangePassword: handlePassword, loading ,error,success,errorMessage,passworderror}) => {
+    let history = useHistory();
+
     const getToken = JSON.parse(localStorage.getItem("data"))
     const {username} = getToken.user
     const [userCredentials, setUserCredentials] = useState({
@@ -23,28 +27,32 @@ const PasswordChange = ({ history, ChangePassword: handlePassword, loading ,erro
     const [errors, setErrors] = useState([]);
     const [successMessage, SetSuccessMessage] = useState([]);
 
-    
+    console.log(history)
     function handleInputChange(event) {
-        setErrors([])
         setUserCredentials({ ...userCredentials, [event.target.name]: event.target.value });
         console.log(userCredentials)
     };
 
     useEffect(() => { 
-        console.log(error)
-        if(passworderror){
-
+        console.log(error,errorMessage)
+        if(errorMessage){
+          if (error && errorMessage.error!="Old Password is incorrect"){
             return setErrors(['There was an error sending your request, please try again later.']);
+        }else if(errorMessage){
+          return setErrors([errorMessage.error]);
         }
-    }, [passworderror]);
-
-    useEffect(() => { 
+        }
        
-        if(success){
-            
-            history.push("/")
+      }, [error, errorMessage]);
+
+    useEffect(() => {
+        console.log(success)
+        if (success) {
+            history.push("/");
         }
     }, [success]);
+
+
 
     const {
         userName,oldPassword,newPassword,confirmPassword
@@ -117,7 +125,7 @@ ChangePassword.propTypes = {
         user:state.settings.user,
         error:state.settings.passworderror,
         passworderror:state.settings.passworderror,
-        erroMessage:state.settings.erroMessage,
+        errorMessage:state.settings.errorMessage,
         success:state.settings.passwordSuccess
       });
   

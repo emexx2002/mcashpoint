@@ -73,7 +73,7 @@ const CreateAgentModal = ({
     //     });
     //   };
     const _handleSelectState = (e) => {
-        agentStates.map((state, i) => {
+        agentStates.map((state, i) => {  
             let stateId = state.id;
 
             setCreateAgentData({

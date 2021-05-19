@@ -5,26 +5,32 @@ import { AgentConstant } from "../../constants/constants";
 import { history } from '../../utils/history'
 
 
-export const ChangePassword = ({ userName, oldPassword, newPassword }) => dispatch => {
-  const username = userName
-  console.log(username, oldPassword, newPassword)
+export const ChangePassword = ({ userName, oldPassword, newPassword,confirmPassword }) => async (dispatch) => {
+  const password = newPassword
+
+  // console.log(username, oldPassword, newPassword,confirmPassword)
   dispatch(asyncActions(CHANGE_PASSWORD).loading(true));
-  axios
-    .patch(`${AgentConstant.CHANGE_PASSWORD_URL}`, {
-      username,
-      oldPassword,
-      newPassword
+  const token = JSON.parse(localStorage.getItem("data"))
+  try {
+    const { data } = await axios.patch(`${AgentConstant.CHANGE_PASSWORD_URL}`, { oldPassword, password, confirmPassword }, {
+      headers: {
+        Authorization: `bearer ${token.access_token}`,
+        "Content-Type": "application/json",
+      },
     })
-    .then(res => {
-      const response = res.data
-      if (response.responseCode === '00') {
-        dispatch(asyncActions(CHANGE_PASSWORD).success(response.data));
-      }
-    })
-    .catch(error => {
-      dispatch(asyncActions(CHANGE_PASSWORD).failure(true, error))
-    });
-};
+    if (data.responseCode === '00') {
+      dispatch(asyncActions(CHANGE_PASSWORD).success(data.data));
+      window.location.replace('/')
+    } else if (data.responseCode === "XX") {
+      dispatch(
+        asyncActions(CHANGE_PASSWORD).failure(true, data.responseMessage)
+      );
+    }
+
+  } catch (error) {
+    return dispatch(asyncActions(CHANGE_PASSWORD).failure(true, error))
+  };
+}
 
 export const FetchRole = () => dispatch => {
   dispatch(asyncActions(FETCH_ROLE).loading(true));
