@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Nav, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Nav, Form, Button ,Alert} from "react-bootstrap";
 import { UserChangePassword } from "../../../Redux/requests/userRequest";
 import Loader from "../../../Components/secondLoader";
 import PropTypes from "prop-types";
@@ -23,6 +23,8 @@ const ChangePasswords = ({
         confirmPassword: null
     });
     const [errors, setErrors] = useState([]);
+    const [successMessage, SetSuccessMessage] = useState(['please change Password']);
+
 
     function handleInputChange(event) {
         console.log(event);
@@ -35,10 +37,11 @@ const ChangePasswords = ({
     }
 
    useEffect(() => { 
-        console.log(error,errorMessage)
         if(errorMessage){
+            SetSuccessMessage([])
+
           if (error && errorMessage.error!="Old Password is incorrect"){
-            return setErrors(['There was an error sending your request, please try again later.']);
+            return setErrors(['There was an error sending your request, please try again later.']) ;
         }else if(errorMessage){
           return setErrors([errorMessage.error]);
         }
@@ -57,7 +60,7 @@ const ChangePasswords = ({
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        if (password !== confirmPassword) return setErrors(['Passwords do not match']);
+        if (password !== confirmPassword) return setErrors(['Passwords do not match']),SetSuccessMessage();
         console.log(userPassword)
         const result = await handlePassword(userPassword);
         console.log(result)
@@ -77,7 +80,8 @@ const ChangePasswords = ({
                 )}
 
                 <div className="logo"></div>
-                <ErrorAlert errors={errors} />
+                
+               { error ||errorMessage ?<ErrorAlert errors={errors} />: <Alert variant="success">{successMessage}</Alert>}
                 <Row>
                     <Col md={12} sm={12}>
                         <Form.Group controlId="exampleForm.ControlInput1">

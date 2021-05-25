@@ -35,7 +35,6 @@ const Login = ({
 
   useEffect(() => {
     if (error) {
-      console.log(error)
       return setErrors([ error.error && error.error.response  ?error.error.response.data.responseMessage:
         "There was an error sending your request, please try again later.",
       ]);

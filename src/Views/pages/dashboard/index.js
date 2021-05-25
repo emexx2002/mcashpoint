@@ -82,7 +82,7 @@ console.log(name)
 
         <div className="graphs-wrapper">
           <div className="Dashboard-overview-wrapper">
-          {name =="ADMIN"?
+          {name == "ADMIN" || name == "Senior Management" || name =="Product" ?
             <div className="flex-box ">
               <div className="person-background"></div>
               <div>
@@ -195,7 +195,7 @@ console.log(name)
             <div className="barchart-bg">
               <Barchart />
             </div>
-            {name =="ADMIN"?
+            {name == "ADMIN" || name == "Senior Management "  || name =="Product" ?
             <div className="daily-per-agent">
             <div id="daily-header">Daily Top Performing Agents</div>
 

@@ -5,15 +5,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FetchState, FetchLga, FetchBank, CreateAgentManager } from "../../../Redux/requests/agentManagerRequest";
 import Loader from "../../../Components/secondLoader"
+import moment from 'moment'
+import ErrorAlert from "../../../Components/alerts";
+
+
 
 
 const CreateAgentModal = ({
-    create, show, CreateAgentManager: handleCreateAgentManager, close, FetchState: FetchStates, FetchLga: FetchLgas, FetchBank: FetchBankS, loading, agentStates, agentLgas, agentBanks, success, error, erroMessage
+    create, show, CreateAgentManager: handleCreateAgentManager, close, FetchState: FetchStates, FetchLga: FetchLgas, FetchBank: FetchBankS, loading, agentStates, agentLgas, agentBanks, success, error, errorMessage
 }) => {
-    console.log(error, erroMessage)
     const [isPublic, setIsPublic] = useState(true);
     const [errors, setErrors] = useState([]);
-    const [successMessage, SetSuccessMessage] = useState([]);
+    const [successMessage, SetSuccessMessage] = useState(['Create Agent Manager']);
 
     const [CreateAgentData, setCreateAgentData] = useState({
         firstname: "",
@@ -25,7 +28,9 @@ const CreateAgentModal = ({
         accountNumber: "",
         address: "",
         accountBvn: "",
-        dateOfBirth: "",
+        dateOfBirth: moment()
+        .locale('en')
+        .format('YYYY-MM-DD'),
         username: "",
         nationality: "",
         identityType: "",
@@ -40,16 +45,11 @@ const CreateAgentModal = ({
     }, []);
 
     useEffect(() => {
-        console.log(error, erroMessage)
-        if (erroMessage) {
-            if (error && erroMessage.error != "User with the provided username already exists.") {
-                return setErrors(['There was an error sending your request, please try again later.']);
-            } else if (erroMessage) {
-                return setErrors(erroMessage.error);
-            }
-        }
+        if (error) {
+            return setErrors([ error  ? error.error:"There was an error sending your request, please try again later."]);
+          }
 
-    }, [error, erroMessage]);
+    }, [error, errorMessage]);
 
     useEffect(() => {
         if (success) {
@@ -64,14 +64,6 @@ const CreateAgentModal = ({
     };
 
 
-    //   const _handleSelectState = (e) => {
-    //     let stateCode = e.target.value;
-    //     FetchLgas(stateCode)
-
-    //     setCreateAgentData({
-    //       ...CreateAgentData, [e.target.name]: stateCode
-    //     });
-    //   };
     const _handleSelectState = (e) => {
         agentStates.map((state, i) => {  
             let stateId = state.id;
@@ -89,11 +81,9 @@ const CreateAgentModal = ({
 
 
     const _handleSelectBank = (e) => {
-        let stateCode = e.target.value;
-        FetchLgas(stateCode)
-
+        let bankCode = e.target.value;
         setCreateAgentData({
-            ...CreateAgentData, [e.target.name]: stateCode
+            ...CreateAgentData, [e.target.name]: bankCode
         });
     };
 
@@ -126,12 +116,14 @@ const CreateAgentModal = ({
                 <hr />
                 <Container>
                     <Form onSubmit={onSubmit}>
-                        {
+                    { error  ?<ErrorAlert errors={errors} />: <Alert variant="success">{successMessage}</Alert>}
+
+                        {/* {
                             success ? <Alert variant="success">{successMessage}</Alert> : null
                         }
                         {
                             error ? <Alert variant="danger">{errors}</Alert> : null
-                        }
+                        } */}
                         <div>Personal Infromation</div>
                         <br />
                         <Row>
@@ -179,7 +171,7 @@ const CreateAgentModal = ({
                                 <Form.Group controlId="exampleForm.ControlSelect1">
                                     <Form.Label>Gender</Form.Label>
                                     <Form.Control as="select" name='gender' onChange={updateInput} required>
-                                        <option>Select Gender</option>
+                                        <option value=''>Select Gender</option>
                                         <option>MALE</option>
                                         <option>FEMALE</option>
 
@@ -199,7 +191,7 @@ const CreateAgentModal = ({
                                 <Form.Group controlId="exampleForm.ControlSelect1"   >
                                     <Form.Label>State</Form.Label>
                                     <Form.Control name="stateId" as="select" onChange={_handleSelectState} required>
-                                        <option >Select your state</option>
+                                        <option value=''>Select your state</option>
                                         {
                                             agentStates.map((state, i) => {
                                                 return <option key={i} value={state.stateCode}>{state.stateName}</option>
@@ -212,7 +204,7 @@ const CreateAgentModal = ({
                                 <Form.Group controlId="exampleForm.ControlSelect1">
                                     <Form.Label>Local Govt Area</Form.Label>
                                     <Form.Control as="select" name='lgaId' onChange={updateInput} required>
-                                        <option disabled>Select your LGA</option>
+                                        <option disabled value=''>Select your LGA</option>
                                         {agentLgas.map((lga, i) => {
                                             return (
                                                 <option value={lga.id} key={i}>
@@ -236,7 +228,7 @@ const CreateAgentModal = ({
                                 <Form.Group controlId="exampleForm.ControlSelect1">
                                     <Form.Label>ID type</Form.Label>
                                     <Form.Control as="select" name='identityType' onChange={updateInput} required>
-                                        <option>Choose an ID type</option>
+                                        <option value=''>Choose an ID type</option>
                                         <option value="National id">National id</option>
                                         <option value="voters id">voters id</option>
                                         <option value="international passport">international passport</option>
@@ -261,7 +253,7 @@ const CreateAgentModal = ({
                                 <Form.Group controlId="exampleForm.ControlInput1">
                                     <Form.Label>Bank Name</Form.Label>
                                     <Form.Control name="bankId" as="select" onChange={_handleSelectBank} required>
-                                        <option >Select your bank</option>
+                                        <option value=''>Select your bank</option>
                                         {
                                             agentBanks.map((bank, i) => {
                                                 return <option key={i} value={bank.id}>{bank.name}</option>
@@ -312,12 +304,12 @@ CreateAgentModal.propTypes = {
 
 };
 
-const mapStateToProps = state => (console.log(state.agentmanager.error), {
+const mapStateToProps = state => (console.log(state), {
     agentStates: state.agentmanager.agentStates,
     agentLgas: state.agentmanager.agentLga,
     agentBanks: state.agentmanager.agentBanks,
     loading: state.agentmanager.loading,
-    erroMessage: state.agentmanager.errorMessage,
+    errorMessage: state.agentmanager.errorMessage,
     success: state.agentmanager.createAgentMansuccess,
     error: state.agentmanager.error,
 });
