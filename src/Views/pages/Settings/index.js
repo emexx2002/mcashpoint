@@ -20,6 +20,9 @@ const Settings = () => {
   const token = JSON.parse(localStorage.getItem("data"));
 
   const { name } = token.user.roleGroup;
+
+  const isVisibleToUser = (roleCode, user) => user.roleGroup.role.some(role => role.roleCode === roleCode)
+
   return (
     <DashboardTemplate>
       <div className="transact-wrapper">
@@ -31,7 +34,7 @@ const Settings = () => {
             <Row>
               <Col sm={3} className="side-tab">
                 <Nav variant="pills" className="flex-column">
-                  {name == "ADMIN" ? (
+                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
                     <Nav.Item>
                       <Nav.Link eventKey="first">
                         <div className="tab-navs">
@@ -48,52 +51,49 @@ const Settings = () => {
                   ) : (
                     ""
                   )}
-                  
+
+                  <Nav.Item>
+                    <Nav.Link eventKey="second">
+                      <div className="tab-navs">
+                        <div>
+                          <img src={Password} />
+                        </div>
+                        <div>
+                          <p>Password</p>
+                          <p>Change password</p>
+                        </div>
+                      </div>
+                    </Nav.Link>
+                  </Nav.Item>
+                  {isVisibleToUser('ROLE_CREATE_ROLEGROUP', token.user) &&
                     <Nav.Item>
-                      <Nav.Link eventKey="second">
+                      <Nav.Link eventKey="third">
                         <div className="tab-navs">
                           <div>
-                            <img src={Password} />
+                            <img src={Role} />
                           </div>
                           <div>
-                            <p>Password</p>
-                            <p>Change password</p>
+                            <p>Role Groups</p>
+                            <p>View and create user roles</p>
                           </div>
                         </div>
                       </Nav.Link>
                     </Nav.Item>
-                  
-                  {name == "ADMIN" ? (
-                  <Nav.Item>
-                    <Nav.Link eventKey="third">
-                      <div className="tab-navs">
-                        <div>
-                          <img src={Role} />
+                  }
+                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
+                    <Nav.Item>
+                      <Nav.Link eventKey="fourth">
+                        <div className="tab-navs">
+                          <div>
+                            <img src={Notifications} />
+                          </div>
+                          <div>
+                            <p>Notifications</p>
+                            <p>Notification preferences </p>
+                          </div>
                         </div>
-                        <div>
-                          <p>Role Groups</p>
-                          <p>View and create user roles</p>
-                        </div>
-                      </div>
-                    </Nav.Link>
-                  </Nav.Item>
-                  ) : (
-                    ""
-                  )}
-                  {name == "ADMIN" ? (
-                  <Nav.Item>
-                    <Nav.Link eventKey="fourth">
-                      <div className="tab-navs">
-                        <div>
-                          <img src={Notifications} />
-                        </div>
-                        <div>
-                          <p>Notifications</p>
-                          <p>Notification preferences </p>
-                        </div>
-                      </div>
-                    </Nav.Link>
-                  </Nav.Item>
+                      </Nav.Link>
+                    </Nav.Item>
                   ) : (
                     ""
                   )}
@@ -101,28 +101,25 @@ const Settings = () => {
               </Col>
               <Col sm={6}>
                 <Tab.Content>
-                {name == "ADMIN" ? (
-                  <Tab.Pane eventKey="first">
-                    <ProfileSettings></ProfileSettings>
-                  </Tab.Pane>
-                   ) : (
+                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
+                    <Tab.Pane eventKey="first">
+                      <ProfileSettings></ProfileSettings>
+                    </Tab.Pane>
+                  ) : (
                     ""
                   )}
                   <Tab.Pane eventKey="second">
                     <ChangePassword></ChangePassword>
                   </Tab.Pane>
-                  {name == "ADMIN" ? (
-                  <Tab.Pane eventKey="third">
-                    <RoleGroups></RoleGroups>
-                  </Tab.Pane>
-                   ) : (
-                    ""
-                  )}
-                   {name == "ADMIN" ? (
-                  <Tab.Pane eventKey="fourth">
-                    <NotificationSettings></NotificationSettings>
-                  </Tab.Pane>
-                   ) : (
+                  {isVisibleToUser('ROLE_CREATE_ROLEGROUP', token.user) &&
+                    <Tab.Pane eventKey="third">
+                      <RoleGroups></RoleGroups>
+                    </Tab.Pane>}
+                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
+                    <Tab.Pane eventKey="fourth">
+                      <NotificationSettings></NotificationSettings>
+                    </Tab.Pane>
+                  ) : (
                     ""
                   )}
                 </Tab.Content>

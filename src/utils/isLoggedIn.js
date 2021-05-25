@@ -1,7 +1,7 @@
 export const isLoggedIn = () => {
   const data = JSON.parse(localStorage.getItem("data"));
   const exp = data.expires_in;
-  console.log(data)
+  console.log('data', data)
   if (data) {
     // console.log("hi");
     // console.log(exp < Date.now() / 1000);

@@ -109,13 +109,13 @@ const AgentManagerReducer = (state = initialState, action) => {
         agentCreation:action.payload,
         success: true,
         loading:false,
-        error: true,
+        error: null,
         createAgentMansuccess:true
       };
     case asyncActionName(CREATE_AGENTS_MANAGER).failure:
       return {
         ...state,
-        error: true,
+        error: action.payload,
         success: false,
         loading:false,
         createAgentMansuccess:false,

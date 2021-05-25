@@ -14,6 +14,9 @@ import { removeToken } from "../../utils/localStorage";
 import { logoutUser } from "../../Redux/requests/userRequest";
 import { connect } from "react-redux";
 
+const isVisibleToUser = (roleCode, user) => user.roleGroup.role.some(role => role.roleCode === roleCode)
+
+
 class SideNav extends Component {
   constructor(props) {
     super(props);
@@ -23,20 +26,18 @@ class SideNav extends Component {
     this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
   }
   _handleSignOut() {
-    // this.props.logoutUser();
-    console.log('logout')
     removeToken()
-          window.location.replace('/')
+    window.location.replace('/')
 
   }
   forceUpdateHandler() {
     this.forceUpdate();
-    console.log("hhheh ");
   }
 
   render() {
     const token = JSON.parse(localStorage.getItem("data"));
-    const { name } = token.user.roleGroup;
+    let { name } = token.user.roleGroup;
+
     return (
       <div className="sidenav-wrap">
         <div className="navbarwrapper">
@@ -56,71 +57,64 @@ class SideNav extends Component {
                     Dashboard
                   </li>
                 </NavLink>
-                {name =="ADMIN"?
-                <NavLink to="/admin" activeClassName="current">
-                  <li className="list-group-item">
-                    <img src={Agent} alt="" /> Admin
+                {isVisibleToUser('ROLE_VIEW_ALL_ADMIN', token.user) &&
+                  <NavLink to="/admin" activeClassName="current">
+                    <li className="list-group-item">
+                      <img src={Agent} alt="" /> Admin
                   </li>
-                </NavLink>
-                :''}
-                <NavLink to="/transactions" activeClassName="current">
+                  </NavLink>}
+                {isVisibleToUser('ROLE_VIEW_ALL_TRANSACTION', token.user) && <NavLink to="/transactions" activeClassName="current">
                   <li className="list-group-item ">
                     <img src={Transaction} alt="" /> Transactions
                   </li>
-                </NavLink>
-                {name =="ADMIN"?
-                <NavLink to="/agents" activeClassName="current">
-                  <li className="list-group-item">
-                    <img src={Agent} alt="" /> Agents
+                </NavLink>}
+                {isVisibleToUser('ROLE_VIEW_ALL_AGENT', token.user) &&
+                  <NavLink to="/agents" activeClassName="current">
+                    <li className="list-group-item">
+                      <img src={Agent} alt="" /> Agents
                   </li>
-                </NavLink>
-                :''}
-                {name =="ADMIN"?
-                 <NavLink to="/agentsmanager" activeClassName="current">
-                 <li className="list-group-item">
-                   <img src={Agentmanagaer} alt="" /> Agent Manager
+                  </NavLink>}
+                {isVisibleToUser('ROLE_VIEW_ALL_AGENT', token.user) &&
+                  <NavLink to="/agentsmanager" activeClassName="current">
+                    <li className="list-group-item">
+                      <img src={Agentmanagaer} alt="" /> Agent Manager
                  </li>
-               </NavLink>
-               :
-               ''}
-                {/* {name =="ADMIN"? */
-                 <NavLink to="/agentfees" activeClassName="current">
-                 <li className="list-group-item">
-                   <img src={Agentmanagaer} alt="" /> Agent Fees
+                  </NavLink>}
+                {isVisibleToUser('ROLE_VIEW_AGENT_FEE', token.user) &&
+                  <NavLink to="/agentfees" activeClassName="current">
+                    <li className="list-group-item">
+                      <img src={Agentmanagaer} alt="" /> Agent Fees
                  </li>
-               </NavLink>
-               /* :"" */
-               }
-               {name =="ADMIN"?
-                <NavLink to="/purse" activeClassName="current">
-                  <li className="list-group-item">
-                    <img src={Purse} alt="" /> Purse
+                  </NavLink>
+                }
+                {isVisibleToUser('ROLE_VIEW_PURSE', token.user) &&
+                  <NavLink to="/purse" activeClassName="current">
+                    <li className="list-group-item">
+                      <img src={Purse} alt="" /> Purse
                   </li>
-                </NavLink>
-                :""}
+                  </NavLink>}
 
-                {name =="ADMIN"?
-                <NavLink to="/audit" activeClassName="current">
-                <li className="list-group-item">
-                  <img src={Audit} alt="" /> Audit
+                {isVisibleToUser('ROLE_VIEW_AUDIT_LOG', token.user) &&
+                  <NavLink to="/audit" activeClassName="current">
+                    <li className="list-group-item">
+                      <img src={Audit} alt="" /> Audit
                 </li>
-              </NavLink>
-              :''}
-                
-                {name =="ADMIN"?
-                <NavLink to="/appversion" activeClassName="current">
-                <li className="list-group-item">
-                  <img src={Audit} alt="" />
+                  </NavLink>}
+
+                {isVisibleToUser('ROLE_VIEW_AUDIT_LOG', token.user) &&
+                  <NavLink to="/appversion" activeClassName="current">
+                    <li className="list-group-item">
+                      <img src={Audit} alt="" />
                   AppVersion
                 </li>
-              </NavLink>
-              :''}
-                
-               
-               
+                  </NavLink>
+                }
+
+
+
 
                 <div className="list-group footer">
-                <NavLink to="/settings" activeClassName="current">
+                  <NavLink to="/settings" activeClassName="current">
                     <li className="list-group-item ">
                       <img src={Settings} alt="" />
                       Settings

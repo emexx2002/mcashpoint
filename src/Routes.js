@@ -33,22 +33,22 @@ class Routes extends Component {
         <Provider store={store}>
           <Router history={history} >
             <Switch>
-              <AuthRequired exact path="/dashboard" component={Dashboard}/>
-              <AuthRequired exact path="/admin" component={Admin}/>
               <Route  path="/" component={Login} exact />
-              <PrivateRoute path= "/transactions" component={Transactions } />
-              <PrivateRoute path= "/agenttransactions" component={TransactionsSingle } />
-              <AuthRequired path= "/agents" component={Agents } adminRequred/>
-              <AuthRequired path= "/agentsmanager" component={AgentsManager } adminRequred/>
-              <AuthRequired path= "/agentfees" component={AgentFees } />
-              <AuthRequired path= "/purse" component={Purse } adminRequred/>
-              <AuthRequired path= "/audit" component={Audit } adminRequred/>
-              <AuthRequired path= "/getagents" component={GetSingleAgents } adminRequred/>
-              <AuthRequired path= "/agentprofile" component={AgentProfile } />
-              <AuthRequired path= "/agentmanagerprofile" component={AgentManagerProfile } />
-              <AuthRequired path= "/appversion" component={AppVersion } adminRequred/>
-              <PrivateRoute path= "/settings" component={Settings } />
-              <PrivateRoute path= "/changepassword" component={changePassword } />
+              <AuthRequired roleCode="ROLE_VIEW_DASHBOARD" exact path="/dashboard" component={Dashboard}/>
+              <AuthRequired roleCode="ROLE_VIEW_ALL_ADMIN" exact path="/admin" component={Admin}/>
+              <AuthRequired roleCode="ROLE_VIEW_ALL_TRANSACTION" path= "/transactions" component={Transactions } />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_TRANSACTION" path= "/agenttransactions" component={TransactionsSingle } />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agents" component={Agents }/>
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agentsmanager" component={AgentsManager }/>
+              <AuthRequired roleCode="ROLE_VIEW_AGENT_FEE" path= "/agentfees" component={AgentFees } />
+              <AuthRequired roleCode="ROLE_VIEW_PURSE" path= "/purse" component={Purse }/>
+              <AuthRequired roleCode="ROLE_VIEW_AUDIT_LOG" path= "/audit" component={Audit}/>
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/getagents" component={GetSingleAgents }/>
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agentprofile" component={AgentProfile } />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agentmanagerprofile" component={AgentManagerProfile } />
+              <AuthRequired path= "/appversion" roleCode="ROLE_VIEW_ALL_ADMIN" component={AppVersion } />
+              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" path= "/settings" component={Settings } />
+              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" path= "/changepassword" component={changePassword } />
             </Switch>
           </Router>
         </Provider>
