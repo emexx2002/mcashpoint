@@ -1,11 +1,12 @@
-body{
-    background: #E5E5E5;
-    height: 100%;
-    font-size: small;
+body {
+  /* background: #e5e5e5; */
+  box-sizing: border-box;
+  height: 100%;
+  font-size: small;
 }
 
 .table {
-    overflow: auto;
-    display: block;
-    table-layout: auto;
-    }
+  overflow: auto;
+  display: block;
+  table-layout: auto;
+}
