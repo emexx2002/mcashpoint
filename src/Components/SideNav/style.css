@@ -1,11 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap");
 .sidenav-wrap {
-  /* height: 100%; */
-  /* text-align: center; */
-  position: fixed;
   height: 100%;
-  width: 17%;
-  /* display: none; */
+  /* text-align: center; */
 }
 
 .navbarwrapper {
@@ -16,7 +12,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  overflow-x: hidden;
   padding-top: 20px;
 }
 

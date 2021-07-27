@@ -71,7 +71,7 @@
   background-image: url(../../../Assets/img/person.png);
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  margin: 10px 10px 10px 10px;
+  margin: 10px;
 }
 
 .underperform-background {
@@ -128,9 +128,8 @@
 }
 .dashboard-wrapper {
   padding: 0px 62px 0px 23px;
-  min-height: 100vh;
+  max-height: 100vh;
   width: 100%;
-  /* background-color: yellowgreen; */
 }
 
 .header-title p {
@@ -142,31 +141,27 @@
   letter-spacing: 0.2px;
   color: #52575c;
 }
-.Dashboard-overview-wrapper {
-  /* background-color: tomato; */
-  width: 100%;
-  /* margin-bottom: 10px; */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
-  grid-gap: 10px;
-  font-size: small;
-}
 .graphs-wrapper {
-  /* padding-top: 30px; */
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 110px 255px 1fr;
+  grid-template-rows: 110px, 255px, 1fr;
   /* grid-gap: 22px; */
-  /* background-color: violet; */
   height: 100%;
 }
+.Dashboard-overview-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  font-size: small;
+}
+
 .flex-box {
   background: #ffffff;
   /* Stroke/1 */
 
   border: 1px solid #e2e2e2;
-  box-sizing: border-box;
   border-radius: 10px;
   font-family: Montserrat;
   font-style: normal;
@@ -174,7 +169,6 @@
   font-size: 13px;
   line-height: 24px;
   display: flex;
-  align-items: center;
   align-items: center;
   width: 100%;
   height: 80%;
@@ -240,8 +234,6 @@
 }
 .barchart-bg {
   background: #ffffff;
-  /* Stroke/1 */
-  /* padding: 5px 5px  ; */
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
   border-radius: 10px;
@@ -273,7 +265,6 @@
 }
 
 .daily-per-agent {
-  /* margin-right: 20px; */
   margin-left: -30px;
   background: #ffffff;
   height: 85%;
@@ -297,14 +288,12 @@
 
 .dougnut-wrapper {
   background: #ffffff;
-  /* margin-left: 10px; */
   /* Stroke/1 */
   grid-row: 1 / span 3;
   grid-column: 4;
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
   border-radius: 10px;
-  /* padding: 20px; */
   height: 100%;
   font-size: small;
   width: 100%;
@@ -352,22 +341,58 @@
     line-height: 12px;
     letter-spacing: 0.2px;
   }
+
+  .dashboard-wrapper {
+    padding: 0px 1rem;
+
+    /* background-color: yellowgreen; */
+  }
+
+  .graphs-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
   .flex-box {
-    grid-column: auto;
-    grid-row: auto;
+    height: 20%;
+
+    /* margin-bottom: 10px; */
   }
   .Dashboard-overview-wrapper {
-    /* display: grid; */
-    width: 100%;
-    grid-template-columns: 1fr;
+    /* width: 10%; */
+    display: flex;
+    flex-wrap: wrap;
   }
   .line-and-details {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
   }
-  .chart-bg,
-  .transaction-graph-inner,
+
+  .bar-graph-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .chart-bg {
+    /* Stroke/1 */
+    padding: 0px;
+    border: 1px solid #e2e2e2;
+    width: 100%;
+    overflow-x: scroll;
+    height: fit-content;
+  }
+  .transaction-graph-inner {
+    height: fit-content;
+    margin-left: 0px;
+  }
+
   .dougnut-wrapper {
-    grid-column: auto;
-    grid-row: auto;
+    height: fit-content;
+    /* margin-bottom: 1rem; */
+  }
+
+  .daily-per-agent {
+    margin-top: 1rem;
+    margin-left: 0px;
+    height: fit-content;
+    width: 100%;
   }
 }
