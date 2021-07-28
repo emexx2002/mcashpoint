@@ -22,14 +22,7 @@
   color: #ffffff;
   margin: 10px 10px 10px 0px;
 }
-@media screen and (max-width: 600px) {
-  .nav-tabs .nav-item.nav-link.active,
-  .nav-tabs .nav-item.nav-link {
-    padding: 0.5rem !important;
-    margin: 0.5rem !important;
-    width: 100%;
-  }
-}
+
 .nav-tabs .nav-item.nav-link {
   background: #ffffff;
   border: 1px solid #dfe0eb;
@@ -113,4 +106,13 @@
 .errormessage {
   color: red;
   font-size: 9px;
+}
+
+@media screen and (max-width: 600px) {
+  .nav-tabs .nav-item.nav-link.active,
+  .nav-tabs .nav-item.nav-link {
+    padding: 0.5rem !important;
+    margin: 0.5rem !important;
+    width: 100%;
+  }
 }

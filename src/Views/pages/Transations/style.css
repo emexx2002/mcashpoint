@@ -17,22 +17,6 @@
 .agent-transact-header img {
   margin: 10px;
 }
-@media screen and (max-width: 600px) {
-  .transact-wrapper {
-    background: #2ac769;
-    padding: 0px 10px 0px 23px !important;
-  }
-  .agent-transact-header img {
-    display: none;
-  }
-  .agent-transact-header span {
-    text-align: center;
-    display: none;
-  }
-  .agent-transact-header {
-    width: 100%;
-  }
-}
 
 .transact-wrapper {
   font-family: Montserrat;
@@ -112,6 +96,7 @@
   justify-content: flex-end;
   align-content: center;
 }
+
 .pagination_wrap p {
   color: #393b3e;
   font-size: 10px;
@@ -140,4 +125,25 @@
   color: #393b3e;
   font-weight: 700;
   text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+  .transact-wrapper {
+    padding: 0px 10px 0px 23px !important;
+  }
+  .agent-transact-header img {
+    display: none;
+  }
+  .agent-transact-header span {
+    text-align: center;
+    display: none;
+  }
+  .agent-transact-header {
+    width: 100%;
+  }
+  .pagination_wrap {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
