@@ -152,4 +152,8 @@
   .table-wrapper h4 {
     text-align: center;
   }
+  .pagination li {
+    margin: 2px;
+    padding: 1px 8px;
+  }
 }
