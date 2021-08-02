@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DashboardTemplate from "../../Views/template/dashboardtemplate";
 import BootstrapTable from "react-bootstrap-table-next";
-import Loader from "../../Components/secondLoader"
+import Loader from "../../Components/secondLoader";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { RiSuitcaseLine } from "react-icons/ri";
@@ -13,136 +13,133 @@ import Filter from "../../Assets/img/filter.png";
 import Print from "../../Assets/img/printer.png";
 import Success from "../../Assets/img/success.svg";
 import image from "../../Assets/img/agentimage.png";
-import SweetAlert from 'react-bootstrap-sweetalert';
+import SweetAlert from "react-bootstrap-sweetalert";
 import EditUser from "../../Views/pages/Agents/editAgent";
-
-
 
 import {
   ActivateDeactivateUser,
   ResetPassword,
   FetchSingleAgent,
-  ActivatateCode
+  ActivatateCode,
 } from "../../Redux//requests/agentRequest";
 import { connect } from "react-redux";
 
 import "./style.css";
 const Profile = (props) => {
-  const { loading, ActivateDeactivateUser: ActivateDeactivateUsers, ResetPassword: ResetPasswords, resetSuccess, agents, FetchSingleAgent: FetchSingleAgents, activateDeacivate ,  successActivation,  ActivatateCode: ActivatateCodes,
-  } = props
-  const [smShow, setSmShow] = useState(false)
-  const [title, setTitle] = useState('');
+  const {
+    loading,
+    ActivateDeactivateUser: ActivateDeactivateUsers,
+    ResetPassword: ResetPasswords,
+    resetSuccess,
+    agents,
+    FetchSingleAgent: FetchSingleAgents,
+    activateDeacivate,
+    successActivation,
+    ActivatateCode: ActivatateCodes,
+  } = props;
+  const [smShow, setSmShow] = useState(false);
+  const [title, setTitle] = useState("");
   const [danger, setDanger] = useState(false);
   const [success, setSucess] = useState(false);
   const [editagent, showEditAgentModal] = useState(false);
   const [agentDetails, setAgentDetails] = useState([]);
 
+  const { state } = props.location;
 
-  const { state } = props.location
-  
-
-  const singleAgent = agents[0] ? agents[0].user : ''
-  const activationcodenumber = agents[0] ? agents[0].activationCode: ''
-
+  const singleAgent = agents[0] ? agents[0].user : "";
+  const activationcodenumber = agents[0] ? agents[0].activationCode : "";
 
   React.useEffect(() => {
-    FetchSingleAgents(state.row.UserName)
-  }, [])
+    FetchSingleAgents(state.row.UserName);
+  }, []);
 
   React.useEffect(() => {
     if (activateDeacivate) {
-      setSmShow(true)
-      setTitle("Action performed successfully")
-      setDanger(false)
-      setSucess(true)
+      setSmShow(true);
+      setTitle("Action performed successfully");
+      setDanger(false);
+      setSucess(true);
     }
-  }, [activateDeacivate])
+  }, [activateDeacivate]);
 
   useEffect(() => {
     if (activateDeacivate == false) {
-      setTitle("Action not perform successfully")
-      setDanger(true)
-      setSucess(false)
-      setSmShow(true)
+      setTitle("Action not perform successfully");
+      setDanger(true);
+      setSucess(false);
+      setSmShow(true);
     }
   }, [activateDeacivate]);
 
   const ActivateAgent = async (agentId, activationuser) => {
     // ActivateDeactivateUsers(agentId, !activationuser)
-    const res = await ActivateDeactivateUsers(agentId, !activationuser)
-    console.log(res)
-
-  }
+    const res = await ActivateDeactivateUsers(agentId, !activationuser);
+    console.log(res);
+  };
   function DeActivateAgent(agentId, activationuser) {
-    ActivateDeactivateUsers(agentId, !activationuser)
+    ActivateDeactivateUsers(agentId, !activationuser);
   }
 
   const ResetAgentPassword = async (agentId) => {
-    const res = await props.ResetPassword(agentId)
-  }
-
-
+    const res = await props.ResetPassword(agentId);
+  };
 
   useEffect(() => {
     if (resetSuccess) {
-      setSmShow(true)
-      setTitle("Password has been reset succesfully")
-      setDanger(false)
-      setSucess(true)
+      setSmShow(true);
+      setTitle("Password has been reset succesfully");
+      setDanger(false);
+      setSucess(true);
     }
-
   }, [resetSuccess]);
 
   useEffect(() => {
     if (resetSuccess == false) {
-      setTitle("Password can't be reset")
-      setDanger(true)
-      setSucess(false)
-      setSmShow(true)
+      setTitle("Password can't be reset");
+      setDanger(true);
+      setSucess(false);
+      setSmShow(true);
     }
   }, [resetSuccess]);
 
   function closemodal() {
-    setSmShow(false)
+    setSmShow(false);
     window.location.reload();
-
   }
 
   useEffect(() => {
     if (successActivation) {
-      setTitle("Activation code generated successfully")
-      setDanger(false)
-      setSucess(true)
-      setSmShow(true)
+      setTitle("Activation code generated successfully");
+      setDanger(false);
+      setSucess(true);
+      setSmShow(true);
       return;
     }
   }, [successActivation]);
 
   useEffect(() => {
-    if (successActivation==false) {
-      setTitle("Activation code could not be generated ")
-      setDanger(true)
-      setSucess(false)
-      setSmShow(true)
+    if (successActivation == false) {
+      setTitle("Activation code could not be generated ");
+      setDanger(true);
+      setSucess(false);
+      setSmShow(true);
       return;
     }
   }, [successActivation]);
 
   const EditAgent = (details) => {
     showEditAgentModal(true);
-    setAgentDetails(details)
+    setAgentDetails(details);
   };
   const closeAgentModal = () => {
     showEditAgentModal(false);
     window.location.reload();
-
   };
 
   function ActivatateCode(agentId) {
     // setActivation(null);
     ActivatateCodes(agentId);
   }
-
 
   return (
     <DashboardTemplate>
@@ -168,10 +165,10 @@ const Profile = (props) => {
         title={title}
         showCancelButton
         onConfirm={() => {
-          closemodal(false)
+          closemodal(false);
         }}
         onCancel={() => {
-          closemodal(false)
+          closemodal(false);
         }}
         onEscapeKey={() => closemodal()}
         onOutsideClick={() => closemodal()}
@@ -191,34 +188,36 @@ const Profile = (props) => {
         </div>
         <div className="agent-transact-header">
           <div>Details of Agents on mCashPoint</div>
-
         </div>
         <NavLink to="/agents">
           <button className="butn btns">
             <AiOutlineArrowLeft /> Back
-            </button>
+          </button>
         </NavLink>
 
         <div className="profile-wrapper">
           <p className="header">Agent Profile</p>
           <hr />
-          <div className="edit"><FiEdit2 /></div>
+
           <div className="biodata">
             <div className="address">
               <div className="profile-image">
+                <div className="edit">
+                  <FiEdit2 />
+                </div>
                 <img src={image}></img>
               </div>
               <div className="info">
-                <h6>{state.row ? state.row.agent.user.fullName : ''}</h6>
+                <h6>{state.row ? state.row.agent.user.fullName : ""}</h6>
                 <label>
                   {" "}
                   <RiSuitcaseLine />
-                  {state.row ? state.row.BusinessName : ''}
+                  {state.row ? state.row.BusinessName : ""}
                 </label>
                 <label>
                   {" "}
                   <HiOutlineLocationMarker />
-                  {state.row.agent ? state.row.agent.businessAddress : ''}
+                  {state.row.agent ? state.row.agent.businessAddress : ""}
                 </label>
               </div>
             </div>
@@ -226,40 +225,76 @@ const Profile = (props) => {
               <div className="email">
                 <label>Email</label>
                 <p>
-                  <b>{state.row ? state.row.agent.user.email : ''}</b>
+                  <b>{state.row ? state.row.agent.user.email : ""}</b>
                 </p>
               </div>
               <div className="gender">
                 <label>Gender</label>
-                <p>{state.row ? state.row.agent.gender : ''}</p>
+                <p>{state.row ? state.row.agent.gender : ""}</p>
               </div>
             </div>
             <div className="bank">
               <div className="bank-name">
                 <label>Bank</label>
-                <p>{state.row ? state.row.agent.bank.name : ''}</p>
+                <p>{state.row ? state.row.agent.bank.name : ""}</p>
               </div>
               <div className="bank-acct">
                 <label>Account Information</label>
-                <p>{state.row ? state.row.agent.accountNumber : ''}, {state.row ? state.row.agent.accountName : ''}</p>
+                <p>
+                  {state.row ? state.row.agent.accountNumber : ""},{" "}
+                  {state.row ? state.row.agent.accountName : ""}
+                </p>
               </div>
             </div>
             <div className="btn-group">
               {console.log(singleAgent)}
-              {singleAgent && singleAgent.enabled == true ?
-                <button onClick={() => DeActivateAgent(state.row.agent.user.id, singleAgent.enabled)} className="btn1 btns ">DEACTIVATE</button> :
-                <button onClick={() => ActivateAgent(state.row.agent.user.id, singleAgent.enabled)} className="btn3 btns">ACTIVATE</button>
-              }
+              {singleAgent && singleAgent.enabled == true ? (
+                <button
+                  onClick={() =>
+                    DeActivateAgent(
+                      state.row.agent.user.id,
+                      singleAgent.enabled
+                    )
+                  }
+                  className="btn1 btns "
+                >
+                  DEACTIVATE
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    ActivateAgent(state.row.agent.user.id, singleAgent.enabled)
+                  }
+                  className="btn3 btns"
+                >
+                  ACTIVATE
+                </button>
+              )}
 
-              <button className="btn2 btns" onClick={() => EditAgent(agents[0])} >Edit Agent</button>
+              <button
+                className="btn2 btns"
+                onClick={() => EditAgent(agents[0])}
+              >
+                Edit Agent
+              </button>
 
-              <button className="btn2 btns" onClick={() => ResetAgentPassword(state.row.agent.user.id)} >RESET PASSWORD</button>
-              {state.row?state.row.agent.activationCode:"" }
-              {activationcodenumber == null ?
-              <button onClick={() => ActivatateCode(state.row.AgentID)} className="btn3 btns">GENERATE ACTIVATION CODE</button>
-              : <button className="btn3 btns">{activationcodenumber}</button>} 
-
-
+              <button
+                className="btn2 btns"
+                onClick={() => ResetAgentPassword(state.row.agent.user.id)}
+              >
+                RESET PASSWORD
+              </button>
+              {state.row ? state.row.agent.activationCode : ""}
+              {activationcodenumber == null ? (
+                <button
+                  onClick={() => ActivatateCode(state.row.AgentID)}
+                  className="btn3 btns"
+                >
+                  GENERATE ACTIVATION CODE
+                </button>
+              ) : (
+                <button className="btn3 btns">{activationcodenumber}</button>
+              )}
             </div>
           </div>
         </div>
@@ -274,7 +309,6 @@ const Profile = (props) => {
   );
 };
 
-
 const mapStateToProps = (state) => (
   console.log(state),
   {
@@ -286,8 +320,6 @@ const mapStateToProps = (state) => (
     resetSuccess: state.agents.resetSuccess,
     agents: state.agents.agents,
     successActivation: state.agents.successActivation,
-
-
   }
 );
 
@@ -295,5 +327,5 @@ export default connect(mapStateToProps, {
   ActivateDeactivateUser,
   ResetPassword,
   FetchSingleAgent,
-  ActivatateCode
+  ActivatateCode,
 })(Profile);
