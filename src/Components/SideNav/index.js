@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./style.css";
 import { NavLink } from "react-router-dom";
 import Logo from "../../Assets/img/mCP-logo 1.svg";
+import MobileLogo from "../../Assets/img/mobile-logo.png";
 import Dashboard from "../../Assets/img/dashboard.png";
 import Transaction from "../../Assets/img/transaction.png";
 import Audit from "../../Assets/img/audit.png";
@@ -42,7 +43,8 @@ class SideNav extends Component {
         <div className="navbarwrapper">
           <div className="navbarinnerwrapper">
             <div className="logo">
-              <img src={Logo} alt="paycenterlogo" />
+              <img src={Logo} alt="m-cash logo" className="desktop-logo" />
+              <img src={MobileLogo} alt="m-cash logo" className="mobile-logo" />
             </div>
             <div className="sidenavlist">
               <ul className="list-group">

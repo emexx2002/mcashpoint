@@ -74,7 +74,9 @@ a {
   background: #ffffff;
   width: 100%;
 }
-
+.mobile-logo {
+  display: none;
+}
 @media (max-width: 600px) {
   .navbarwrapper {
     width: 50px;
@@ -88,6 +90,17 @@ a {
   }
 
   .list-group-item-text {
+    display: none;
+  }
+  .logo {
+    padding: 0;
+  }
+  .mobile-logo {
+    display: flex;
+    align-self: center;
+    width: 100%;
+  }
+  .desktop-logo {
     display: none;
   }
 }
