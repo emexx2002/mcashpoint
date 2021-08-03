@@ -152,7 +152,6 @@ div.custom-switch > label {
     height: 50%;
   }
   .main-tabs {
-    margin-right: 1rem;
     margin-bottom: 1rem;
     padding: 0;
     height: auto;
@@ -162,5 +161,30 @@ div.custom-switch > label {
   }
   .profile-submit-btn {
     width: 100%;
+  }
+  .role {
+    width: 100%;
+  }
+  .Role-overview-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 1rem auto;
+    justify-content: center;
+  }
+  .role-box {
+    flex-wrap: wrap;
+    line-height: 20px;
+    margin: 0;
+    height: 120px;
+    width: 100%;
+    padding: 5px;
+  }
+  .col-sm-6 {
+    margin: 0 1rem;
+    padding: 0;
+  }
+  .tab-content {
+    margin-right: 1rem;
   }
 }
