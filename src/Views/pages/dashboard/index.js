@@ -21,14 +21,10 @@ const DashBoard = (props) => {
     transactionTypeBreakdown,
     numberOfAgents,
     loading,
-    role
+    role,
   } = props;
-  const {
-    successful_value,
-    failed_volume,
-    successful_volume,
-    failed_value,
-  } = dashboardBreakdown;
+  const { successful_value, failed_volume, successful_volume, failed_value } =
+    dashboardBreakdown;
   const { totalTransactionValue, totalTransactionVolume } = dashboardDetails;
 
   useEffect(() => {
@@ -60,8 +56,8 @@ const DashBoard = (props) => {
     }
   );
   const token = JSON.parse(localStorage.getItem("data"));
-const {name} = token.user.roleGroup
-console.log(name)
+  const { name } = token.user.roleGroup;
+  console.log(name);
   return (
     <DashboardTemplate>
       <div className="dashboard-wrapper">
@@ -82,15 +78,19 @@ console.log(name)
 
         <div className="graphs-wrapper">
           <div className="Dashboard-overview-wrapper">
-          {name == "ADMIN" || name == "Senior Management" || name =="Product" ?
-            <div className="flex-box ">
-              <div className="person-background"></div>
-              <div>
-                <div>{numberOfAgents ? numberOfAgents : "00"}</div>
-                <div>Agents </div>
+            {name == "ADMIN" ||
+            name == "Senior Management" ||
+            name == "Product" ? (
+              <div className="flex-box ">
+                <div className="person-background"></div>
+                <div>
+                  <div>{numberOfAgents ? numberOfAgents : "00"}</div>
+                  <div>Agents </div>
+                </div>
               </div>
-            </div>
-            :''}
+            ) : (
+              ""
+            )}
             {/* <div className="flex-box">
               <div className="mark-background"></div>
               <div>
@@ -127,8 +127,12 @@ console.log(name)
               <div className="transaction-details a">
                 <p>Successful</p>
                 <h6 className="success-text">
-                  {successful_value ? successful_value.toLocaleString() : "#0000"}(
-                  {successful_volume ? successful_volume.toLocaleString() : "0"})
+                  {successful_value
+                    ? successful_value.toLocaleString()
+                    : "#0000"}
+                  (
+                  {successful_volume ? successful_volume.toLocaleString() : "0"}
+                  )
                 </h6>
               </div>
               <div className="transaction-details">
@@ -195,17 +199,23 @@ console.log(name)
             <div className="barchart-bg">
               <Barchart />
             </div>
-            {name == "ADMIN" || name == "Senior Management "  || name =="Product" ?
-            <div className="daily-per-agent">
-            <div id="daily-header">Daily Top Performing Agents</div>
+            {name == "ADMIN" ||
+            name == "Senior Management " ||
+            name == "Product" ? (
+              <div className="daily-per-agent">
+                <div id="daily-header">Daily Top Performing Agents</div>
 
-            {mostPerformingAgent.slice(0, 5).map((PerformingAgent, index) => (
-              <div>
-                <li>{PerformingAgent.businessName}</li>
+                {mostPerformingAgent
+                  .slice(0, 5)
+                  .map((PerformingAgent, index) => (
+                    <div>
+                      <li>{PerformingAgent.businessName}</li>
+                    </div>
+                  ))}
               </div>
-            ))}
-          </div>:''}
-            
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
@@ -225,7 +235,7 @@ const mapStateToProps = (state) => (
     numberOfAgents: state.dashboard.numberOfAgents,
     loading: state.dashboard.loading,
     error: state.dashboard.error,
-    role: state.users.role
+    role: state.users.role,
   }
 );
 
