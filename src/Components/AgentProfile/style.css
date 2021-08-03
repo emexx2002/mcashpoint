@@ -2,8 +2,7 @@
   background: #ffffff;
   width: 65%;
   height: 490px;
-  /* padding: 30px; */
-  /* margin-top: 20px; */
+  margin-top: 20px;
 }
 .butn {
   background: #00249c;
@@ -17,10 +16,11 @@
   font-size: 16px;
   letter-spacing: 0.2px;
   color: #00249c;
-  /* margin: 1rem 0 1rem 2rem; */
+  margin: 10px 0 0 10px;
 }
 .biodata {
   margin: 2rem 2rem 0 2rem;
+  /* background: cornflowerblue; */
 }
 .info {
   margin: 3rem;
@@ -116,4 +116,65 @@ label {
   margin: 0;
   cursor: pointer;
   width: 50%;
+}
+.profile-image {
+  position: relative;
+}
+.edit {
+  position: absolute;
+  top: 150px;
+  left: 108px;
+}
+@media screen and (max-width: 600px) {
+  .profile-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    height: 80%;
+  }
+  .biodata {
+    margin: 0.5rem 0.5rem 0 0.5rem;
+    /* background: cornflowerblue; */
+  }
+  .address {
+    flex-direction: column;
+  }
+  .profile-image {
+    margin: 10px auto;
+  }
+  .info {
+    margin: 1rem auto;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .emailgender {
+    flex-direction: column;
+    width: 100%;
+    background: none;
+  }
+  .email {
+    background: none;
+    width: 100%;
+  }
+  .gender {
+    margin: 0;
+    background: none;
+    width: 100%;
+  }
+  .bank {
+    flex-direction: column;
+    background: none;
+    width: 100%;
+  }
+  .bank-name {
+    background: none;
+    width: 100%;
+  }
+  .btn-group {
+    flex-direction: column;
+  }
+  .bank-acct {
+    background: none;
+    width: 100%;
+    margin: 0;
+  }
 }

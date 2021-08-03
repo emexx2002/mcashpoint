@@ -21,7 +21,8 @@ const Settings = () => {
 
   const { name } = token.user.roleGroup;
 
-  const isVisibleToUser = (roleCode, user) => user.roleGroup.role.some(role => role.roleCode === roleCode)
+  const isVisibleToUser = (roleCode, user) =>
+    user.roleGroup.role.some((role) => role.roleCode === roleCode);
 
   return (
     <DashboardTemplate>
@@ -34,7 +35,9 @@ const Settings = () => {
             <Row>
               <Col sm={3} className="side-tab">
                 <Nav variant="pills" className="flex-column">
-                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
+                  {name == "ADMIN" ||
+                  name == "Senior Management " ||
+                  name == "Product" ? (
                     <Nav.Item>
                       <Nav.Link eventKey="first">
                         <div className="tab-navs">
@@ -65,7 +68,7 @@ const Settings = () => {
                       </div>
                     </Nav.Link>
                   </Nav.Item>
-                  {isVisibleToUser('ROLE_CREATE_ROLEGROUP', token.user) &&
+                  {isVisibleToUser("ROLE_CREATE_ROLEGROUP", token.user) && (
                     <Nav.Item>
                       <Nav.Link eventKey="third">
                         <div className="tab-navs">
@@ -79,8 +82,10 @@ const Settings = () => {
                         </div>
                       </Nav.Link>
                     </Nav.Item>
-                  }
-                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
+                  )}
+                  {name == "ADMIN" ||
+                  name == "Senior Management " ||
+                  name == "Product" ? (
                     <Nav.Item>
                       <Nav.Link eventKey="fourth">
                         <div className="tab-navs">
@@ -101,7 +106,9 @@ const Settings = () => {
               </Col>
               <Col sm={6}>
                 <Tab.Content>
-                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
+                  {name == "ADMIN" ||
+                  name == "Senior Management " ||
+                  name == "Product" ? (
                     <Tab.Pane eventKey="first">
                       <ProfileSettings></ProfileSettings>
                     </Tab.Pane>
@@ -111,11 +118,14 @@ const Settings = () => {
                   <Tab.Pane eventKey="second">
                     <ChangePassword></ChangePassword>
                   </Tab.Pane>
-                  {isVisibleToUser('ROLE_CREATE_ROLEGROUP', token.user) &&
+                  {isVisibleToUser("ROLE_CREATE_ROLEGROUP", token.user) && (
                     <Tab.Pane eventKey="third">
                       <RoleGroups></RoleGroups>
-                    </Tab.Pane>}
-                  {name == "ADMIN" || name == "Senior Management " || name == "Product" ? (
+                    </Tab.Pane>
+                  )}
+                  {name == "ADMIN" ||
+                  name == "Senior Management " ||
+                  name == "Product" ? (
                     <Tab.Pane eventKey="fourth">
                       <NotificationSettings></NotificationSettings>
                     </Tab.Pane>

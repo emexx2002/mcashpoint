@@ -12,6 +12,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  overflow-x: hidden;
   padding-top: 20px;
 }
 
@@ -73,14 +74,14 @@ a {
   background: #ffffff;
   width: 100%;
 }
-
+.mobile-logo {
+  display: none;
+}
 @media (max-width: 600px) {
   .navbarwrapper {
     width: 50px;
   }
-  .logo {
-    width: 10%;
-  }
+
   .list-group-item {
     padding: 5px 0px 5px 10px !important;
   }
@@ -89,6 +90,17 @@ a {
   }
 
   .list-group-item-text {
+    display: none;
+  }
+  .logo {
+    padding: 0;
+  }
+  .mobile-logo {
+    display: flex;
+    align-self: center;
+    width: 100%;
+  }
+  .desktop-logo {
     display: none;
   }
 }
