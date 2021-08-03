@@ -115,4 +115,19 @@
     margin: 0.5rem !important;
     width: 100%;
   }
+  .addbtn {
+    width: 100%;
+    margin: 1rem 0;
+  }
+  .btn-success {
+    width: 100%;
+  }
+  .note {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+  .notebtn {
+    margin: 1rem 0;
+    width: 100%;
+  }
 }
