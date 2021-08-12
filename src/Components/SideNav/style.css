@@ -77,13 +77,40 @@ a {
 .mobile-logo {
   display: none;
 }
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .navbarwrapper {
     width: 50px;
   }
 
   .list-group-item {
     padding: 5px 0px 5px 10px !important;
+  }
+  .sidenavlist img {
+    margin-right: 50px;
+  }
+
+  .list-group-item-text {
+    display: none;
+  }
+  .logo {
+    padding: 0;
+  }
+  .mobile-logo {
+    display: flex;
+    align-self: center;
+    width: 100%;
+  }
+  .desktop-logo {
+    display: none;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 992px) {
+  .navbarwrapper {
+    width: 50px;
+  }
+
+  .list-group-item {
+    padding: 10px 0px 10px 10px !important;
   }
   .sidenavlist img {
     margin-right: 50px;
