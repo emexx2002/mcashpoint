@@ -188,3 +188,32 @@ div.custom-switch > label {
     margin-right: 1rem;
   }
 }
+@media only screen and (min-device-width: 768px) and (max-device-width: 992px) {
+  .tabs-wrap {
+    width: 100%;
+  }
+  .side-tab {
+    /* margin: 0 2rem 1rem 1rem;
+    height: 50%; */
+    width: 50%;
+  }
+  .col-sm-6 {
+    margin: 0 1rem;
+    padding: 0;
+  }
+  .col-sm-3 {
+    max-width: 30% !important;
+  }
+  .main-tabs {
+    padding: 30px 50px;
+    height: 80vh;
+  }
+  .role-box {
+    flex-wrap: wrap;
+    line-height: 20px;
+
+    height: 120px;
+    width: 100%;
+    padding: 5px;
+  }
+}

@@ -329,7 +329,7 @@
   color: #52575c;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
   .header-title h3 {
     font-weight: 600;
     font-size: 18px;
@@ -394,5 +394,54 @@
     margin-left: 0px;
     height: fit-content;
     width: 100%;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 992px) {
+  .dashboard-wrapper {
+    padding: 0 1rem;
+  }
+  .graphs-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-right: 1rem;
+  }
+  .Dashboard-overview-wrapper,
+  .line-and-details,
+  .bar-graph-wrapper {
+    display: flex;
+  }
+  .Dashboard-overview-wrapper {
+    margin-right: 1rem;
+  }
+  .line-and-details {
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  .chart-bg {
+    width: 70%;
+    height: fit-content;
+  }
+  .transaction-graph-inner {
+    width: 30%;
+    height: 288px;
+  }
+  .dougnut-wrapper {
+    height: fit-content;
+    width: 300px;
+    /* margin-bottom: 1rem; */
+  }
+  .bar-graph-wrapper {
+    flex-wrap: wrap;
+  }
+  .barchart-bg {
+    width: 100%;
+    padding: 0 auto;
+    margin-right: 1rem;
+  }
+  .daily-per-agent {
+    margin-top: 2rem;
+    margin-left: 0;
+    width: 300px;
   }
 }

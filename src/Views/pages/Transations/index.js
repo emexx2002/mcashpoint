@@ -14,7 +14,13 @@ import {
 import Loader from "../../../Components/secondLoader";
 import ExportModal from "../../../Components/Exports";
 import FilterModal from "../../../Components/Filter";
-import { Nav, NavItem, NavLink, DropdownButton, Dropdown } from "react-bootstrap";
+import {
+  Nav,
+  NavItem,
+  NavLink,
+  DropdownButton,
+  Dropdown,
+} from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import ViewReceipts from "../../../Components/viewReceipt";
 
@@ -33,7 +39,7 @@ const Transactions = (props) => {
     transactionTotal,
     successTransaction,
     transactionsType,
-    transactionStatus
+    transactionStatus,
   } = props;
   const [alltransactions, setTransactions] = useState([FetchTransactions]);
   const [totalSize, setTransactionsTotal] = useState(0);
@@ -43,7 +49,7 @@ const Transactions = (props) => {
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
-  const [viewReceipt, setViewReceipt] = useState('');
+  const [viewReceipt, setViewReceipt] = useState("");
   const [receiptview, showReceiptView] = useState(false);
 
   const initialState = {
@@ -83,7 +89,7 @@ const Transactions = (props) => {
     setNextPage(0);
   };
   const ViewReceipt = (details) => {
-    console.log(details)
+    console.log(details);
     showReceiptView(true);
     setViewReceipt(details);
   };
@@ -95,12 +101,13 @@ const Transactions = (props) => {
   useEffect(() => {
     FetchTransactions(nextPage, length, filterValues);
     FetchTransactionType();
-    FetchTransactionStatuses()
+    FetchTransactionStatuses();
   }, [nextPage, length, filterValues]);
 
-  const handleSelect=(e)=>{
-    console.log(e)
-    setLength(e)  }
+  const handleSelect = (e) => {
+    console.log(e);
+    setLength(e);
+  };
 
   const title = "Transactions page";
   const headers = [
@@ -125,7 +132,9 @@ const Transactions = (props) => {
     transact.agent.businessName,
     transact.transactionId,
     transact.transactionType.type,
-    transact.agent.bankTerminal === null ? '' : transact.agent.bankTerminal.terminalId,
+    transact.agent.bankTerminal === null
+      ? ""
+      : transact.agent.bankTerminal.terminalId,
     transact.amount,
     transact.statusCode,
     transact.agentFee,
@@ -327,7 +336,7 @@ const Transactions = (props) => {
         </div>
         <div className="agent-transact-header">
           <div>An overview of all transactions on mCashPoint</div>
-          <div>
+          <div className="actions">
             <span
             // onclick={()=> window.print()}
             >
@@ -403,11 +412,16 @@ const Transactions = (props) => {
           <Dropdown.Item eventKey="30">30</Dropdown.Item>
           <Dropdown.Item eventKey="50">50</Dropdown.Item>
           <Dropdown.Item eventKey="100">100</Dropdown.Item>
-          <Dropdown.Item eventKey={transactionTotal ? String(transactionTotal):'0' }>All</Dropdown.Item>
-
+          <Dropdown.Item
+            eventKey={transactionTotal ? String(transactionTotal) : "0"}
+          >
+            All
+          </Dropdown.Item>
         </DropdownButton>
-{        console.log(typeof(String(transactionTotal)))
-}        <p>Showing 1 to {length} of {transactionTotal}</p>
+        {console.log(typeof String(transactionTotal))}{" "}
+        <p>
+          Showing 1 to {length} of {transactionTotal}
+        </p>
         <div className="pagination">
           <Pagination
             activePage={activePage}
@@ -437,5 +451,5 @@ const mapStateToProps = (state) => (
 export default connect(mapStateToProps, {
   FetchTransaction,
   FetchTransactionTypes,
-  FetchTransactionStatus
+  FetchTransactionStatus,
 })(Transactions);
