@@ -69,8 +69,9 @@ a {
   margin-right: 25px;
 }
 .footer {
-  position: absolute;
-  bottom: 0;
+  /* position: absolute; */
+  /* bottom: 0; */
+  margin-top:50px ;
   background: #ffffff;
   width: 100%;
 }

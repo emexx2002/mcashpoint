@@ -30,7 +30,7 @@ const Agents = (props) => {
     FetchAgent: FetchAgents,
     UnAssignTerminal: UnAssignTerminals,
     ActivatateCode: ActivatateCodes,
-    FetchTransactionSingle:FetchTransactionSingles,
+    FetchTransactionSingle: FetchTransactionSingles,
     bankTerminal,
     agents,
     loading,
@@ -77,7 +77,7 @@ const Agents = (props) => {
 
   function _handleFilterValue(event) {
     event.preventDefault();
-        setFilterValues({
+    setFilterValues({
       ...filterValues,
       [event.target.name]: event.target.value,
     });
@@ -95,11 +95,11 @@ const Agents = (props) => {
   }, [successActivation, activationCode]);
 
   useEffect(() => {
-    if (unassignSuccess ) {
+    if (unassignSuccess) {
       // FetchAgents(nextPage, length, filterValues);
       reload()
     }
-  }, [unassignSuccess,success]);
+  }, [unassignSuccess, success]);
 
   function ActivatateCode(agentId) {
     // setActivation(null);
@@ -109,7 +109,7 @@ const Agents = (props) => {
   function ViewTransaction(agentId) {
     // setActivation(null);
     localStorage.setItem('agentId', agentId);
-    window.location ="/agenttransactions"
+    window.location = "/agenttransactions"
   }
   const AssignTerminals = (agentId, businessName) => {
     setBusinessName(businessName);
@@ -164,7 +164,7 @@ const Agents = (props) => {
 
   const products = agents.map((agent, index) => {
     return {
-      agent: agent ? agent :'',
+      agent: agent ? agent : '',
       id: index,
       AgentID: agent.id === null ? "" : agent.id,
       BusinessName: agent.businessName === null ? "" : agent.businessName,
@@ -173,6 +173,7 @@ const Agents = (props) => {
       Action: '',
       TerminalID:
         agent.bankTerminal === null ? "" : agent.bankTerminal.terminalId,
+      AgentManager: agent.agentManager === null ? "" : agent.agentManager.user.fullName,
       DateCreated: agent.createdAt === null ? "" : agent.createdAt,
     };
   });
@@ -184,10 +185,10 @@ const Agents = (props) => {
       formatter: (cellContent, row) => {
         return (
           <NavLink
-          to={{
-            pathname: `/agentprofile`,
-            state: {row}
-       }}
+            to={{
+              pathname: `/agentprofile`,
+              state: { row }
+            }}
             className=" editadmin"
           >
             {row.agent.id}
@@ -217,7 +218,7 @@ const Agents = (props) => {
         console.log(row.agent.bankTerminal);
         return (
           <h5>
-            
+
             {row.agent.bankTerminal === null ? (
               <button
                 type="button"
@@ -276,6 +277,8 @@ const Agents = (props) => {
     },
     // { dataField: 'AgentManager', text: 'Agent Manager'},
     { dataField: "DateCreated", text: "Date Created" },
+    { dataField: "AgentManager", text: "Agent Manager" },
+
   ];
   const defaultSorted = [
     {
@@ -350,7 +353,7 @@ const Agents = (props) => {
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
       />
-      <ExportModal show={ExportModalActive} close={closeExport} filename='Agent file' title={title} headers={headers} item={item} products={products} columns={columns}/>
+      <ExportModal show={ExportModalActive} close={closeExport} filename='Agent file' title={title} headers={headers} item={item} products={products} columns={columns} />
     </div>
   );
 };

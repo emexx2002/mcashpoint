@@ -109,6 +109,8 @@ console.log(transactionsType)
       // PreBalance:agent.purseBalance === 'undefined' ? '': agent.purseBalance,
       // PostBalance:agent.purseBalance === 'undefined' ? '':agent.purseBalance,
       Description: agent.reason === "undefined" ? "" : agent.reason,
+      DateCreated: agent.createdAt === "undefined" ? "" : agent.createdAt,
+
     };
   });
 
@@ -130,7 +132,7 @@ console.log(transactionsType)
         return { width: "250px", textAlign: "center", padding: "10px" };
       },
     },
-    // { dataField: 'Description', text: 'Description'},
+    { dataField: "DateCreated", text: "Date Created" },
   ];
 
   const defaultSorted = [

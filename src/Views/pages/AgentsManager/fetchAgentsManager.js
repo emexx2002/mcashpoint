@@ -19,7 +19,7 @@ import "./style.css";
 const FetchAgentsManager = (props) => {
   const {
     FetchAgentManager: FetchAgentManagers,
-    agentmanager,
+    agentmanager,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     loading,
     showFilterModal,
     FilterModalActive,
@@ -117,6 +117,7 @@ const FetchAgentsManager = (props) => {
     // { dataField: 'id', text: 'Id'},
     { dataField: "AgentID", text: "Agent ID" ,
     formatter: (cellContent, row) => {
+      console.log(row.Agent)
       return (
         <NavLink
         to={{
