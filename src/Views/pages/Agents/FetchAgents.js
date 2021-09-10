@@ -173,7 +173,7 @@ const Agents = (props) => {
       Action: '',
       TerminalID:
         agent.bankTerminal === null ? "" : agent.bankTerminal.terminalId,
-      AgentManager: agent.agentManager === null ? "" : agent.agentManager.user.fullName,
+      AgentManager: agent.agentManager === null || typeof agent.agentManager !== "object" ? "" : agent.agentManager.user.fullName,
       DateCreated: agent.createdAt === null ? "" : agent.createdAt,
     };
   });
