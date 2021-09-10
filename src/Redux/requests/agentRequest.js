@@ -99,7 +99,7 @@ export const FetchambassadorAgent = (
     const token = JSON.parse(localStorage.getItem("data"));
     console.log(`bearer ${token.access_token}`);
     axios
-        .get(`${AgentConstant.FETCH_AGENT_URL}startPage=${page}&length=${length}&startDate=${startDate}&endDate=${endDate}&username=${username}&businessName=${businessName}&phone=${phone}&agentId=${agentIde}
+        .get(`${AgentConstant.FETCH_AGENT_URL}startPage=${page}&length=${length}&startDate=${startDate}&endDate=${endDate}&username=${username}&businessName=${businessName}&phone=${phone}&agentManagerId=${agentIde}
         `, {
             headers: {
                 Authorization: `bearer ${token.access_token}`,

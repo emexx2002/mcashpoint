@@ -164,7 +164,7 @@ const FetchAgentsManager = (props) => {
           <h5>
             <button
               type="button"
-              onClick={() => ViewAgent(row.AgentID)}
+              onClick={() => ViewAgent(row.Agent.id)}
               className="viewTransac"
             >
               Agents
