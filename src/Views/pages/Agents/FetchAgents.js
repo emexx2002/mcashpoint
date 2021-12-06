@@ -5,11 +5,13 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import AssignTerminal from "../../../Components/Assign Terminal";
+import HardwareModal from "../../../Components/hardware";
+
 import Loader from "../../../Components/secondLoader";
 import { Modal } from "react-bootstrap";
 import ExportModal from "../../../Components/Exports/index";
 import FilterModal from "../../../Components/Filter/index";
-
+import { FetchHardWare } from "../../../Redux/requests/hardwareRequest";
 import {
   FetchAgent,
   ActivatateCode,
@@ -17,9 +19,7 @@ import {
   UnAssignTerminal,
 } from "../../../Redux/requests/agentRequest";
 
-import {
-  FetchTransactionSingle
-} from "../../../Redux/requests/transactionRequest";
+import { FetchTransactionSingle } from "../../../Redux/requests/transactionRequest";
 import { connect } from "react-redux";
 import "./style.css";
 import Pagination from "react-js-pagination";
@@ -31,6 +31,7 @@ const Agents = (props) => {
     UnAssignTerminal: UnAssignTerminals,
     ActivatateCode: ActivatateCodes,
     FetchTransactionSingle: FetchTransactionSingles,
+    FetchHardWare: FetchHardWares,
     bankTerminal,
     agents,
     loading,
@@ -45,11 +46,11 @@ const Agents = (props) => {
     ExportModalActive,
     initialState,
     filterValues,
-    setFilterValues,
-    history
+    setFilterValues
   } = props;
   const [businessName, setBusinessName] = useState("");
-
+  const [memberID, setmemberID] = useState("");
+  const [showhardware, setshowhardware] = useState(false);
   const [smShow, setSmShow] = useState(false);
   const [activation, setActivation] = useState(null);
   const [terminalID, showTerminalID] = useState(false);
@@ -57,7 +58,26 @@ const Agents = (props) => {
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
+  const [type, SetType] = useState('assigndevice');
 
+
+  const closehardware = () => {
+    setshowhardware(false);
+    setmemberID('')
+    window.location.reload();
+  };
+
+  function AssignDevice(agentId) {
+    SetType('assigndevice')
+    setmemberID(agentId)
+    setshowhardware(true);
+  }
+
+  function UnAssignDevice(agentId) {
+    SetType('unassigndevice')
+    setmemberID(agentId)
+    setshowhardware(true);
+  }
   const reload = () => {
     FetchAgents(nextPage, length, filterValues);
     FetchBankTerminals();
@@ -68,6 +88,11 @@ const Agents = (props) => {
   const closeFilter = () => {
     showFilterModal(false);
   };
+
+  useEffect(() => {
+    FetchHardWares();
+    // console.log(hardwares)
+  }, []);
 
   useEffect(() => {
     setSmShow(false);
@@ -97,7 +122,7 @@ const Agents = (props) => {
   useEffect(() => {
     if (unassignSuccess) {
       // FetchAgents(nextPage, length, filterValues);
-      reload()
+      reload();
     }
   }, [unassignSuccess, success]);
 
@@ -108,9 +133,10 @@ const Agents = (props) => {
 
   function ViewTransaction(agentId) {
     // setActivation(null);
-    localStorage.setItem('agentId', agentId);
-    window.location = "/agenttransactions"
+    localStorage.setItem("agentId", agentId);
+    window.location = "/agenttransactions";
   }
+
   const AssignTerminals = (agentId, businessName) => {
     setBusinessName(businessName);
 
@@ -164,16 +190,19 @@ const Agents = (props) => {
 
   const products = agents.map((agent, index) => {
     return {
-      agent: agent ? agent : '',
+      agent: agent ? agent : "",
       id: index,
       AgentID: agent.id === null ? "" : agent.id,
       BusinessName: agent.businessName === null ? "" : agent.businessName,
       UserName: agent.user.username === null ? "" : agent.user.username,
       PhoneNumber: agent.businessPhone === null ? "" : agent.businessPhone,
-      Action: '',
+      Action: "",
       TerminalID:
         agent.bankTerminal === null ? "" : agent.bankTerminal.terminalId,
-      AgentManager: agent.agentManager === null || typeof agent.agentManager !== "object" ? "" : agent.agentManager.user.fullName,
+      AgentManager:
+        agent.agentManager === null || typeof agent.agentManager !== "object"
+          ? ""
+          : agent.agentManager.user.fullName,
       DateCreated: agent.createdAt === null ? "" : agent.createdAt,
     };
   });
@@ -181,19 +210,21 @@ const Agents = (props) => {
   const columns = [
     // { dataField: 'id', text: 'Id'},
     {
-      dataField: "AgentID", text: "Agent ID",
+      dataField: "AgentID",
+      text: "Agent ID",
       formatter: (cellContent, row) => {
         return (
           <NavLink
             to={{
               pathname: `/agentprofile`,
-              state: { row }
+              state: { row },
             }}
             className=" editadmin"
           >
             {row.agent.id}
-          </NavLink>)
-      }
+          </NavLink>
+        );
+      },
     },
     {
       dataField: "BusinessName",
@@ -218,7 +249,6 @@ const Agents = (props) => {
         console.log(row.agent.bankTerminal);
         return (
           <h5>
-
             {row.agent.bankTerminal === null ? (
               <button
                 type="button"
@@ -278,7 +308,40 @@ const Agents = (props) => {
     // { dataField: 'AgentManager', text: 'Agent Manager'},
     { dataField: "DateCreated", text: "Date Created" },
     { dataField: "AgentManager", text: "Agent Manager" },
-
+    {
+      dataField: "AssignDevice",
+      text: "Assign Device",
+      formatter: (cellContent, row) => {
+        return (
+          <h5>
+            <button
+              type="button"
+              onClick={() => AssignDevice(row.agent.user.memberId)}
+              className=" generate-code"
+            >
+              Assign Device
+            </button>
+          </h5>
+        );
+      },
+    },
+    {
+      dataField: "UnAssignDevice",
+      text: "Unassign Device",
+      formatter: (cellContent, row) => {
+        return (
+          <h5>
+            <button
+              type="button"
+              onClick={() => UnAssignDevice(row.agent.user.memberId)}
+              className=" unassign-terminal"
+            >
+              UAssign Device
+            </button>
+          </h5>
+        );
+      },
+    },
   ];
   const defaultSorted = [
     {
@@ -289,6 +352,7 @@ const Agents = (props) => {
 
   return (
     <div className="table-wrapper">
+      <HardwareModal show={showhardware} close={closehardware} memberId={memberID}  type={type}/>
       <Modal
         size="sm"
         show={smShow}
@@ -353,13 +417,23 @@ const Agents = (props) => {
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
       />
-      <ExportModal show={ExportModalActive} close={closeExport} filename='Agent file' title={title} headers={headers} item={item} products={products} columns={columns} />
+      <ExportModal
+        show={ExportModalActive}
+        close={closeExport}
+        filename="Agent file"
+        title={title}
+        headers={headers}
+        item={item}
+        products={products}
+        columns={columns}
+      />
     </div>
   );
 };
 const mapStateToProps = (state) => (
   console.log(state),
   {
+    hardwares: state.hardwaredevice.hardwares,
     agents: state.agents.agents,
     activationCode: state.agents.activationCode,
     bankTerminal: state.agents.bankTerminal,
@@ -377,5 +451,6 @@ export default connect(mapStateToProps, {
   ActivatateCode,
   FetchBankTerminal,
   UnAssignTerminal,
-  FetchTransactionSingle
+  FetchTransactionSingle,
+  FetchHardWare,
 })(Agents);
