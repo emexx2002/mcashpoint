@@ -8,7 +8,7 @@ export const FetchHardWare = (memberId) => async (dispatch) => {
   try {
     dispatch(asyncActions(FETCH_HARDWARES).loading(true));
     const { data } = await axios.get(
-      `https://cors-anywhere.herokuapp.com/https://cashout.mcashpoint.com/hardware?memberId=${memberId}`,
+      `https://cashout.mcashpoint.com/hardware?memberId=${memberId}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export const ActivateHardWare =
     dispatch(asyncActions(ACTIVATE_HARDWARES).loading(true));
     try {
       const { data } = await axios.post(
-        `https://cors-anywhere.herokuapp.com/https://cashout.mcashpoint.com/hardware/assign`,
+        `https://cashout.mcashpoint.com/hardware/assign`,
         { memberId, serialNumber },
         {
           headers: {
@@ -59,7 +59,7 @@ export const ActivateHardWare =
     dispatch(asyncActions(DEACTIVATE_HARDWARES).loading(true));
     try {
       const { data } = await axios.post(
-        `https://cors-anywhere.herokuapp.com/https://cashout.mcashpoint.com/hardware/un-assign`,
+        `https://cashout.mcashpoint.com/hardware/un-assign`,
         { memberId, serialNumber },
         {
           headers: {

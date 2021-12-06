@@ -19,7 +19,7 @@ const HardWareModal = ({ close }) => {
 		setLoading(true);
 		axios
 			.post(
-				"https://cors-anywhere.herokuapp.com/https://cashout.mcashpoint.com/hardware/load",
+				"https://cashout.mcashpoint.com/hardware/load",
 				formData,
 				{
 					headers: {
