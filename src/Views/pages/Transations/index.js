@@ -6,6 +6,13 @@ import Upload from "../../../Assets/img/upload.png";
 import Filter from "../../../Assets/img/filter.png";
 import Print from "../../../Assets/img/printer.png";
 import DashboardTemplate from "../../template/dashboardtemplate";
+import "react-toastify/dist/ReactToastify.css";
+// import {
+//   ToastsContainer,
+//   ToastsStore,
+//   ToastsContainerPosition,
+// } from "react-toasts";
+import { ToastContainer, toast } from "react-toastify";
 import {
   FetchTransaction,
   FetchTransactionTypes,
@@ -66,6 +73,48 @@ const Transactions = (props) => {
     draw: "",
   };
   const [filterValues, setFilterValues] = useState(initialState);
+
+  const QueryTransaction = (transactId) => {
+    const token = JSON.parse(localStorage.getItem("data"));
+    const loadings = toast.loading("Please wait...");
+    console.log(transactId);
+    const apiUrl = `https://api.mcashpoint.com/api/v1/transfer/query?transactionId=${transactId}`;
+    fetch(apiUrl, {
+      headers: {
+        Authorization: `bearer ${token.access_token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.responseCode == "00") {
+          toast.update(loadings, {
+            render: "Transaction Query Successfully",
+            type: "success",
+            isLoading: false,
+             autoClose: 8000 
+          });
+        } else {
+          toast.update(loadings, {
+            render: data.responseMessage,
+            type: "error",
+            isLoading: false,
+            autoClose: 8000 
+
+          });
+
+          toast.error();
+        }
+      })
+      .catch((error) => {
+        toast.update(loadings, {
+          render: error.message,
+          type: "error",
+          isLoading: false,
+          autoClose: 8000 
+        });
+      });
+  };
 
   const _handleFilterValue = (event) => {
     console.log(event);
@@ -286,6 +335,30 @@ const Transactions = (props) => {
       },
     },
 
+    {
+      dataField: "QueryTrans",
+      text: "Query Tansaction",
+      formatter: (cellContent, row) => {
+        console.log("row", row);
+        return (
+          <h5>
+            {row.transact.transactionType.type == "Funds Transfer" ||
+            row.transact.transactionType.type == "Agent Transfer" ? (
+              <button
+                type="button"
+                onClick={() => QueryTransaction(row.TransactionID)}
+                className="viewTransac"
+              >
+                Query
+              </button>
+            ) : (
+              ""
+            )}
+          </h5>
+        );
+      },
+    },
+
     // { dataField: 'BeneficiaryDetails', text: 'Beneficiary Details'},
   ];
 
@@ -432,6 +505,7 @@ const Transactions = (props) => {
           />
         </div>
       </div>
+      <ToastContainer autoClose={8000}/>
     </DashboardTemplate>
   );
 };
