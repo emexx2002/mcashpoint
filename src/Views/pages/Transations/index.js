@@ -77,7 +77,6 @@ const Transactions = (props) => {
   const QueryTransaction = (transactId) => {
     const token = JSON.parse(localStorage.getItem("data"));
     const loadings = toast.loading("Please wait...");
-    console.log(transactId);
     const apiUrl = `https://api.mcashpoint.com/api/v1/transfer/query?transactionId=${transactId}`;
     fetch(apiUrl, {
       headers: {
@@ -88,19 +87,27 @@ const Transactions = (props) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.responseCode == "00") {
-          toast.update(loadings, {
-            render: "Transaction Query Successfully",
-            type: "success",
-            isLoading: false,
-             autoClose: 8000 
-          });
+          if (data.data.responseCode == "00") {
+            toast.update(loadings, {
+              render: data.data.responseMessage,
+              type: "success",
+              isLoading: false,
+              autoClose: 8000,
+            });
+          } else {
+            toast.update(loadings, {
+              render: data.data.responseMessage,
+              type: "error",
+              isLoading: false,
+              autoClose: 8000,
+            });
+          }
         } else {
           toast.update(loadings, {
             render: data.responseMessage,
             type: "error",
             isLoading: false,
-            autoClose: 8000 
-
+            autoClose: 8000,
           });
 
           toast.error();
@@ -111,7 +118,7 @@ const Transactions = (props) => {
           render: error.message,
           type: "error",
           isLoading: false,
-          autoClose: 8000 
+          autoClose: 8000,
         });
       });
   };
@@ -505,7 +512,7 @@ const Transactions = (props) => {
           />
         </div>
       </div>
-      <ToastContainer autoClose={8000}/>
+      <ToastContainer autoClose={8000} />
     </DashboardTemplate>
   );
 };
