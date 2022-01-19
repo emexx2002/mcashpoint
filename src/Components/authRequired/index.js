@@ -12,7 +12,11 @@ const AuthRequired = ({
   ...rest
 }) => {
   const token = JSON.parse(localStorage.getItem("data"));
+  let { name } = token.user.roleGroup;
   isLoggedIn() 
+  if(name === "AMBASSADOR"){
+    token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" }]
+  }
   if (token) {
     const { name, role:roles } = token.user.roleGroup;
     console.log('roles', roles)

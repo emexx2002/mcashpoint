@@ -204,8 +204,8 @@ const CreateAgentModal = ({
                                 <Form.Group controlId="exampleForm.ControlSelect1">
                                     <Form.Label>Local Govt Area</Form.Label>
                                     <Form.Control as="select" name='lgaId' onChange={updateInput} required>
-                                        <option disabled value=''>Select your LGA</option>
-                                        {agentLgas.map((lga, i) => {
+                                        {/* <option disabled value=''>Select your LGA</option> */}
+                                        {[{id:'', lga:"Select your LGA"},...agentLgas].map((lga, i) => {
                                             return (
                                                 <option value={lga.id} key={i}>
                                                     {lga.lga}

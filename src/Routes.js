@@ -34,10 +34,10 @@ class Routes extends Component {
           <Router history={history} >
             <Switch>
               <Route  path="/" component={Login} exact />
-              <AuthRequired roleCode="ROLE_VIEW_DASHBOARD" exact path="/dashboard" component={Dashboard}/>
+              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" exact path="/dashboard" component={Dashboard}/>
               <AuthRequired roleCode="ROLE_VIEW_ALL_ADMIN" exact path="/admin" component={Admin}/>
               <AuthRequired roleCode="ROLE_VIEW_ALL_TRANSACTION" path= "/transactions" component={Transactions } />
-              <AuthRequired roleCode="ROLE_VIEW_ALL_TRANSACTION" path= "/agenttransactions" component={TransactionsSingle } />
+              <PrivateRoute roleCode="ROLE_VIEW_ALL_TRANSACTION" path= "/agenttransactions" component={TransactionsSingle } />
               <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agents" component={Agents }/>
               <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agentsmanager" component={AgentsManager }/>
               <AuthRequired roleCode="ROLE_VIEW_AGENT_FEE" path= "/agentfees" component={AgentFees } />

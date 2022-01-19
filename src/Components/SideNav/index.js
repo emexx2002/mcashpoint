@@ -16,8 +16,11 @@ import { logoutUser } from "../../Redux/requests/userRequest";
 import { connect } from "react-redux";
 import HardWareModal from "../HardwareModal/HardWareModal";
 
+
+
 const isVisibleToUser = (roleCode, user) =>
 	user.roleGroup.role.some((role) => role.roleCode === roleCode);
+	
 
 class SideNav extends Component {
 	constructor(props) {
@@ -43,7 +46,11 @@ class SideNav extends Component {
 
 	render() {
 		const token = JSON.parse(localStorage.getItem("data"));
+		console.log("token",token)
 		let { name } = token.user.roleGroup;
+		if(name === "AMBASSADOR"){
+			token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" }]
+		}
 
 		return (
 			<div className="sidenav-wrap">
@@ -92,7 +99,7 @@ class SideNav extends Component {
 										</li>
 									</NavLink>
 								)}
-								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) && (
+								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) &&(name!="AMBASSADOR") && (
 									<NavLink to="/agentsmanager" activeClassName="current">
 										<li className="list-group-item">
 											<img src={Agentmanagaer} alt="" />{" "}

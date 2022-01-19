@@ -25,6 +25,11 @@ import "./style.css";
 import Pagination from "react-js-pagination";
 
 const Agents = (props) => {
+  const token = JSON.parse(localStorage.getItem("data"));
+  let { name } = token.user.roleGroup;
+
+  console.log("token", name);
+
   const {
     FetchBankTerminal: FetchBankTerminals,
     FetchAgent: FetchAgents,
@@ -46,7 +51,7 @@ const Agents = (props) => {
     ExportModalActive,
     initialState,
     filterValues,
-    setFilterValues
+    setFilterValues,
   } = props;
   const [businessName, setBusinessName] = useState("");
   const [memberID, setmemberID] = useState("");
@@ -58,24 +63,26 @@ const Agents = (props) => {
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
-  const [type, SetType] = useState('assigndevice');
-
+  const [type, SetType] = useState("assigndevice");
+  const [columnHidden, SetcolumnHidden] = useState(
+    name == "AMBASSADOR" ? true : false
+  );
 
   const closehardware = () => {
     setshowhardware(false);
-    setmemberID('')
+    setmemberID("");
     window.location.reload();
   };
 
   function AssignDevice(agentId) {
-    SetType('assigndevice')
-    setmemberID(agentId)
+    SetType("assigndevice");
+    setmemberID(agentId);
     setshowhardware(true);
   }
 
   function UnAssignDevice(agentId) {
-    SetType('unassigndevice')
-    setmemberID(agentId)
+    SetType("unassigndevice");
+    setmemberID(agentId);
     setshowhardware(true);
   }
   const reload = () => {
@@ -245,6 +252,7 @@ const Agents = (props) => {
     {
       dataField: "Action",
       text: "Action",
+      hidden: columnHidden,
       formatter: (cellContent, row) => {
         console.log(row.agent.bankTerminal);
         return (
@@ -311,7 +319,9 @@ const Agents = (props) => {
     {
       dataField: "AssignDevice",
       text: "Assign Device",
+      hidden: columnHidden,
       formatter: (cellContent, row) => {
+        
         return (
           <h5>
             <button
@@ -328,6 +338,7 @@ const Agents = (props) => {
     {
       dataField: "UnAssignDevice",
       text: "Unassign Device",
+      hidden: columnHidden,
       formatter: (cellContent, row) => {
         return (
           <h5>
@@ -352,7 +363,12 @@ const Agents = (props) => {
 
   return (
     <div className="table-wrapper">
-      <HardwareModal show={showhardware} close={closehardware} memberId={memberID}  type={type}/>
+      <HardwareModal
+        show={showhardware}
+        close={closehardware}
+        memberId={memberID}
+        type={type}
+      />
       <Modal
         size="sm"
         show={smShow}

@@ -178,3 +178,6 @@ label {
     margin: 0;
   }
 }
+.hideAction{
+  display: none;
+}

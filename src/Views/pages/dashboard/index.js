@@ -80,6 +80,7 @@ const DashBoard = (props) => {
           <div className="Dashboard-overview-wrapper">
             {name == "ADMIN" ||
             name == "Senior Management" ||
+            name == "AMBASSADOR" || 
             name == "Product" ? (
               <div className="flex-box ">
                 <div className="person-background"></div>
@@ -119,6 +120,7 @@ const DashBoard = (props) => {
           </div>
 
           {/* <div className="transaction-graph-wrapper"> */}
+          {   name == "AMBASSADOR" ? '': (
           <div className="line-and-details">
            <div className="chart-status">
               <div className="chart-bg">
@@ -184,6 +186,7 @@ const DashBoard = (props) => {
 
          
           </div>
+          )}
         </div>
 
       </div>

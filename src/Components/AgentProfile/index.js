@@ -26,6 +26,8 @@ import { connect } from "react-redux";
 
 import "./style.css";
 const Profile = (props) => {
+  const token = JSON.parse(localStorage.getItem("data"));
+  let { name } = token.user.roleGroup;
   const {
     loading,
     ActivateDeactivateUser: ActivateDeactivateUsers,
@@ -250,36 +252,42 @@ const Profile = (props) => {
               {console.log(singleAgent)}
               {singleAgent && singleAgent.enabled == true ? (
                 <button
+                  disabled={name == "AMBASSADOR" ? true : false}
                   onClick={() =>
                     DeActivateAgent(
                       state.row.agent.user.id,
                       singleAgent.enabled
                     )
                   }
-                  className="btn1 btns "
+                  className={`btn1 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
+
                 >
                   DEACTIVATE
                 </button>
               ) : (
                 <button
+                  disabled={name == "AMBASSADOR" ? true : false}
                   onClick={() =>
                     ActivateAgent(state.row.agent.user.id, singleAgent.enabled)
                   }
-                  className="btn3 btns"
+                  className={`btn3 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
+
                 >
                   ACTIVATE
                 </button>
               )}
 
               <button
-                className="btn2 btns"
+                disabled={name == "AMBASSADOR" ? true : false}
+                className={`btn2 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
                 onClick={() => EditAgent(agents[0])}
               >
                 Edit Agent
               </button>
 
               <button
-                className="btn2 btns"
+                disabled={name == "AMBASSADOR" ? true : false}
+                className={`btn2 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
                 onClick={() => ResetAgentPassword(state.row.agent.user.id)}
               >
                 RESET PASSWORD
