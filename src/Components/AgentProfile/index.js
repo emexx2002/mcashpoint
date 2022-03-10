@@ -252,42 +252,56 @@ const Profile = (props) => {
               {console.log(singleAgent)}
               {singleAgent && singleAgent.enabled == true ? (
                 <button
-                  disabled={name == "AMBASSADOR" ? true : false}
+                  disabled={
+                    name == "AMBASSADOR" && name == "AGENT" ? true : false
+                  }
                   onClick={() =>
                     DeActivateAgent(
                       state.row.agent.user.id,
                       singleAgent.enabled
                     )
                   }
-                  className={`btn1 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
-
+                  className={`btn1 btns ${
+                    name == "AMBASSADOR" && name == "AGENT" ? "hideAction" : ""
+                  }`}
                 >
                   DEACTIVATE
                 </button>
               ) : (
                 <button
-                  disabled={name == "AMBASSADOR" ? true : false}
+                  disabled={
+                    name == "AMBASSADOR" && name == "AGENT" ? true : false
+                  }
                   onClick={() =>
                     ActivateAgent(state.row.agent.user.id, singleAgent.enabled)
                   }
-                  className={`btn3 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
-
+                  className={`btn3 btns ${
+                    name == "AMBASSADOR" && name == "AGENT" ? "hideAction" : ""
+                  }`}
                 >
                   ACTIVATE
                 </button>
               )}
 
               <button
-                disabled={name == "AMBASSADOR" ? true : false}
-                className={`btn2 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
+                disabled={
+                  name == "AMBASSADOR" && name == "AGENT" ? true : false
+                }
+                className={`btn2 btns ${
+                  name == "AMBASSADOR" && name == "AGENT" ? "hideAction" : ""
+                }`}
                 onClick={() => EditAgent(agents[0])}
               >
                 Edit Agent
               </button>
 
               <button
-                disabled={name == "AMBASSADOR" ? true : false}
-                className={`btn2 btns ${name == "AMBASSADOR" ? 'hideAction' : ''}`}
+                disabled={
+                  name == "AMBASSADOR" && name == "AGENT" ? true : false
+                }
+                className={`btn2 btns ${
+                  name == "AMBASSADOR" && name == "AGENT" ? "hideAction" : ""
+                }`}
                 onClick={() => ResetAgentPassword(state.row.agent.user.id)}
               >
                 RESET PASSWORD

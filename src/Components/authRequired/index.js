@@ -17,6 +17,9 @@ const AuthRequired = ({
   if(name === "AMBASSADOR"){
     token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" }]
   }
+  if(name === "AGENT"){
+    token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" },{roleCode:"ROLE_VIEW_ALL_TRANSACTION" }]
+  }
   if (token) {
     const { name, role:roles } = token.user.roleGroup;
     console.log('roles', roles)

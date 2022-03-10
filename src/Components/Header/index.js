@@ -13,7 +13,7 @@ export default function Header(props) {
                 // <img src={Notification} alt="" />*/}
         <span className="divider">|</span>
         <span>{token ? token.user.roleGroup.name : ""}</span>
-        <img src={Photo} alt="" />
+        {/* <img src={Photo} alt="" /> */}
       </div>
     </div>
   );

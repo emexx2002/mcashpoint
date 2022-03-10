@@ -51,6 +51,9 @@ class SideNav extends Component {
 		if(name === "AMBASSADOR"){
 			token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" }]
 		}
+		if(name === "AGENT"){
+			token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" },{roleCode:"ROLE_VIEW_ALL_TRANSACTION" }]
+		}
 
 		return (
 			<div className="sidenav-wrap">
@@ -91,7 +94,7 @@ class SideNav extends Component {
 										</li>
 									</NavLink>
 								)}
-								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) && (
+								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user)&&(name!="AGENT") && (
 									<NavLink to="/agents" activeClassName="current">
 										<li className="list-group-item">
 											<img src={Agent} alt="" />{" "}
@@ -99,7 +102,7 @@ class SideNav extends Component {
 										</li>
 									</NavLink>
 								)}
-								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) &&(name!="AMBASSADOR") && (
+								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) &&(name!="AMBASSADOR")&&(name!="AGENT") && (
 									<NavLink to="/agentsmanager" activeClassName="current">
 										<li className="list-group-item">
 											<img src={Agentmanagaer} alt="" />{" "}
