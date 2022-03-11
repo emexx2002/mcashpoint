@@ -19,11 +19,12 @@ import { createHashHistory } from 'history'
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 import PrivateRoute from './utils/privateRoute'
-import {history} from './utils/history'
+import { history } from './utils/history'
 import AuthRequired from "./Components/authRequired"
 import AgentProfile from "./Components/AgentProfile"
 import AgentManagerProfile from "./Components/AgentManagerProfile"
 import changePassword from "./Views/pages/userChangePassword";
+import AgentsAccount from "./Views/pages/AgentsAccount"
 
 
 class Routes extends Component {
@@ -33,26 +34,27 @@ class Routes extends Component {
         <Provider store={store}>
           <Router history={history} >
             <Switch>
-              <Route  path="/" component={Login} exact />
-              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" exact path="/dashboard" component={Dashboard}/>
-              <AuthRequired roleCode="ROLE_VIEW_ALL_ADMIN" exact path="/admin" component={Admin}/>
-              <AuthRequired roleCode="ROLE_VIEW_ALL_TRANSACTION" path= "/transactions" component={Transactions } />
-              <PrivateRoute roleCode="ROLE_VIEW_ALL_TRANSACTION" path= "/agenttransactions" component={TransactionsSingle } />
-              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agents" component={Agents }/>
-              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agentsmanager" component={AgentsManager }/>
-              <AuthRequired roleCode="ROLE_VIEW_AGENT_FEE" path= "/agentfees" component={AgentFees } />
-              <AuthRequired roleCode="ROLE_VIEW_PURSE" path= "/purse" component={Purse }/>
-              <AuthRequired roleCode="ROLE_VIEW_AUDIT_LOG" path= "/audit" component={Audit}/>
-              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/getagents" component={GetSingleAgents }/>
-              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agentprofile" component={AgentProfile } />
-              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path= "/agentmanagerprofile" component={AgentManagerProfile } />
-              <AuthRequired path= "/appversion" roleCode="ROLE_VIEW_ALL_ADMIN" component={AppVersion } />
-              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" path= "/settings" component={Settings } />
-              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" path= "/changepassword" component={changePassword } />
+              <Route path="/" component={Login} exact />
+              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" exact path="/dashboard" component={Dashboard} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_ADMIN" exact path="/admin" component={Admin} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_TRANSACTION" path="/transactions" component={Transactions} />
+              <PrivateRoute roleCode="ROLE_VIEW_ALL_TRANSACTION" path="/agenttransactions" component={TransactionsSingle} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path="/agents" component={Agents} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path="/agentsmanager" component={AgentsManager} />
+              <AuthRequired roleCode="ROLE_VIEW_AGENT_FEE" path="/agentfees" component={AgentFees} />
+              <AuthRequired roleCode="ROLE_VIEW_PURSE" path="/purse" component={Purse} />
+              <AuthRequired roleCode="ROLE_VIEW_AUDIT_LOG" path="/audit" component={Audit} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path="/getagents" component={GetSingleAgents} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path="/agentprofile" component={AgentProfile} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path="/agentsaccount" component={AgentsAccount} />
+              <AuthRequired roleCode="ROLE_VIEW_ALL_AGENT" path="/agentmanagerprofile" component={AgentManagerProfile} />
+              <AuthRequired path="/appversion" roleCode="ROLE_VIEW_ALL_ADMIN" component={AppVersion} />
+              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" path="/settings" component={Settings} />
+              <PrivateRoute roleCode="ROLE_VIEW_DASHBOARD" path="/changepassword" component={changePassword} />
             </Switch>
           </Router>
         </Provider>
-       
+
       </div>
     );
   }

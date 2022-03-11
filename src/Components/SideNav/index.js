@@ -20,7 +20,7 @@ import HardWareModal from "../HardwareModal/HardWareModal";
 
 const isVisibleToUser = (roleCode, user) =>
 	user.roleGroup.role.some((role) => role.roleCode === roleCode);
-	
+
 
 class SideNav extends Component {
 	constructor(props) {
@@ -46,13 +46,13 @@ class SideNav extends Component {
 
 	render() {
 		const token = JSON.parse(localStorage.getItem("data"));
-		console.log("token",token)
+		console.log("token", token)
 		let { name } = token.user.roleGroup;
-		if(name === "AMBASSADOR"){
-			token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" }]
+		if (name === "AMBASSADOR") {
+			token.user.roleGroup.role = [{ roleCode: "ROLE_VIEW_ALL_AGENT" }]
 		}
-		if(name === "AGENT"){
-			token.user.roleGroup.role = [{roleCode:"ROLE_VIEW_ALL_AGENT" },{roleCode:"ROLE_VIEW_ALL_TRANSACTION" }]
+		if (name === "AGENT") {
+			token.user.roleGroup.role = [{ roleCode: "ROLE_VIEW_ALL_AGENT" }, { roleCode: "ROLE_VIEW_ALL_TRANSACTION" }]
 		}
 
 		return (
@@ -94,7 +94,7 @@ class SideNav extends Component {
 										</li>
 									</NavLink>
 								)}
-								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user)&&(name!="AGENT") && (
+								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) && (name != "AGENT") && (
 									<NavLink to="/agents" activeClassName="current">
 										<li className="list-group-item">
 											<img src={Agent} alt="" />{" "}
@@ -102,7 +102,15 @@ class SideNav extends Component {
 										</li>
 									</NavLink>
 								)}
-								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) &&(name!="AMBASSADOR")&&(name!="AGENT") && (
+								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) && (name = "AGENT") && (
+									<NavLink to="/agentsaccount" activeClassName="current">
+										<li className="list-group-item">
+											<img src={Agent} alt="" />{" "}
+											<span className="list-group-item-text">Agents Profile </span>
+										</li>
+									</NavLink>
+								)}
+								{isVisibleToUser("ROLE_VIEW_ALL_AGENT", token.user) && (name != "AMBASSADOR") && (name != "AGENT") && (
 									<NavLink to="/agentsmanager" activeClassName="current">
 										<li className="list-group-item">
 											<img src={Agentmanagaer} alt="" />{" "}
