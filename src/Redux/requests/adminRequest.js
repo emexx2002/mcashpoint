@@ -1,8 +1,18 @@
 import axios from "axios";
-import { asyncActions } from "../../utils/asyncUtil";
-import { FETCH_ADMIN_USERS,CREATE_ADMIN,UPDATE_ADMIN } from "../actions/actionTypes";
-import { AgentConstant } from "../../constants/constants";
-import { history } from '../../utils/history'
+import {
+    asyncActions
+} from "../../utils/asyncUtil";
+import {
+    FETCH_ADMIN_USERS,
+    CREATE_ADMIN,
+    UPDATE_ADMIN
+} from "../actions/actionTypes";
+import {
+    AgentConstant
+} from "../../constants/constants";
+import {
+    history
+} from '../../utils/history'
 
 
 export const FetchAdmin = (
@@ -21,12 +31,12 @@ export const FetchAdmin = (
         .then((res) => {
             const response = res.data;
             if (response.responseCode === "00") {
-              dispatch(asyncActions(FETCH_ADMIN_USERS).success(response.data));
+                dispatch(asyncActions(FETCH_ADMIN_USERS).success(response.data));
             }
-          })
-          .catch((error) => {
+        })
+        .catch((error) => {
             dispatch(asyncActions(FETCH_ADMIN_USERS).failure(true, error));
-          });
+        });
 };
 
 export const CreateAdmin = ({
@@ -77,13 +87,13 @@ export const UpdateAdmin = ({
     username,
     roleGroupName,
 }) => (dispatch) => {
-    console.log(parseInt(id),id)
+    console.log(parseInt(id), id)
     dispatch(asyncActions(UPDATE_ADMIN).loading(true));
     const token = JSON.parse(localStorage.getItem("data"));
     axios
         .put(
             `${AgentConstant.ADMIN_USERS_URL}`, {
-                id:parseInt(id),
+                id: parseInt(id),
                 firstname,
                 lastname,
                 email,
@@ -111,4 +121,3 @@ export const UpdateAdmin = ({
             dispatch(asyncActions(UPDATE_ADMIN).failure(true, error))
         );
 };
-
