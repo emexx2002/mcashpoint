@@ -134,7 +134,7 @@ const Transactions = (props) => {
 
                 </div>
               </div>
-              <div className="col-md-12">
+              {/* <div className="col-md-12">
                 <div className="container-fluid pt-4  mt-5">
                   <div className="row">
                     <div className="col-md-3">
@@ -158,7 +158,7 @@ const Transactions = (props) => {
                   </div>
                 </div>
 
-              </div>
+              </div> */}
             </div>
           </div>)}
 
