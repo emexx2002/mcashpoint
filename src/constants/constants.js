@@ -9,7 +9,7 @@ export const AgentConstant = {
   DASHBOARD_TRANSACTION_DETAILS_URL: `${BASE_URL}/api/v1/dashboard`,
   FETCH_AUDIT_URL: `${BASE_URL}/api/v1/audit?`,
   FETCH_AGENT_PURSE_URL: `${BASE_URL}/api/v1/purse/agent?`,
-  FETCH_CENTRAL_PURSE_URL: `${BASE_URL}/api/v1/purse/central?`, 
+  FETCH_CENTRAL_PURSE_URL: `${BASE_URL}/api/v1/purse/central?`,
   ACTIVATION_CODE_URL: `${BASE_URL}/api/v1/terminal/activation/generate?agentId`,
   CHANGE_PASSWORD_URL: `${BASE_URL}/api/v1/user/password`,
   FETCH_STATE_URL: `${BASE_URL}/api/v1/state`,
@@ -29,11 +29,12 @@ export const AgentConstant = {
   API_VERSION_URL: `${BASE_URL}/api/v1/app/version`,
   FETCH_TRANSACTIONS_TYPES_URL: `${BASE_URL}/api/v1/transaction/types`,
   FETCH_TRANSACTIONS_STATUS_URL: `${BASE_URL}/api/v1/transaction/status`,
-  ADMIN_USERS_URL:`${BASE_URL}/api/v1/admin?`,
-  PURSE_BALANCE_SUMMARY_URL:`${BASE_URL}/api/v1/purse/balance/general`,
-  ACTIVATE_DEACTIVATE_USER_URL:`${BASE_URL}/api/v1/user/activate-deactivate`,
-  RESET_AGENT_PASSWORD_URL:`${BASE_URL}/api/v1/user/password/reset?userId`,
-  MAXIMUM_RANGE_URL:`${BASE_URL}/api/v1/convenience/maximum/range?`,
-  CONVIENIENCE_FEE_URL:`${BASE_URL}/api/v1/convenience`
-  
+  ADMIN_USERS_URL: `${BASE_URL}/api/v1/admin?`,
+  PURSE_BALANCE_SUMMARY_URL: `${BASE_URL}/api/v1/purse/balance/general`,
+  ACTIVATE_DEACTIVATE_USER_URL: `${BASE_URL}/api/v1/user/activate-deactivate`,
+  RESET_AGENT_PASSWORD_URL: `${BASE_URL}/api/v1/user/password/reset?userId`,
+  MAXIMUM_RANGE_URL: `${BASE_URL}/api/v1/convenience/maximum/range?`,
+  CONVIENIENCE_FEE_URL: `${BASE_URL}/api/v1/convenience`,
+  CREATE_PIN: `${BASE_URL}/api/v1/agent/transaction/pin/create`,
+  RESET_PIN: `${BASE_URL}/api/v1/agent/transaction/pin/reset`,
 };

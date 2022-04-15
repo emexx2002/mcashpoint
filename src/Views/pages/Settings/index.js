@@ -14,6 +14,8 @@ import ChangePassword from "./changePassword";
 
 import "./style.css";
 import RoleGroups from "./RoleGroups";
+import CreatePin from "./CreatePin";
+import ResetPIN from "./ResetPIN";
 
 const Settings = () => {
   const [key, setKey] = React.useState("first");
@@ -83,6 +85,35 @@ const Settings = () => {
                       </Nav.Link>
                     </Nav.Item>
                   )}
+
+                  {name === "AGENT" && (
+                    <Nav.Item>
+                      <Nav.Link eventKey="fifth">
+                        <div className="tab-navs">
+                          <div>
+                            <img src={Password} alt="create-pin" />
+                          </div>
+                          <div>
+                            <p>Create Pin</p>
+                          </div>
+                        </div>
+                      </Nav.Link>
+                    </Nav.Item>
+                  )}
+                  {name === "AGENT" && (
+                    <Nav.Item>
+                      <Nav.Link eventKey="sixth">
+                        <div className="tab-navs">
+                          <div>
+                            <img src={Password} alt="reset-pin" />
+                          </div>
+                          <div>
+                            <p>Reset Pin</p>
+                          </div>
+                        </div>
+                      </Nav.Link>
+                    </Nav.Item>
+                  )}
                   {name == "ADMIN" ||
                   name == "Senior Management " ||
                   name == "Product" ? (
@@ -131,6 +162,17 @@ const Settings = () => {
                     </Tab.Pane>
                   ) : (
                     ""
+                  )}
+
+                  {name === "AGENT" && (
+                    <Tab.Pane eventKey="fifth">
+                      <CreatePin></CreatePin>
+                    </Tab.Pane>
+                  )}
+                  {name === "AGENT" && (
+                    <Tab.Pane eventKey="sixth">
+                      <ResetPIN></ResetPIN>
+                    </Tab.Pane>
                   )}
                 </Tab.Content>
               </Col>
