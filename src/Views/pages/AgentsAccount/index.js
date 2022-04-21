@@ -37,7 +37,7 @@ import { connect } from "react-redux";
 
 import "./style.css";
 import { ActivatateCode } from "../../../Redux/requests/agentRequest";
-import SweetAlert from "sweetalert-react/lib/SweetAlert";
+import SweetAlert from "react-bootstrap-sweetalert";
 // import ExportLink from '../Exports/index';
 
 const Transactions = (props) => {
@@ -75,7 +75,7 @@ const Transactions = (props) => {
       setTitle("Activation code generated successfully");
       setDanger(false);
       setSucess(true);
-      return;
+      setSmShow(true);
     }
   }, [successActivation]);
 
@@ -96,9 +96,8 @@ const Transactions = (props) => {
         success={success}
         danger={danger}
         title={title}
-        showCancelButton
         onConfirm={() => {
-          closemodal(false);
+          closemodal();
         }}
         onCancel={() => {
           closemodal(false);
@@ -255,7 +254,7 @@ const Transactions = (props) => {
                         style={{ borderRadius: "8px" }}
                       >
                         <h3 style={{ fontSize: "18px", color: "#606060" }}>
-                          Account Information
+                          Account Informationsssss
                         </h3>
                         <h3
                           style={{
