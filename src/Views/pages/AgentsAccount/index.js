@@ -254,7 +254,7 @@ const Transactions = (props) => {
                         style={{ borderRadius: "8px" }}
                       >
                         <h3 style={{ fontSize: "18px", color: "#606060" }}>
-                          Account Informationsssss
+                          Account Information
                         </h3>
                         <h3
                           style={{
