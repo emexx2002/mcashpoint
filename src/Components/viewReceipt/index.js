@@ -43,7 +43,7 @@ const ViewReceipt = ({ show, close, details }) => {
               </div>
               <div className="receipt-head">
                 <div>Total Amount</div>
-                <div>{details.Amount}</div>
+                <div>{details.totalAmount}</div>
               </div>
               <div className="receipt-head">
                 <div>Transaction type</div>
