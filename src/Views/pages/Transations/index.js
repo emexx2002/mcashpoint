@@ -192,6 +192,7 @@ const Transactions = (props) => {
       ? ""
       : transact.agent.bankTerminal.terminalId,
     transact.amount,
+    transact.totalAmount,
     transact.statusCode,
     transact.agentFee,
     transact.stampDuty,
@@ -238,6 +239,7 @@ const Transactions = (props) => {
           : transact.prePurseBalance.toFixed(2),
       AppVersion:
         transact.appVersion === "undefined" ? "" : transact.appVersion,
+        totalAmount: transact.totalAmount === "undefined" ? "" : parseInt(transact.totalAmount).toLocaleString() ,
     };
   });
 
