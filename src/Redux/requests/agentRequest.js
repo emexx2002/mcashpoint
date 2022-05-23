@@ -261,6 +261,7 @@ export const CreateAgent =
     stateId,
     lgaId,
     bankId,
+    agentManagerId,
   }) =>
   (dispatch) => {
     dispatch(asyncActions(CREATE_AGENTS).loading(true));
@@ -285,6 +286,7 @@ export const CreateAgent =
           stateId,
           lgaId,
           bankId,
+          agentManagerId,
         },
         {
           headers: {
