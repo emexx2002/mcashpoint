@@ -161,7 +161,6 @@ const Transactions = (props) => {
   }, [nextPage, length, filterValues]);
 
   const handleSelect = (e) => {
-    console.log(e);
     setLength(e);
   };
 
@@ -239,7 +238,10 @@ const Transactions = (props) => {
           : transact.prePurseBalance.toFixed(2),
       AppVersion:
         transact.appVersion === "undefined" ? "" : transact.appVersion,
-        totalAmount: transact.totalAmount === "undefined" ? "" : parseInt(transact.totalAmount).toLocaleString() ,
+      totalAmount:
+        transact.totalAmount === "undefined"
+          ? ""
+          : parseInt(transact.totalAmount).toLocaleString(),
     };
   });
 
@@ -500,7 +502,6 @@ const Transactions = (props) => {
             All
           </Dropdown.Item>
         </DropdownButton>
-        {console.log(typeof String(transactionTotal))}{" "}
         <p>
           Showing 1 to {length} of {transactionTotal}
         </p>

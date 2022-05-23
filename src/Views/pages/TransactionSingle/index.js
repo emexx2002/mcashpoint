@@ -17,7 +17,13 @@ import {
 import Loader from "../../../Components/secondLoader";
 import ExportModal from "../../../Components/Exports";
 import FilterModal from "../../../Components/Filter";
-import { Nav, NavItem, NavLink } from "react-bootstrap";
+import {
+  Nav,
+  NavItem,
+  NavLink,
+  DropdownButton,
+  Dropdown,
+} from "react-bootstrap";
 import Pagination from "react-js-pagination";
 
 import { connect } from "react-redux";
@@ -60,7 +66,6 @@ const Transactions = (props) => {
   const [filterValues, setFilterValues] = useState(initialState);
 
   const _handleFilterValue = (event) => {
-    console.log(event);
     setFilterValues({
       ...filterValues,
       [event.target.name]: event.target.value,
@@ -69,6 +74,9 @@ const Transactions = (props) => {
     showExportModal(false);
   };
 
+  const handleSelect = (e) => {
+    setLength(e);
+  };
   // const resetFilter = (event) => {
   //   event.preventDefault();
 
@@ -84,8 +92,7 @@ const Transactions = (props) => {
   useEffect(() => {
     FetchTransactionSingles(nextPage, length, filterValues);
     FetchTransactionType();
-    FetchTransactionStatuses()
-
+    FetchTransactionStatuses();
   }, [nextPage, length, filterValues]);
 
   const title = "Transactions page";
@@ -111,7 +118,9 @@ const Transactions = (props) => {
     transact.agent.businessName,
     transact.transactionId,
     transact.transactionType.type,
-    transact.agent.bankTerminal==null?'':transact.agent.bankTerminal.terminalId,
+    transact.agent.bankTerminal == null
+      ? ""
+      : transact.agent.bankTerminal.terminalId,
     transact.amount,
     transact.statusCode,
     transact.agentFee,
@@ -355,6 +364,23 @@ const Transactions = (props) => {
         columns={columns}
       />
       <div className="pagination_wrap">
+        <DropdownButton
+          menuAlign="right"
+          title={length}
+          id="dropdown-menu-align-right"
+          onSelect={handleSelect}
+        >
+          <Dropdown.Item eventKey="10">10</Dropdown.Item>
+          <Dropdown.Item eventKey="20">20</Dropdown.Item>
+          <Dropdown.Item eventKey="30">30</Dropdown.Item>
+          <Dropdown.Item eventKey="50">50</Dropdown.Item>
+          <Dropdown.Item eventKey="100">100</Dropdown.Item>
+          <Dropdown.Item
+            eventKey={transactionTotal ? String(transactionTotal) : "0"}
+          >
+            All
+          </Dropdown.Item>
+        </DropdownButton>
         <p>Showing 1 to 10 of {transactionTotal}</p>
         <div className="pagination">
           <Pagination
@@ -386,5 +412,4 @@ export default connect(mapStateToProps, {
   FetchTransactionSingle,
   FetchTransactionTypes,
   FetchTransactionStatus,
-
 })(Transactions);
