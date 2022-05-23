@@ -37,4 +37,5 @@ export const AgentConstant = {
   CONVIENIENCE_FEE_URL: `${BASE_URL}/api/v1/convenience`,
   CREATE_PIN: `${BASE_URL}/api/v1/agent/transaction/pin/create`,
   RESET_PIN: `${BASE_URL}/api/v1/agent/transaction/pin/reset`,
+  FETCH_ALL_AGENT_MANAGERS: `${BASE_URL}/api/v1/agent/manager`,
 };

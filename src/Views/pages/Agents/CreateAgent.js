@@ -22,6 +22,8 @@ import { CreateAgent } from "../../../Redux/requests/agentRequest";
 import Loader from "../../../Components/secondLoader";
 import "./style.css";
 import moment from "moment";
+import axios from "axios";
+import { AgentConstant } from "../../../constants/constants";
 const CreateAgentModal = ({
   create,
   show,
@@ -61,14 +63,34 @@ const CreateAgentModal = ({
     lgaId: "",
     bankId: "",
   });
+  const [allAgents, setAllAgents] = useState();
+  const getToken = JSON.parse(localStorage.getItem("data"));
+  const { access_token } = getToken;
 
   useEffect(() => {
     FetchStates();
     FetchBankS();
+
+    const fetchAgentManagers = async () => {
+      try {
+        const res = await axios.get(
+          `${AgentConstant.FETCH_ALL_AGENT_MANAGERS}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `bearer ${access_token}`,
+            },
+          }
+        );
+        setAllAgents(res.data.data);
+      } catch (error) {
+        console.log("error ===> ", error.response);
+      }
+    };
+    fetchAgentManagers();
   }, []);
 
   useEffect(() => {
-    console.log(error, erroMessage);
     if (erroMessage) {
       if (error && erroMessage.error != "Already registered user") {
         return (
@@ -117,6 +139,7 @@ const CreateAgentModal = ({
 
   const onSubmit = (event) => {
     event.preventDefault();
+    console.log("CreateAgentData ====", CreateAgentData);
     handleCreateAgent(CreateAgentData);
   };
 
@@ -199,6 +222,24 @@ const CreateAgentModal = ({
                   <option>Select Gender</option>
                   <option>MALE</option>
                   <option>FEMALE</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4} sm={12}>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Agent Manager</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="agentManagerId"
+                  onChange={updateInput}
+                >
+                  <option>Select Manager</option>
+                  {allAgents?.map((agent) => (
+                    <option value={agent.id}>{agent.user.fullName}</option>
+                  ))}
+                  {!allAgents && <option value="">No agents available</option>}
                 </Form.Control>
               </Form.Group>
             </Col>
@@ -316,7 +357,6 @@ const CreateAgentModal = ({
                 >
                   <option>Select your bank</option>
                   {agentBanks.map((bank, i) => {
-                    console.log(bank);
                     return (
                       <option key={i} value={bank.id}>
                         {bank.name}
