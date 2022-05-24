@@ -24,6 +24,8 @@ import "./style.css";
 import moment from "moment";
 import axios from "axios";
 import { AgentConstant } from "../../../constants/constants";
+import AsyncSelect from "react-select/async";
+
 const CreateAgentModal = ({
   create,
   show,
@@ -70,29 +72,11 @@ const CreateAgentModal = ({
   useEffect(() => {
     FetchStates();
     FetchBankS();
-
-    const fetchAgentManagers = async () => {
-      try {
-        const res = await axios.get(
-          `${AgentConstant.FETCH_ALL_AGENT_MANAGERS}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `bearer ${access_token}`,
-            },
-          }
-        );
-        setAllAgents(res.data.data);
-      } catch (error) {
-        console.log("error ===> ", error.response);
-      }
-    };
-    fetchAgentManagers();
   }, []);
 
   useEffect(() => {
     if (erroMessage) {
-      if (error && erroMessage.error != "Already registered user") {
+      if (error && erroMessage.error !== "Already registered user") {
         return (
           setErrors([
             "There was an error sending your request, please try again later.",
@@ -110,6 +94,39 @@ const CreateAgentModal = ({
       return SetSuccessMessage(["operation Successful"]), setErrors([]);
     }
   }, [success]);
+
+  const SearchAgentManagers = async (searchQuery) => {
+    try {
+      const res = await axios.get(
+        `${AgentConstant.FETCH_ALL_AGENT_MANAGERS}?username=${searchQuery}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${access_token}`,
+          },
+        }
+      );
+      const agentData = res?.data?.data?.map((agent) => ({
+        label: agent.user.fullName,
+        value: agent.id,
+      }));
+      return agentData;
+    } catch (error) {
+      console.log("error ===> ", error?.response);
+    }
+  };
+
+  const promiseOptions = (inputValue) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(SearchAgentManagers(inputValue));
+      }, 1000);
+    });
+
+  const handleInputChange = (newValue) => {
+    const inputValue = newValue.replace(/\W/g, "");
+    return inputValue;
+  };
 
   const updateInput = (event) => {
     setCreateAgentData({
@@ -139,7 +156,6 @@ const CreateAgentModal = ({
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("CreateAgentData ====", CreateAgentData);
     handleCreateAgent(CreateAgentData);
   };
 
@@ -228,19 +244,22 @@ const CreateAgentModal = ({
           </Row>
           <Row>
             <Col md={4} sm={12}>
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Agent Manager</Form.Label>
-                <Form.Control
-                  as="select"
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <label>Agent Manager</label>
+                <AsyncSelect
+                  cacheOptions
+                  loadOptions={promiseOptions}
+                  defaultOptions
+                  onChange={(val) => {
+                    const { value } = val;
+                    updateInput({
+                      target: { value: value, name: "agentManagerId" },
+                    });
+                  }}
                   name="agentManagerId"
-                  onChange={updateInput}
-                >
-                  <option>Select Manager</option>
-                  {allAgents?.map((agent) => (
-                    <option value={agent.id}>{agent.user.fullName}</option>
-                  ))}
-                  {!allAgents && <option value="">No agents available</option>}
-                </Form.Control>
+                  onInputChange={handleInputChange}
+                  className="mb-3"
+                />
               </Form.Group>
             </Col>
           </Row>
