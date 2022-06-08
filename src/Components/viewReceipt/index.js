@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Modal,
-  Container,
-  Button,
-} from "react-bootstrap";
+import { Modal, Container, Button } from "react-bootstrap";
 import ReactToPdf from "react-to-pdf";
 
 import Cancel from "../../Assets/img/x.png";
@@ -35,7 +31,7 @@ const ViewReceipt = ({ show, close, details }) => {
         </Container>
 
         <Container>
-          <div style={{paddingLeft:"40px"}} ref={ref}>
+          <div style={{ paddingLeft: "40px" }} ref={ref}>
             <div className="receipt-header">
               <div className="receipt-head">
                 <div>Agent Name</div>

@@ -15,11 +15,12 @@ import FilterModal from "../../../Components/Filter/index";
 import Pagination from "react-js-pagination";
 
 import "./style.css";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 const FetchAgentsManager = (props) => {
   const {
     FetchAgentManager: FetchAgentManagers,
-    agentmanager,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+    agentmanager,
     loading,
     showFilterModal,
     FilterModalActive,
@@ -28,13 +29,11 @@ const FetchAgentsManager = (props) => {
     agentManagerTotal,
     initialState,
     filterValues,
-    setFilterValues
+    setFilterValues,
   } = props;
   const [nextPage, setNextPage] = useState(0);
   const [length, setLength] = useState(10);
   const [activePage, setActivePage] = useState(1);
-  
-
 
   // const [filterValues, setFilterValues] = useState(initialState);
 
@@ -62,17 +61,20 @@ const FetchAgentsManager = (props) => {
     showExportModal(false);
   };
 
-
   const _handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
-    setNextPage(pageNumber-1);
+    setNextPage(pageNumber - 1);
   };
 
   function ViewAgent(agentId) {
     // setActivation(null);
-    localStorage.setItem('viewagentId', agentId);
-    window.location ="/getagents"
+    localStorage.setItem("viewagentId", agentId);
+    window.location = "/getagents";
   }
+
+  const handleSelect = (e) => {
+    setLength(e);
+  };
 
   const title = "AgentManager page";
   const headers = [
@@ -83,7 +85,7 @@ const FetchAgentsManager = (props) => {
       "Phone Number",
       "State",
       "LGA",
-      "Date Created"
+      "Date Created",
     ],
   ];
 
@@ -95,14 +97,13 @@ const FetchAgentsManager = (props) => {
     agent.state.stateName,
     agent.lga.lga,
     agent.createdAt,
-
   ]);
 
   const products = agentmanager.map((agent, index) => {
     console.log(agent);
     return {
       id: index,
-      Agent:agent,
+      Agent: agent,
       AgentID: agent.user.id === null ? "" : agent.user.id,
       Name: agent.user.fullName === null ? "" : agent.user.fullName,
       UserName: agent.user.username === null ? "" : agent.user.username,
@@ -115,21 +116,24 @@ const FetchAgentsManager = (props) => {
 
   const columns = [
     // { dataField: 'id', text: 'Id'},
-    { dataField: "AgentID", text: "Agent ID" ,
-    formatter: (cellContent, row) => {
-      console.log(row.Agent)
-      return (
-        <NavLink
-        to={{
-          pathname: `/agentmanagerprofile`,
-          state: {row}
-     }}
-          className=" editadmin"
-        >
-          {row.AgentID}
-        </NavLink>)
-    }
-  },
+    {
+      dataField: "AgentID",
+      text: "Agent ID",
+      formatter: (cellContent, row) => {
+        console.log(row.Agent);
+        return (
+          <NavLink
+            to={{
+              pathname: `/agentmanagerprofile`,
+              state: { row },
+            }}
+            className=" editadmin"
+          >
+            {row.AgentID}
+          </NavLink>
+        );
+      },
+    },
     {
       dataField: "Name",
       text: " Name",
@@ -146,7 +150,7 @@ const FetchAgentsManager = (props) => {
         wordWrap: "break-word",
         padding: "10px",
       },
-      headerStyle: (colum, colIndex) => { 
+      headerStyle: (colum, colIndex) => {
         return { width: "200px", textAlign: "center" };
       },
     },
@@ -207,6 +211,18 @@ const FetchAgentsManager = (props) => {
         />
       </div>
       <div className="pagination_wrap">
+        <DropdownButton
+          menuAlign="right"
+          title={length}
+          id="dropdown-menu-align-right"
+          onSelect={handleSelect}
+        >
+          <Dropdown.Item eventKey="10">10</Dropdown.Item>
+          <Dropdown.Item eventKey="20">20</Dropdown.Item>
+          <Dropdown.Item eventKey="30">30</Dropdown.Item>
+          <Dropdown.Item eventKey="50">50</Dropdown.Item>
+          <Dropdown.Item eventKey="100">100</Dropdown.Item>
+        </DropdownButton>
         <p>Showing 1 to 10 of {agentManagerTotal}</p>
         <div className="pagination">
           <Pagination
@@ -231,7 +247,16 @@ const FetchAgentsManager = (props) => {
         handleFilterValue={_handleFilterValue}
         submitFilter={onFilterSubmit}
       />
-      <ExportModal show={ExportModalActive} close={closeExport} filename='AgentManager file' title={title} headers={headers} item={item} products={products} columns={columns}/>
+      <ExportModal
+        show={ExportModalActive}
+        close={closeExport}
+        filename="AgentManager file"
+        title={title}
+        headers={headers}
+        item={item}
+        products={products}
+        columns={columns}
+      />
     </div>
   );
 };
