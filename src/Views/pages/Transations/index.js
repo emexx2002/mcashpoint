@@ -222,6 +222,9 @@ const Transactions = (props) => {
           : transact.agent.bankTerminal.terminalId,
       Amount: transact.amount === "undefined" ? "" : transact.amount,
       Status: transact.statusCode,
+      accountNumber: transact.accountNumber ? transact.accountNumber : "-----",
+      accountName: transact.accountName ? transact.accountName : "----",
+      bankName: transact.bankName ? transact.bankName : "-----",
       ConvenienceFee: transact.convenienceFee,
       AgentFee: transact.agentFee === "undefined" ? "" : transact.agentFee,
       StampDuty: transact.stampDuty === "undefined" ? "" : transact.stampDuty,
@@ -327,6 +330,9 @@ const Transactions = (props) => {
     // { dataField: 'CardDetails', text: 'Card Details'},
     { dataField: "PreBalance", text: "Pre-Balance" },
     { dataField: "PostBalance", text: "Post-Balance" },
+    { dataField: "accountName", text: "Beneficiary A/C Name" },
+    { dataField: "accountNumber", text: "Beneficiary A/C No" },
+    { dataField: "bankName", text: "Beneficiary Bank" },
     { dataField: "App Version", text: "App Version" },
     {
       dataField: "ViewReceipt",
@@ -407,13 +413,7 @@ const Transactions = (props) => {
     <DashboardTemplate>
       <div className="transact-wrapper">
         {loading && (
-          <Loader
-            type="TailSpin"
-            type="Oval"
-            height={60}
-            width={60}
-            color="#1E4A86"
-          />
+          <Loader type="TailSpin" height={60} width={60} color="#1E4A86" />
         )}
         <div className="header-title">
           <h3>Transactions</h3>

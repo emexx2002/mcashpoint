@@ -321,7 +321,6 @@ const Agents = (props) => {
       text: "Assign Device",
       hidden: columnHidden,
       formatter: (cellContent, row) => {
-        
         return (
           <h5>
             <button

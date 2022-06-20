@@ -155,7 +155,7 @@ const Transactions = (props) => {
                     textTransform: "capitalize",
                   }}
                 >
-                  {item.agentManager.accountName}
+                  {item.accountName}
                 </h3>
                 <div className="container-fluid pl-0">
                   <img
@@ -264,7 +264,7 @@ const Transactions = (props) => {
                             textTransform: "capitalize",
                           }}
                         >
-                          {item.accountNumber} , {item.agentManager.accountName}
+                          {item.accountNumber} , {item.accountName}
                         </h3>
                       </div>
                     </div>
