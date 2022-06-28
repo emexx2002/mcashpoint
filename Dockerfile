@@ -9,6 +9,7 @@ WORKDIR /app
 # Copy the files we need to our new Directory
 COPY package.json /app
 RUN npm install
+RUN npm install -g serve
 COPY . /app/
 COPY ["package.json", "package-lock.json*", "./"]
 COPY /run.sh /app/run.sh
@@ -17,6 +18,6 @@ RUN ls -lah
 # Expose the port outside of the container
 EXPOSE 3000
 
-CMD ["sh","run.sh"]
-
+# CMD ["sh","run.sh"]
+CMD ["serve", "-s", "./build"]
 
