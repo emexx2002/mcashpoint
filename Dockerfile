@@ -9,6 +9,7 @@ WORKDIR /app
 # Copy the files we need to our new Directory
 COPY package.json /app
 RUN npm install
+RUN npm run build
 RUN npm install -g serve
 COPY . /app/
 COPY ["package.json", "package-lock.json*", "./"]
