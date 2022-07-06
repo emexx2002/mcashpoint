@@ -41,54 +41,74 @@ const Filter = ({ show, close, ...props }) => {
         <Container>
           <h3>Enter Filter Parameters</h3>
           <Form onSubmit={submitFilter}>
-            <Row>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>Start Date</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="date"
-                    placeholder="Start Date"
-                    name="startDate"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={4} sm={12}>
-                <Form.Group controlId="">
-                  <Form.Label>End Date</Form.Label>
-                  <Form.Control
-                    size="sm"
-                    type="date"
-                    placeholder="Enter End Date"
-                    name="endDate"
-                    onChange={handleFilterValue}
-                  />
-                </Form.Group>
-              </Col>
-              {props.name == "transaction" ?
+            {props.name === "agentPurse" ?
+              <Row>
                 <Col md={4} sm={12}>
                   <Form.Group controlId="">
-                    <Form.Label>Select Status</Form.Label>
+                    <Form.Label>Bussiness Name</Form.Label>
                     <Form.Control
                       size="sm"
-                      as="select"
-                      name="status"
+                      type="text"
+                      placeholder="Bussines Name"
+                      name="businessName"
                       onChange={handleFilterValue}
-                    >
-                      <option>Select Status</option>
-                      {transactionStatus.map((tranStatus, i) => {
-                        return (
-                          <option key={i} value={tranStatus.statusCode}>
-                            {tranStatus.statusMessage}
-                          </option>
-                        );
-                      })}
-                    </Form.Control>
+                    />
                   </Form.Group>
                 </Col>
-                : ''}
-            </Row>
+
+              </Row>
+              :
+
+              <Row>
+                <Col md={4} sm={12}>
+                  <Form.Group controlId="">
+                    <Form.Label>Start Date</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      type="date"
+                      placeholder="Start Date"
+                      name="startDate"
+                      onChange={handleFilterValue}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={4} sm={12}>
+                  <Form.Group controlId="">
+                    <Form.Label>End Date</Form.Label>
+                    <Form.Control
+                      size="sm"
+                      type="date"
+                      placeholder="Enter End Date"
+                      name="endDate"
+                      onChange={handleFilterValue}
+                    />
+                  </Form.Group>
+                </Col>
+                {props.name == "transaction" ?
+                  <Col md={4} sm={12}>
+                    <Form.Group controlId="">
+                      <Form.Label>Select Status</Form.Label>
+                      <Form.Control
+                        size="sm"
+                        as="select"
+                        name="status"
+                        onChange={handleFilterValue}
+                      >
+                        <option>Select Status</option>
+                        {transactionStatus.map((tranStatus, i) => {
+                          return (
+                            <option key={i} value={tranStatus.statusCode}>
+                              {tranStatus.statusMessage}
+                            </option>
+                          );
+                        })}
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                  : ''}
+              </Row>
+            }
+
             {props.name == "transaction" || props.name == "centralpurse" ?
               <Row>
 
@@ -202,19 +222,19 @@ const Filter = ({ show, close, ...props }) => {
                         />
                       </Form.Group>
                     </Col>
-                      :( <Col md={4} sm={12}>
-                        <Form.Group controlId="">
-                          <Form.Label>Business Name</Form.Label>
-                          <Form.Control
-                            size="sm"
-                            type="text"
-                            name="businessName"
-                            placeholder="Enter business Name"
-                            onChange={handleFilterValue}
-                          />
-                        </Form.Group>
-                      </Col>)
-}
+                    : (<Col md={4} sm={12}>
+                      <Form.Group controlId="">
+                        <Form.Label>Business Name</Form.Label>
+                        <Form.Control
+                          size="sm"
+                          type="text"
+                          name="businessName"
+                          placeholder="Enter business Name"
+                          onChange={handleFilterValue}
+                        />
+                      </Form.Group>
+                    </Col>)
+                  }
 
                   <Col md={4} sm={12}>
                     <Form.Group controlId="">
