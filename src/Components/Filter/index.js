@@ -123,6 +123,7 @@ const Filter = ({ show, close, ...props }) => {
                       onChange={handleFilterValue}
                     >
                       <option>{props.typetext}</option>
+                      <option value="card">card</option>
                       {props.transactionsType.map((transType, i) => {
                         return (
                           <option key={i} value={transType.id}>
