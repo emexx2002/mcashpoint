@@ -33,8 +33,15 @@ const Audit = (props) => {
   const [receiptview, showReceiptView] = useState(false);
   console.log(audits);
   useEffect(() => {
-    FetchAudits(nextPage, length);
+    FetchAudits(nextPage, length, filterValues);
   }, [nextPage, length]);
+
+  const initialState = {
+    startDate: "",
+    endDate: "",
+
+  };
+  const [filterValues, setFilterValues] = useState(initialState);
 
   const products = audits.map((aud, index) => {
     return {
@@ -100,39 +107,39 @@ const Audit = (props) => {
       order: "desc",
     },
   ];
-  // const _handleFilterValue = (event) => {
-  //   console.log(event);
-  //   setFilterValues({
-  //     ...filterValues,
-  //     [event.target.name]: event.target.value,
-  //   });
-  //   setNextPage(0);
-  //   showExportModal(false);
-  // };
+  const _handleFilterValue = (event) => {
+    console.log(event);
+    setFilterValues({
+      ...filterValues,
+      [event.target.name]: event.target.value,
+    });
+    setNextPage(0);
+    showExportModal(false);
+  };
 
-  // const resetFilter = (event) => {
-  //   event.preventDefault();
+  const resetFilter = (event) => {
+    event.preventDefault();
 
-  //   setFilterValues({...initialState});
-  // };
+    setFilterValues({ ...initialState });
+  };
   const handleSelect = (e) => {
     setLength(e);
   };
-  // const onFilterSubmit = (event) => {
-  //   event.preventDefault();
-  //   FetchAudits(nextPage, length, filterValues);
-  //   closeFilter();
-  //   setNextPage(0);
-  // };
-  // const ViewReceipt = (details) => {
-  //   console.log(details);
-  //   showReceiptView(true);
-  //   setViewReceipt(details);
-  // };
+  const onFilterSubmit = (event) => {
+    event.preventDefault();
+    FetchAudits(nextPage, length, filterValues);
+    closeFilter();
+    setNextPage(0);
+  };
+  const ViewReceipt = (details) => {
+    console.log(details);
+    showReceiptView(true);
+    setViewReceipt(details);
+  };
 
-  // const closeViewReceipt = () => {
-  //   showReceiptView(false);
-  // };
+  const closeViewReceipt = () => {
+    showReceiptView(false);
+  };
 
   const _handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -145,10 +152,10 @@ const Audit = (props) => {
     showFilterModal(false);
   };
 
-  // const OpenFilter = () => {
-  //   showFilterModal(true);
-  //   setFilterValues(initialState);
-  // };
+  const OpenFilter = () => {
+    showFilterModal(true);
+    setFilterValues(initialState);
+  };
   return (
     <DashboardTemplate>
       <div className="transact-wrapper">
@@ -171,7 +178,7 @@ const Audit = (props) => {
               Print
             </span>
 
-            <span>
+            <span onClick={() => OpenFilter()}>
               <img src={Filter} />
               Filter
             </span>
@@ -194,21 +201,20 @@ const Audit = (props) => {
             hover
             condensed
           />
-          {/* <FilterModal
-        type={"Transaction"}
-        typetext={"Enter Transaction Type"}
-        idtext={"Enter Transaction ID"}
-        show={FilterModalActive}
-        close={closeFilter}
-        nextPage={nextPage}
-        length={length}
-        loadPage={FetchAudits}
-        handleFilterValue={_handleFilterValue}
-        submitFilter={onFilterSubmit}
-        name={"audits"}
-        transactionsType={transactionsType}
-        transactionStatus={transactionStatus}
-      /> */}
+          <FilterModal
+            type={"Audit"}
+            typetext={"Enter Transaction Type"}
+            idtext={"Enter Transaction ID"}
+            show={FilterModalActive}
+            close={closeFilter}
+            nextPage={nextPage}
+            length={length}
+            loadPage={FetchAudits}
+            handleFilterValue={_handleFilterValue}
+            submitFilter={onFilterSubmit}
+            name={"audits"}
+
+          />
           <ExportModal
             show={exportModalActive}
             close={closeExport}
